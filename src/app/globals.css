@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #000000;
+  --background: #ffffff;
+  --wave-blue: #0066FF;
+  --wave-purple: #8B7BE8;
+  --wave-lime: #C8FF00;
+  --wave-lavender: #B8C4FF;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  max-width: 100vw;
+  overflow-x: hidden;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  /*
+   * Font stack: DM Sans for Latin, Noto Sans JP for Japanese
+   * The browser will automatically select the appropriate font
+   * based on the character being rendered
+   */
+  font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
+}
+
+p {
+  line-height: 2;
+  font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
+}
+
+/* Monospace text (for code, technical content) */
+code, pre, .font-mono {
+  font-family: var(--font-dm-mono), var(--font-noto-sans-jp), monospace;
+}
+
+/* Utility classes for explicit font control */
+.font-en {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+.font-jp {
+  font-family: var(--font-noto-sans-jp), sans-serif;
+}
+
+/* Gradient Background - matching PDF design */
+.gradient-bg {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 102, 255, 0.9) 0%,
+      rgba(139, 123, 232, 0.7) 30%,
+      rgba(184, 196, 255, 0.8) 50%,
+      rgba(200, 255, 0, 0.6) 70%,
+      rgba(200, 255, 0, 0.8) 100%
+    ),
+    linear-gradient(90deg,
+      #0066ff 0%,
+      #8B7BE8 25%,
+      #B8C4FF 50%,
+      #C8FF00 75%,
+      #0066ff 100%
+    );
+  background-size: 100% 100%, 200% 100%;
+}
+
+/* Vertical Japanese Text */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply bg-wave-blue text-white px-8 py-3 text-sm font-medium tracking-wider transition-all duration-200;
+}
+
+.btn-primary:hover {
+  @apply opacity-90;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  @apply transition-transform duration-300 ease-out;
+}
+
+.card-hover:hover {
+  @apply scale-[1.01];
+}
+
+/* Line separator */
+.line-separator {
+  @apply border-t border-black/10;
+}
+
+/* Form Elements */
+input, textarea {
+  @apply text-sm;
+  letter-spacing: 0.02em;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Selection */
+::selection {
+  background: var(--wave-blue);
+  color: white;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Page transitions */
+main {
+  min-height: 100vh;
+}
