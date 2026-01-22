@@ -26,8 +26,8 @@ export function ReleaseCard({
   listenUrl,
 }: ReleaseCardProps) {
   return (
-    <article className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12 border-t border-black/10">
-      <div>
+    <article className="grid-6 py-12 border-t border-black/10">
+      <div className="col-3">
         <p className="text-sm text-gray-500 mb-2">
           {year}. {type}
         </p>
@@ -61,7 +61,7 @@ export function ReleaseCard({
         )}
       </div>
 
-      <div className="aspect-square relative bg-gray-100">
+      <div className="col-3 aspect-square relative bg-gray-100">
         <Image
           src={coverImage}
           alt={title}

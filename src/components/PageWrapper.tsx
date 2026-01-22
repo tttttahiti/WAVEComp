@@ -13,12 +13,8 @@ export function PageWrapper({ children }: PageWrapperProps) {
   const { isMenuOpen, toggleMenu } = useMenu();
 
   return (
-    <div
-      className={`min-h-screen bg-white transition-[width] duration-500 ease-out overflow-x-hidden ${
-        isMenuOpen ? "md:w-[80vw]" : "w-full"
-      }`}
-    >
-      {/* Fixed Header */}
+    <>
+      {/* Fixed Header - stays at full width */}
       <header
         className={`fixed top-0 left-0 z-50 p-6 flex justify-between items-start transition-[width] duration-500 ease-out ${
           isMenuOpen ? "md:w-[80vw] w-full" : "w-full"
@@ -49,8 +45,14 @@ export function PageWrapper({ children }: PageWrapperProps) {
         </button>
       </header>
 
-      {/* Page Content */}
-      {children}
-    </div>
+      {/* Page Content - width shrinks when menu opens */}
+      <div
+        className={`min-h-screen bg-white transition-[width] duration-500 ease-out overflow-hidden ${
+          isMenuOpen ? "md:w-[80vw]" : "w-full"
+        }`}
+      >
+        {children}
+      </div>
+    </>
   );
 }

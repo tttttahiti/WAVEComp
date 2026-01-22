@@ -56,7 +56,7 @@ export default function ReleasesPage() {
     <>
       {/* Hero Section */}
       <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
             alt=""
@@ -66,11 +66,11 @@ export default function ReleasesPage() {
           />
         </div>
         <div className="relative z-10 w-full px-6 md:px-16 pb-12">
-          <div className="flex justify-between items-end">
-            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight">
+          <div className="max-w-7xl mx-auto grid-6">
+            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight col-3">
               RELEASES
             </h1>
-            <span className="text-white text-2xl md:text-4xl font-bold tracking-tight">
+            <span className="text-white text-2xl md:text-4xl font-bold tracking-tight col-3 text-right">
               ALL
             </span>
           </div>
@@ -79,7 +79,7 @@ export default function ReleasesPage() {
 
       {/* Releases List */}
       <section className="py-16 md:py-24 px-6 md:px-16">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {releases.map((release) => (
             <ReleaseCard key={release.id} {...release} />
           ))}

@@ -49,7 +49,6 @@ const allWorks = [
 export default function WorksPage() {
   const [filterTag, setFilterTag] = useState("");
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
-  const [minHeight, setMinHeight] = useState<number | undefined>(undefined);
 
   const filteredWorks = useMemo(() => {
     if (!filterTag) return allWorks;
@@ -62,26 +61,28 @@ export default function WorksPage() {
 
   const handleImageLoad = useCallback((id: string, height: number) => {
     setImageHeights((prev) => {
-      const updated = { ...prev, [id]: height };
-      // フィルタリングされたワークの画像のみを考慮
-      const filteredIds = filteredWorks.map((w) => w.id);
-      const filteredHeights = Object.entries(updated)
-        .filter(([id]) => filteredIds.includes(id))
-        .map(([, height]) => height);
-      
-      if (filteredHeights.length === filteredWorks.length && filteredHeights.length > 0) {
-        const min = Math.min(...filteredHeights);
-        setMinHeight(min);
-      }
-      return updated;
+      if (prev[id] === height) return prev;
+      return { ...prev, [id]: height };
     });
-  }, [filteredWorks]);
+  }, []);
+
+  const minHeight = useMemo(() => {
+    const filteredIds = filteredWorks.map((w) => w.id);
+    const filteredHeights = Object.entries(imageHeights)
+      .filter(([id]) => filteredIds.includes(id))
+      .map(([, height]) => height);
+
+    if (filteredHeights.length === filteredWorks.length && filteredHeights.length > 0) {
+      return Math.min(...filteredHeights);
+    }
+    return undefined;
+  }, [imageHeights, filteredWorks]);
 
   return (
     <>
       {/* Hero Section */}
       <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
             alt=""
@@ -91,11 +92,11 @@ export default function WorksPage() {
           />
         </div>
         <div className="relative z-10 w-full px-6 md:px-16 pb-12">
-          <div className="flex justify-between items-end">
-            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight">
+          <div className="max-w-7xl mx-auto grid-6">
+            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight col-3">
               WORKS
             </h1>
-            <span className="text-white text-2xl md:text-4xl font-bold tracking-tight">
+            <span className="text-white text-2xl md:text-4xl font-bold tracking-tight col-3 text-right">
               ALL
             </span>
           </div>
@@ -106,30 +107,33 @@ export default function WorksPage() {
       <section className="py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           {/* Filter Input */}
-          <div className="flex justify-end mb-8">
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                #
-              </span>
-              <input
-                type="text"
-                placeholder=""
-                value={filterTag}
-                onChange={(e) => setFilterTag(e.target.value)}
-                className="w-48 md:w-64 border border-black/20 pl-8 pr-4 py-2 text-sm focus:outline-none focus:border-wave-blue transition-colors"
-              />
+          <div className="grid-6 mb-8">
+            <div className="col-start-5 col-2 flex justify-end">
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  #
+                </span>
+                <input
+                  type="text"
+                  placeholder=""
+                  value={filterTag}
+                  onChange={(e) => setFilterTag(e.target.value)}
+                  className="w-48 md:w-64 bg-white text-black border border-black/20 pl-8 pr-4 py-2 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Works Grid - 2 columns on desktop */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+          {/* Works Grid - 6 columns (each card takes 3 columns) */}
+          <div className="grid-6">
             {filteredWorks.map((work) => (
-              <WorkCard
-                key={work.id}
-                {...work}
-                onImageLoad={(height) => handleImageLoad(work.id, height)}
-                imageHeight={minHeight}
-              />
+              <div key={work.id} className="col-3">
+                <WorkCard
+                  {...work}
+                  onImageLoad={(height) => handleImageLoad(work.id, height)}
+                  imageHeight={minHeight}
+                />
+              </div>
             ))}
           </div>
         </div>

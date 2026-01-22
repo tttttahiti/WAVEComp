@@ -1,0 +1,24 @@
+# Environment variables
+.env
+
+# WordPress uploads (stored in Docker volume)
+uploads/*
+!uploads/.gitkeep
+
+# Themes (unless custom)
+themes/*
+!themes/.gitkeep
+
+# Database dumps
+*.sql
+*.sql.gz
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

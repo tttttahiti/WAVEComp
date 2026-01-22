@@ -46,7 +46,7 @@ export function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
-          className="w-full border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+          className="w-full bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
         />
       </div>
 
@@ -60,7 +60,7 @@ export function ContactForm() {
           name="company"
           value={formData.company}
           onChange={handleChange}
-          className="w-full border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+          className="w-full bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
         />
       </div>
 
@@ -75,7 +75,7 @@ export function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+          className="w-full bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
         />
       </div>
 
@@ -90,7 +90,7 @@ export function ContactForm() {
           onChange={handleChange}
           required
           rows={6}
-          className="w-full border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors resize-none"
+          className="w-full bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors resize-none"
         />
       </div>
 

@@ -7,7 +7,7 @@ export default function AboutPage() {
     <>
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[400px] flex items-end overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
             alt=""
@@ -17,17 +17,19 @@ export default function AboutPage() {
           />
         </div>
         <div className="relative z-10 w-full px-6 md:px-16 pb-12">
-          <div className="flex justify-between items-end">
-            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight">
+          <div className="max-w-7xl mx-auto grid-6">
+            <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight col-3">
               ABOUT
             </h1>
-            <Image
-              src="/svg/logo-wave.svg"
-              alt="WA/VE"
-              width={140}
-              height={40}
-              className="w-[100px] md:w-[140px] h-auto"
-            />
+            <div className="col-3 flex justify-end items-end">
+              <Image
+                src="/svg/logo-wave.svg"
+                alt="WA/VE"
+                width={140}
+                height={40}
+                className="w-[100px] md:w-[140px] h-auto"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -37,18 +39,16 @@ export default function AboutPage() {
 
       {/* Our Service Section */}
       <section className="py-20 md:py-32 px-6 md:px-16 border-t border-black/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-16">
-            <h2 className="text-2xl md:text-3xl font-bold">OUR SERVICE</h2>
-            <ul className="space-y-3 text-sm md:text-base">
-              <li>HAL ca アーティストマネージメント</li>
-              <li>サウンドプロデュース</li>
-              <li>コンテンツ制作</li>
-              <li>音楽制作</li>
-              <li>企画 / 体験デザイン</li>
-              <li>イベント企画 / プロデュース</li>
-            </ul>
-          </div>
+        <div className="max-w-7xl mx-auto grid-6">
+          <h2 className="text-2xl md:text-3xl font-bold col-1">OUR SERVICE</h2>
+          <ul className="space-y-3 text-sm md:text-base col-start-2 col-5">
+            <li>HAL ca アーティストマネージメント</li>
+            <li>サウンドプロデュース</li>
+            <li>コンテンツ制作</li>
+            <li>音楽制作</li>
+            <li>企画 / 体験デザイン</li>
+            <li>イベント企画 / プロデュース</li>
+          </ul>
         </div>
       </section>
 
@@ -59,8 +59,8 @@ export default function AboutPage() {
 
           <div className="space-y-24">
             {/* Member 1 - Mai Shimada */}
-            <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-16">
-              <div className="aspect-[3/4] relative bg-gray-100">
+            <div className="grid-6">
+              <div className="aspect-[3/4] relative bg-gray-100 col-2">
                 <Image
                   src="/images/members/shimada.jpg"
                   alt="島田 舞"
@@ -69,7 +69,7 @@ export default function AboutPage() {
                   sizes="(max-width: 768px) 100vw, 280px"
                 />
               </div>
-              <div>
+              <div className="col-4">
                 <p className="text-lg md:text-xl font-bold mb-1">島田 舞 / Mai Shimada</p>
                 <p className="text-sm text-gray-500 mb-6">Producer / Manager</p>
                 <div className="text-sm leading-[2] space-y-4">
@@ -102,8 +102,8 @@ export default function AboutPage() {
             </div>
 
             {/* Member 2 - Haruka Kikuchi */}
-            <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-16">
-              <div className="aspect-[3/4] relative bg-gray-100">
+            <div className="grid-6">
+              <div className="aspect-[3/4] relative bg-gray-100 col-2">
                 <Image
                   src="/images/members/kikuchi.jpg"
                   alt="菊地 晴夏"
@@ -112,7 +112,7 @@ export default function AboutPage() {
                   sizes="(max-width: 768px) 100vw, 280px"
                 />
               </div>
-              <div>
+              <div className="col-4">
                 <p className="text-lg md:text-xl font-bold mb-1">菊地 晴夏 / Haruka Kikuchi</p>
                 <p className="text-sm text-gray-500 mb-6">Planner / Producer / Composer</p>
                 <div className="text-sm leading-[2] space-y-4">
@@ -144,33 +144,29 @@ export default function AboutPage() {
 
       {/* Info Section */}
       <section className="py-20 md:py-32 px-6 md:px-16 border-t border-black/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-16">
-            <h2 className="text-2xl md:text-3xl font-bold">INFO</h2>
-            <div className="text-sm leading-[2]">
-              <p className="font-medium">WA/VE</p>
-              <p>株式会社ウェーブ</p>
-              <p className="mt-4">設立日：2026年4月1日</p>
-              <p>代表取締役（共同代表）：</p>
-              <p>菊地晴夏 / 島田舞</p>
-              <p className="mt-4">
-                <a href="mailto:info@wa-ve.jp" className="text-wave-blue hover:underline">
-                  info@wa-ve.jp
-                </a>
-              </p>
-            </div>
+        <div className="max-w-7xl mx-auto grid-6">
+          <h2 className="text-2xl md:text-3xl font-bold col-1">INFO</h2>
+          <div className="text-sm leading-[2] col-start-2 col-5">
+            <p className="font-medium">WA/VE</p>
+            <p>株式会社ウェーブ</p>
+            <p className="mt-4">設立日：2026年4月1日</p>
+            <p>代表取締役（共同代表）：</p>
+            <p>菊地晴夏 / 島田舞</p>
+            <p className="mt-4">
+              <a href="mailto:info@wa-ve.jp" className="text-wave-blue hover:underline">
+                info@wa-ve.jp
+              </a>
+            </p>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
       <section className="py-20 md:py-32 px-6 md:px-16 border-t border-black/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-16">
-            <h2 className="text-2xl md:text-3xl font-bold">CONTACT</h2>
-            <div className="max-w-xl">
-              <ContactForm />
-            </div>
+        <div className="max-w-7xl mx-auto grid-6">
+          <h2 className="text-2xl md:text-3xl font-bold col-1">CONTACT</h2>
+          <div className="col-start-2 col-4">
+            <ContactForm />
           </div>
         </div>
       </section>

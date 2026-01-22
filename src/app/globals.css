@@ -21,6 +21,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light only;
 }
 
 body {
@@ -114,19 +115,48 @@ code, pre, .font-mono {
   @apply scale-[1.01];
 }
 
+/* Squish background images when menu is open */
+@media (min-width: 768px) {
+  body.menu-open .squish-on-menu {
+    transform: scaleX(0.8);
+    transform-origin: left;
+  }
+}
+
 /* Line separator */
 .line-separator {
   @apply border-t border-black/10;
 }
 
-/* Form Elements */
-input, textarea {
+/* Form Elements - Force light mode colors */
+input, textarea, select {
   @apply text-sm;
   letter-spacing: 0.02em;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 
-input:focus, textarea:focus {
+input::placeholder, textarea::placeholder {
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+  opacity: 1;
+}
+
+input:focus, textarea:focus, select:focus {
   outline: none;
+}
+
+/* Prevent autofill from changing colors */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-color: #ffffff !important;
 }
 
 /* Scrollbar */
@@ -163,4 +193,43 @@ input:focus, textarea:focus {
 /* Page transitions */
 main {
   min-height: 100vh;
+}
+
+/* 6-column grid system */
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid-6 {
+    gap: 1.5rem;
+  }
+}
+
+/* Grid column spans */
+.col-1 { grid-column: span 1; }
+.col-2 { grid-column: span 2; }
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; }
+
+/* Grid column start positions */
+.col-start-1 { grid-column-start: 1; }
+.col-start-2 { grid-column-start: 2; }
+.col-start-3 { grid-column-start: 3; }
+.col-start-4 { grid-column-start: 4; }
+.col-start-5 { grid-column-start: 5; }
+.col-start-6 { grid-column-start: 6; }
+
+/* Mobile responsive - stack to full width on mobile */
+@media (max-width: 767px) {
+  .col-1, .col-2, .col-3, .col-4, .col-5 {
+    grid-column: span 6;
+  }
+  .col-start-1, .col-start-2, .col-start-3, .col-start-4, .col-start-5, .col-start-6 {
+    grid-column-start: 1;
+  }
 }

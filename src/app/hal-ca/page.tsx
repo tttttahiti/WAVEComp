@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { WorkCard } from "@/components/WorkCard";
@@ -58,31 +58,35 @@ const featuredReleases = [
 
 export default function HalCaPage() {
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
-  const [minHeight, setMinHeight] = useState<number | undefined>(undefined);
 
   const handleImageLoad = useCallback((id: string, height: number) => {
     setImageHeights((prev) => {
-      const updated = { ...prev, [id]: height };
-      const heights = Object.values(updated);
-      if (heights.length === featuredWorks.length) {
-        const min = Math.min(...heights);
-        setMinHeight(min);
-      }
-      return updated;
+      if (prev[id] === height) return prev;
+      return { ...prev, [id]: height };
     });
   }, []);
+
+  const minHeight = useMemo(() => {
+    const heights = Object.values(imageHeights);
+    if (heights.length === featuredWorks.length) {
+      return Math.min(...heights);
+    }
+    return undefined;
+  }, [imageHeights]);
 
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] bg-gray-100">
-        <Image
-          src="/images/hal-ca-hero.jpg"
-          alt="HAL ca"
-          fill
-          className="object-cover object-top"
-          priority
-        />
+      <section className="relative min-h-[70vh] bg-gray-100 overflow-hidden">
+        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
+          <Image
+            src="/images/hal-ca-hero.jpg"
+            alt="HAL ca"
+            fill
+            className="object-cover object-top"
+            priority
+          />
+        </div>
         <div className="absolute top-6 left-6 z-10">
           <span className="text-white text-sm tracking-wider">SOUND \</span>
         </div>
@@ -90,51 +94,53 @@ export default function HalCaPage() {
 
       {/* Artist Info Section */}
       <section className="py-20 md:py-32 px-6 md:px-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">HAL ca</h1>
+        <div className="max-w-7xl mx-auto grid-6">
+          <div className="col-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-8">HAL ca</h1>
 
-          <p className="text-base md:text-lg leading-[2] mb-8">
-            HAL caは、アンビエント・実験音楽を軸とするコンポーザー / サウンドアーティスト。
-          </p>
+            <p className="text-base md:text-lg leading-[2] mb-8">
+              HAL caは、アンビエント・実験音楽を軸とするコンポーザー / サウンドアーティスト。
+            </p>
 
-          <div className="text-sm md:text-base leading-[2.2] space-y-6 text-gray-700">
-            <p>
-              東京生まれ。国立音楽大学を経て渡仏し、パリ・エコールノルマル音楽院映画音楽作曲科を首席で修了、またパリ地方音楽院エレクトロアコースティック作曲科にて電子音響を学ぶ。
-            </p>
-            <p>
-              ノイズや声、フィールドレコーディングなど多様な音響オブジェクトをオーケストレーションし、円環的な時間感覚をもった音のデザインを追求。抽象的でありながらも身体感覚に訴えかける響きを生み出し、聴く者を「今ここ」に立ち戻らせる音楽を作り続けている。
-            </p>
-            <p>
-              作品はデジタルリリースにとどまらず、広告音楽、オーディオヴィジュアルや空間インスタレーションへも展開。マルチチャンネルによる多層的な音響デザインや、音の体験デザインを得意とし、近年は BMW THE SEVEN ART MUSEUM や大阪関西万博に空間音響演出で参加するなど、活動を幅を広げている。
-            </p>
-          </div>
+            <div className="text-sm md:text-base leading-[2.2] space-y-6 text-gray-700">
+              <p>
+                東京生まれ。国立音楽大学を経て渡仏し、パリ・エコールノルマル音楽院映画音楽作曲科を首席で修了、またパリ地方音楽院エレクトロアコースティック作曲科にて電子音響を学ぶ。
+              </p>
+              <p>
+                ノイズや声、フィールドレコーディングなど多様な音響オブジェクトをオーケストレーションし、円環的な時間感覚をもった音のデザインを追求。抽象的でありながらも身体感覚に訴えかける響きを生み出し、聴く者を「今ここ」に立ち戻らせる音楽を作り続けている。
+              </p>
+              <p>
+                作品はデジタルリリースにとどまらず、広告音楽、オーディオヴィジュアルや空間インスタレーションへも展開。マルチチャンネルによる多層的な音響デザインや、音の体験デザインを得意とし、近年は BMW THE SEVEN ART MUSEUM や大阪関西万博に空間音響演出で参加するなど、活動を幅を広げている。
+              </p>
+            </div>
 
-          {/* External Links */}
-          <div className="mt-12 flex flex-wrap gap-6">
-            <a
-              href="https://music.apple.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-wave-blue hover:underline"
-            >
-              APPLE MUSIC
-            </a>
-            <a
-              href="https://spotify.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-wave-blue hover:underline"
-            >
-              SPOTIFY
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-wave-blue hover:underline"
-            >
-              INSTAGRAM (HAL ca)
-            </a>
+            {/* External Links */}
+            <div className="mt-12 flex flex-wrap gap-6">
+              <a
+                href="https://music.apple.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-wave-blue hover:underline"
+              >
+                APPLE MUSIC
+              </a>
+              <a
+                href="https://spotify.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-wave-blue hover:underline"
+              >
+                SPOTIFY
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-wave-blue hover:underline"
+              >
+                INSTAGRAM (HAL ca)
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -142,19 +148,20 @@ export default function HalCaPage() {
       {/* Featured Works Section */}
       <section className="py-20 md:py-32 px-6 md:px-16 border-t border-black/10">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold">FEATURED</h2>
-            <h2 className="text-2xl md:text-3xl font-bold">WORKS</h2>
+          <div className="grid-6 mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold col-3">FEATURED</h2>
+            <h2 className="text-2xl md:text-3xl font-bold col-3 text-right">WORKS</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid-6">
             {featuredWorks.map((work) => (
-              <WorkCard
-                key={work.id}
-                {...work}
-                onImageLoad={(height) => handleImageLoad(work.id, height)}
-                imageHeight={minHeight}
-              />
+              <div key={work.id} className="col-2">
+                <WorkCard
+                  {...work}
+                  onImageLoad={(height) => handleImageLoad(work.id, height)}
+                  imageHeight={minHeight}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -163,32 +170,33 @@ export default function HalCaPage() {
       {/* Featured Releases Section */}
       <section className="py-20 md:py-32 px-6 md:px-16 border-t border-black/10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid-6">
             {featuredReleases.map((release) => (
-              <Link
-                key={release.id}
-                href={`/releases#${release.slug}`}
-                className="block card-hover"
-              >
-                <article className="border-t border-black/10 pt-6">
-                  <div className="aspect-square relative bg-gray-100 mb-4 overflow-hidden">
-                    <Image
-                      src={release.thumbnail}
-                      alt={release.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-xs text-gray-500">RELEASE</p>
-                    <h3 className="font-medium text-sm">{release.title}</h3>
-                    <p className="text-xs text-gray-500">
-                      #HALca #Release Release Date: {release.releaseDate}
-                    </p>
-                  </div>
-                </article>
-              </Link>
+              <div key={release.id} className="col-2">
+                <Link
+                  href={`/releases#${release.slug}`}
+                  className="block card-hover"
+                >
+                  <article className="border-t border-black/10 pt-6">
+                    <div className="aspect-square relative bg-gray-100 mb-4 overflow-hidden">
+                      <Image
+                        src={release.thumbnail}
+                        alt={release.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs text-gray-500">RELEASE</p>
+                      <h3 className="font-medium text-sm">{release.title}</h3>
+                      <p className="text-xs text-gray-500">
+                        #HALca #Release Release Date: {release.releaseDate}
+                      </p>
+                    </div>
+                  </article>
+                </Link>
+              </div>
             ))}
           </div>
 

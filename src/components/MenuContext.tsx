@@ -14,13 +14,20 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    document.body.style.overflow = !isMenuOpen ? "hidden" : "";
+    const newState = !isMenuOpen;
+    setIsMenuOpen(newState);
+    document.body.style.overflow = newState ? "hidden" : "";
+    if (newState) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
     document.body.style.overflow = "";
+    document.body.classList.remove("menu-open");
   };
 
   return (

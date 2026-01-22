@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { WorkCard } from "@/components/WorkCard";
@@ -60,26 +60,28 @@ const sampleWorks = [
 
 export default function HomePage() {
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
-  const [minHeight, setMinHeight] = useState<number | undefined>(undefined);
 
   const handleImageLoad = useCallback((id: string, height: number) => {
     setImageHeights((prev) => {
-      const updated = { ...prev, [id]: height };
-      const heights = Object.values(updated);
-      if (heights.length === sampleWorks.length) {
-        const min = Math.min(...heights);
-        setMinHeight(min);
-      }
-      return updated;
+      if (prev[id] === height) return prev;
+      return { ...prev, [id]: height };
     });
   }, []);
+
+  const minHeight = useMemo(() => {
+    const heights = Object.values(imageHeights);
+    if (heights.length === sampleWorks.length) {
+      return Math.min(...heights);
+    }
+    return undefined;
+  }, [imageHeights]);
 
   return (
     <>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
             alt=""
@@ -107,19 +109,20 @@ export default function HomePage() {
       {/* Selected Works Section */}
       <section className="py-24 px-6 md:px-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">SELECTED</h2>
-            <h2 className="text-3xl md:text-4xl font-bold">WORKS</h2>
+          <div className="grid-6 mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold col-3">SELECTED</h2>
+            <h2 className="text-3xl md:text-4xl font-bold col-3 text-right">WORKS</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid-6">
             {sampleWorks.map((work) => (
-              <WorkCard
-                key={work.id}
-                {...work}
-                onImageLoad={(height) => handleImageLoad(work.id, height)}
-                imageHeight={minHeight}
-              />
+              <div key={work.id} className="col-2">
+                <WorkCard
+                  {...work}
+                  onImageLoad={(height) => handleImageLoad(work.id, height)}
+                  imageHeight={minHeight}
+                />
+              </div>
             ))}
           </div>
 

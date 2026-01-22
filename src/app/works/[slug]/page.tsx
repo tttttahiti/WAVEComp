@@ -99,69 +99,67 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Work Info Section */}
       <section className="py-16 md:py-24 px-6 md:px-16">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-            {/* Left Column - Title & Date */}
-            <div>
-              <p className="text-sm text-gray-500 mb-2">{work.client}</p>
-              <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-4">
-                {work.title}
-              </h1>
-              <p className="text-sm text-gray-500">Date: {work.date}</p>
+        <div className="max-w-7xl mx-auto grid-6">
+          {/* Left Column - Title & Date */}
+          <div className="col-3">
+            <p className="text-sm text-gray-500 mb-2">{work.client}</p>
+            <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-4">
+              {work.title}
+            </h1>
+            <p className="text-sm text-gray-500">Date: {work.date}</p>
+          </div>
+
+          {/* Right Column - Description & Details */}
+          <div className="col-3">
+            <div className="text-sm leading-[2] whitespace-pre-line mb-8">
+              {work.description}
             </div>
 
-            {/* Right Column - Description & Details */}
-            <div>
-              <div className="text-sm leading-[2] whitespace-pre-line mb-8">
-                {work.description}
+            <p className="text-sm mb-6">{work.role}</p>
+
+            <div className="border-t border-black/10 pt-4 space-y-3">
+              <div className="flex gap-4 text-sm">
+                {work.tags.map((tag, index) => (
+                  <span key={index} className="text-gray-500">
+                    {tag}
+                  </span>
+                ))}
               </div>
 
-              <p className="text-sm mb-6">{work.role}</p>
-
-              <div className="border-t border-black/10 pt-4 space-y-3">
-                <div className="flex gap-4 text-sm">
-                  {work.tags.map((tag, index) => (
-                    <span key={index} className="text-gray-500">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {work.url && (
-                  <p className="text-sm">
-                    <span className="text-gray-500">URL: </span>
-                    <a
-                      href={work.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-wave-blue hover:underline break-all"
-                    >
-                      {work.url}
-                    </a>
-                  </p>
-                )}
-
-                {work.clientRole && (
-                  <p className="text-sm">
-                    <span className="text-gray-500">Client: </span>
-                    {work.clientRole}
-                  </p>
-                )}
-              </div>
-
-              {work.listenUrl && (
-                <div className="mt-8">
-                  <Link
-                    href={work.listenUrl}
-                    className="btn-primary inline-block"
+              {work.url && (
+                <p className="text-sm">
+                  <span className="text-gray-500">URL: </span>
+                  <a
+                    href={work.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="text-wave-blue hover:underline break-all"
                   >
-                    LISTEN
-                  </Link>
-                </div>
+                    {work.url}
+                  </a>
+                </p>
+              )}
+
+              {work.clientRole && (
+                <p className="text-sm">
+                  <span className="text-gray-500">Client: </span>
+                  {work.clientRole}
+                </p>
               )}
             </div>
+
+            {work.listenUrl && (
+              <div className="mt-8">
+                <Link
+                  href={work.listenUrl}
+                  className="btn-primary inline-block"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LISTEN
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -169,23 +167,21 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       {/* Gallery Section */}
       {work.galleryImages.length > 0 && (
         <section className="py-8 px-6 md:px-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {work.galleryImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="aspect-[4/3] relative bg-gray-100"
-                >
-                  <Image
-                    src={image}
-                    alt={`${work.title} - ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="max-w-7xl mx-auto grid-6">
+            {work.galleryImages.map((image, index) => (
+              <div
+                key={index}
+                className="col-3 aspect-[4/3] relative bg-gray-100"
+              >
+                <Image
+                  src={image}
+                  alt={`${work.title} - ${index + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ))}
           </div>
         </section>
       )}
@@ -193,8 +189,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       {/* Video Section */}
       {work.videoUrl && (
         <section className="py-8 px-6 md:px-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="aspect-video relative bg-gray-900">
+          <div className="max-w-7xl mx-auto grid-6">
+            <div className="col-6 aspect-video relative bg-gray-900">
               <div className="absolute inset-0 flex items-center justify-center">
                 <button className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
                   <svg
@@ -214,8 +210,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Credits Section */}
       <section className="py-16 px-6 md:px-16">
-        <div className="max-w-5xl mx-auto">
-          <div className="border-t border-black/10 pt-8">
+        <div className="max-w-7xl mx-auto grid-6">
+          <div className="col-6 border-t border-black/10 pt-8">
             <p className="text-sm font-medium mb-4">Credit:</p>
             <ul className="space-y-1">
               {work.credits.map((credit, index) => (

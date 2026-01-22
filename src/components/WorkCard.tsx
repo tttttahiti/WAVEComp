@@ -17,25 +17,28 @@ interface WorkCardProps {
 
 export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, imageHeight }: WorkCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasReportedRef = useRef(false);
 
   useEffect(() => {
-    if (!onImageLoad || !containerRef.current) return;
+    if (!onImageLoad || !containerRef.current || hasReportedRef.current) return;
 
     const container = containerRef.current;
     const img = container.querySelector("img") as HTMLImageElement;
-    
+
     if (!img) return;
 
     const checkImageSize = () => {
+      if (hasReportedRef.current) return;
       if (img.complete && img.naturalWidth > 0 && img.naturalHeight > 0) {
         const containerWidth = container.offsetWidth;
         const imgNaturalWidth = img.naturalWidth;
         const imgNaturalHeight = img.naturalHeight;
-        
-        // コンテナの幅に合わせた時の高さを計算（object-containの場合）
+
+        // コンテナの幅に合わせた時の高さを計算
         const aspectRatio = imgNaturalHeight / imgNaturalWidth;
         const calculatedHeight = containerWidth * aspectRatio;
-        
+
+        hasReportedRef.current = true;
         onImageLoad(calculatedHeight);
       }
     };
@@ -64,7 +67,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, im
             width={800}
             height={600}
             className="object-contain"
-            style={{ width: "auto", height: "100%" }}
+            style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: "100%" }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
