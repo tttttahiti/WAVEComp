@@ -14,7 +14,7 @@ const sampleWorks = [
     thumbnail: "/images/works/taste-woods.jpg",
     client: "虎ノ門ヒルズ・ステーションアトリウム",
     title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
   {
     id: "2",
@@ -22,7 +22,7 @@ const sampleWorks = [
     thumbnail: "/images/works/bmw-museum.jpg",
     client: "BMW",
     title: "The Seven Art Museum",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
   {
     id: "3",
@@ -38,7 +38,7 @@ const sampleWorks = [
     thumbnail: "/images/works/afterimage.jpg",
     client: "RELEASE",
     title: "Afterimage",
-    tags: ["#HALca", "#Release", "Release Date: 2018.12"],
+    tags: ["#HAL ca", "#Release", "Release Date: 2018.12"],
   },
   {
     id: "5",
@@ -46,7 +46,7 @@ const sampleWorks = [
     thumbnail: "/images/works/matsumoto.jpg",
     client: "長野県松本市",
     title: "松本城 ~氷晶きらめく水鏡~",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
   {
     id: "6",
@@ -54,7 +54,7 @@ const sampleWorks = [
     thumbnail: "/images/works/yamaha.jpg",
     client: "YAMAHA",
     title: "I'm a HERO Program",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
 ];
 
@@ -80,15 +80,21 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left">
-          <Image
-            src="/svg/bg-gradient.svg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
+        {/* Background Video - Vimeo Streaming */}
+        <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left overflow-hidden">
+          <div className="absolute inset-0 w-full h-full" style={{ height: "100%" }}>
+            <iframe
+              src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
+              className="absolute top-0 left-0 w-full h-full"
+              style={{
+                border: "none",
+                transform: "scale(1.5)",
+                transformOrigin: "center center",
+              }}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </div>
         {/* Logo */}
         <div className="relative h-full px-6 md:px-16 grid-6 items-center">

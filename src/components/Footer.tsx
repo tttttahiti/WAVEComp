@@ -25,7 +25,7 @@ export function Footer() {
               ABOUT
             </Link>
             <Link href="/hal-ca" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
-              HAL CA
+              HAL ca
             </Link>
             <Link href="/releases" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               RELEASE

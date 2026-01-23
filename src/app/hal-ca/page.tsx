@@ -12,7 +12,7 @@ const featuredWorks = [
     thumbnail: "/images/works/taste-woods.jpg",
     client: "虎ノ門ヒルズ・ステーションアトリウム",
     title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const featuredWorks = [
     thumbnail: "/images/works/bmw-museum.jpg",
     client: "BMW",
     title: "The Seven Art Museum",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
   },
   {
     id: "3",
