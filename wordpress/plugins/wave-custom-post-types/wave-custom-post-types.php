@@ -324,6 +324,10 @@ class WAVE_Custom_Post_Types {
         if (!$layout_order) {
             $layout_order = 'video,content,gallery,audio';
         }
+        $credits = get_post_meta($post->ID, '_work_credits', true);
+        if (!$credits) {
+            $credits = '[]';
+        }
         ?>
         <style>
             .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
@@ -418,6 +422,13 @@ class WAVE_Custom_Post_Types {
                         ?>
                     </div>
                     <p class="description">ドラッグ＆ドロップで表示順序を変更できます</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="work_credits">Credits</label></th>
+                <td>
+                    <textarea id="work_credits" name="work_credits" rows="8" class="large-text"><?php echo esc_textarea($credits); ?></textarea>
+                    <p class="description">JSON形式で入力してください。例: [{"role":"Artist","name":"諏訪綾子"},{"role":"Sound Installation","name":"HAL ca"}]</p>
                 </td>
             </tr>
         </table>
@@ -637,6 +648,18 @@ class WAVE_Custom_Post_Types {
             // Textarea fields
             if (isset($_POST['work_video_urls'])) {
                 update_post_meta($post_id, '_work_video_urls', sanitize_textarea_field($_POST['work_video_urls']));
+            }
+            // Credits field (JSON)
+            if (isset($_POST['work_credits'])) {
+                // JSON形式を検証して保存
+                $credits = sanitize_textarea_field($_POST['work_credits']);
+                $decoded = json_decode($credits, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    update_post_meta($post_id, '_work_credits', $credits);
+                } else {
+                    // JSON形式が無効な場合は空配列を保存
+                    update_post_meta($post_id, '_work_credits', '[]');
+                }
             }
             // Media fields
             if (isset($_POST['work_audio_file'])) {

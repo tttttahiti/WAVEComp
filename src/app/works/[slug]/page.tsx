@@ -1,67 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
-// Sample work data - will be replaced with WordPress data
-const worksData: Record<string, {
-  client: string;
-  title: string;
-  date: string;
-  description: string;
-  role: string;
-  tags: string[];
-  url?: string;
-  clientRole?: string;
-  heroImage: string;
-  galleryImages: string[];
-  videoUrl?: string;
-  credits: { role: string; name: string }[];
-  listenUrl?: string;
-}> = {
-  "taste-in-the-woods": {
-    client: "虎ノ門ヒルズ・ステーションアトリウム",
-    title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    date: "2025.11",
-    description:
-      "「食」をテーマに新たな感覚体験を生み出すアーティスト・諏訪綾子氏によるクリスマスインスタレーション、諏訪綾子「森をあじわう TASTE in the woods」にて、空間音響演出を HAL ca 担当致しました。\n\n虎ノ門ヒルズに静かに森がたちあらわれ、美しい野生の気配と共に、様々な森や動物、生命の気配を感じられるサウンドインスタレーションを作りました。",
-    role: "サウンドプロデュース／音響演出制作",
-    tags: ["#HALca", "#Installation"],
-    url: "https://www.toranomonhills.com/events/2025/10/0214.html",
-    clientRole: "food creation",
-    heroImage: "/images/works/taste-woods-hero.jpg",
-    galleryImages: [
-      "/images/works/taste-woods-1.jpg",
-      "/images/works/taste-woods-2.jpg",
-      "/images/works/taste-woods-3.jpg",
-      "/images/works/taste-woods-4.jpg",
-    ],
-    credits: [
-      { role: "Artist", name: "諏訪綾子" },
-      { role: "Sound Installation", name: "HAL ca" },
-      { role: "Sound Produce", name: "HAL ca , WA/VE" },
-    ],
-    listenUrl: "https://spotify.com",
-  },
-  "matsumoto-castle": {
-    client: "長野県松本市",
-    title: "松本城 〜 氷晶きらめく水鏡 〜",
-    date: "2025.11",
-    description:
-      "国宝・松本城を舞台にレーザーマッピングを起用した光と音の幻想的な演出が行われ、2021-2022の2年間 HAL ca が音響演出で参加しました。\n\n松本城に訪れ、歩いたり、立ち止まったり、それぞれの時間の過ごし方の中で聴こえてくる音は一瞬一瞬違うものであってほしいという願いを込めて、お城を映し出す水の表情のように静かに移り変わり、今を感じさせる音楽演出を制作しました。",
-    role: "サウンドプロデュース／音響演出制作",
-    tags: ["#HAL ca", "#Movie", "#Installation", "#Experience Design", "#Event Produce"],
-    url: "https://www.toranomonhills.com/events/2025/10/0214.html",
-    clientRole: "Tokyo Lighting Design",
-    heroImage: "/images/works/matsumoto-hero.jpg",
-    galleryImages: [],
-    videoUrl: "https://youtube.com/embed/xxxxx",
-    credits: [
-      { role: "Lighting Produce", name: "Tokyo Lighting Design" },
-      { role: "Sound Produce", name: "HAL ca / Lada Inc." },
-      { role: "Composer", name: "HAL ca" },
-    ],
-    listenUrl: "https://spotify.com",
-  },
-};
+import { getWorkBySlug } from "@/lib/wordpress";
 
 interface WorkDetailPageProps {
   params: Promise<{
@@ -71,7 +10,43 @@ interface WorkDetailPageProps {
 
 export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   const { slug } = await params;
-  const work = worksData[slug];
+  
+  let work = null;
+  try {
+    const wpWork = await getWorkBySlug(slug);
+    if (wpWork) {
+      // credits をパース（JSON文字列の場合と配列の場合の両方に対応）
+      let credits: { role: string; name: string }[] = [];
+      if (wpWork.work_meta.credits) {
+        try {
+          const parsed = typeof wpWork.work_meta.credits === 'string' 
+            ? JSON.parse(wpWork.work_meta.credits) 
+            : wpWork.work_meta.credits;
+          credits = Array.isArray(parsed) ? parsed : [];
+        } catch {
+          credits = [];
+        }
+      }
+
+      work = {
+        client: wpWork.work_meta.client || '',
+        title: wpWork.title.rendered.replace(/<[^>]*>/g, ''),
+        date: wpWork.work_meta.date || '',
+        description: wpWork.content.rendered.replace(/<[^>]*>/g, ''),
+        role: wpWork.work_meta.role || '',
+        tags: [], // タグは別途取得が必要
+        url: wpWork.work_meta.url || '',
+        clientRole: '', // clientRole は work_meta にない場合は空文字
+        heroImage: wpWork.featured_image_url || '/images/placeholder.jpg',
+        galleryImages: wpWork.work_meta.gallery_images?.map((img: { url: string }) => img.url) || [],
+        videoUrl: wpWork.work_meta.video_urls?.[0] || '',
+        credits,
+        listenUrl: wpWork.work_meta.audio_url || '',
+      };
+    }
+  } catch (error) {
+    console.error("Failed to fetch work from WordPress:", error);
+  }
 
   if (!work) {
     return (
@@ -214,7 +189,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           <div className="col-6 border-t border-black/10 pt-8">
             <p className="text-sm font-medium mb-4">Credit:</p>
             <ul className="space-y-1">
-              {work.credits.map((credit, index) => (
+              {work.credits.map((credit: { role: string; name: string }, index: number) => (
                 <li key={index} className="text-sm">
                   <span className="text-gray-500">{credit.role}：</span>
                   {credit.name}

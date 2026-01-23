@@ -254,6 +254,16 @@ export function parseAchievementsToArray(achievements: string): string[] {
  * WPWork を フロントエンド用の形式に変換
  */
 export function transformWork(work: WPWork) {
+  // タグを取得（work_tag は ID の配列なので、別途取得が必要）
+  // ここでは簡易的に role からタグを生成するか、空配列を返す
+  const tags: string[] = [];
+  
+  // role からタグを抽出（例: "Music produce / Music Creation" → ["#Music produce", "#Music Creation"]）
+  if (work.work_meta.role) {
+    const roleParts = work.work_meta.role.split(/[,\/]/).map(r => r.trim()).filter(r => r);
+    tags.push(...roleParts.map(r => `#${r}`));
+  }
+
   return {
     id: String(work.id),
     slug: work.slug,
@@ -268,7 +278,7 @@ export function transformWork(work: WPWork) {
     audioUrl: work.work_meta.audio_url || null,
     galleryImages: work.work_meta.gallery_images || [],
     layoutOrder: work.work_meta.layout_order || ['video', 'content', 'gallery', 'audio'],
-    tags: [], // タグ名は別途取得が必要
+    tags,
   };
 }
 
