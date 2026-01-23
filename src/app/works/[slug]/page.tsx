@@ -84,7 +84,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px]">
+      <section className="relative h-[60vh] min-h-[233px]">
         <Image
           src={work.heroImage}
           alt={work.title}

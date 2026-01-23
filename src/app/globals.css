@@ -126,7 +126,7 @@ code, pre, .font-mono {
 /* Squish background images when menu is open */
 @media (min-width: 768px) {
   body.menu-open .squish-on-menu {
-    transform: scaleX(calc((100vw - 400px) / 100vw));
+    transform: scaleX(calc((100vw - 233px) / 100vw));
     transform-origin: left;
   }
 }
@@ -146,12 +146,12 @@ code, pre, .font-mono {
 
 @media (min-width: 768px) {
   body.menu-open .hero-video-container {
-    width: calc(100vw - 400px);
+    width: calc(100vw - 233px);
   }
 
   body.menu-open .hero-video-iframe {
-    width: max(calc(100vw - 400px), 177.78vh);
-    height: max(100vh, calc((100vw - 400px) * 0.5625));
+    width: max(calc(100vw - 233px), 177.78vh);
+    height: max(100vh, calc((100vw - 233px) * 0.5625));
   }
 }
 
@@ -168,7 +168,7 @@ code, pre, .font-mono {
 
 @media (min-width: 768px) {
   .menu-overlay {
-    left: calc(100vw - 400px);
+    left: calc(100vw - 233px);
     right: auto;
   }
 }

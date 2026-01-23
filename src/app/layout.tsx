@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, DM_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { MenuProvider } from "@/components/MenuContext";
+import { SoundProvider } from "@/components/SoundContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PageWrapper } from "@/components/PageWrapper";
@@ -41,14 +42,16 @@ export default function RootLayout({
     <html lang="ja">
       <body className={`${dmSans.variable} ${dmMono.variable} ${notoSansJP.variable} antialiased bg-white`}>
         <MenuProvider>
-          {/* Side Menu */}
-          <Header />
+          <SoundProvider>
+            {/* Side Menu */}
+            <Header />
 
-          {/* Main Content - Shrinks when menu opens */}
-          <PageWrapper>
-            <main>{children}</main>
-            <Footer />
-          </PageWrapper>
+            {/* Main Content - Shrinks when menu opens */}
+            <PageWrapper>
+              <main>{children}</main>
+              <Footer />
+            </PageWrapper>
+          </SoundProvider>
         </MenuProvider>
       </body>
     </html>
