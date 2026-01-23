@@ -55,6 +55,7 @@ export interface WPMember {
     name_en: string;
     role: string;
     achievements: string;
+    mobile_image_url: string | null;
   };
 }
 
@@ -277,17 +278,34 @@ export function transformRelease(release: WPRelease) {
 }
 
 /**
+ * HTML コンテンツを段落配列に変換
+ */
+export function parseBiographyToArray(html: string): string[] {
+  if (!html) return [];
+  // <p>タグで分割し、空の段落を除去
+  const paragraphs = html
+    .split(/<\/?p[^>]*>/)
+    .map(p => stripHtml(p).trim())
+    .filter(p => p !== '');
+  return paragraphs.length > 0 ? paragraphs : [stripHtml(html)];
+}
+
+/**
  * WPMember を フロントエンド用の形式に変換
  */
 export function transformMember(member: WPMember) {
+  const nameJa = stripHtml(member.title.rendered);
+  const nameEn = member.member_meta.name_en || '';
+
   return {
     id: String(member.id),
     slug: member.slug,
-    image: member.featured_image_url || '/images/placeholder.jpg',
-    nameJa: stripHtml(member.title.rendered),
-    nameEn: member.member_meta.name_en || '',
-    role: member.member_meta.role || '',
-    bio: stripHtml(member.content.rendered),
+    imageSrc: member.featured_image_url || '/images/placeholder.jpg',
+    imageSrcMobile: member.member_meta.mobile_image_url || undefined,
+    imageAlt: nameJa,
+    name: nameEn ? `${nameJa} / ${nameEn}` : nameJa,
+    title: member.member_meta.role || '',
+    biography: parseBiographyToArray(member.content.rendered),
     achievements: parseAchievementsToArray(member.member_meta.achievements),
   };
 }

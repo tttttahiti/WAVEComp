@@ -30,7 +30,14 @@ const sampleWorks = [
     thumbnail: "/images/works/suntory.jpg",
     client: "Suntory",
     title: "登美の丘ワイナリー",
-    tags: ["#HAL ca", "#Movie", "#Installation", "#Experience Design", "#Event Produce", "Sound Design / Sound Production"],
+    tags: [
+      "#HAL ca",
+      "#Movie",
+      "#Installation",
+      "#Experience Design",
+      "#Event Produce",
+      "Sound Design / Sound Production",
+    ],
   },
   {
     id: "4",
@@ -82,14 +89,16 @@ export default function HomePage() {
       <section className="relative h-screen overflow-hidden">
         {/* Background Video - Vimeo Streaming */}
         <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left overflow-hidden">
-          <div className="absolute inset-0 w-full h-full" style={{ height: "100%" }}>
+          <div
+            className="absolute inset-0 w-full h-full"
+            style={{ height: "100%" }}
+          >
             <iframe
               src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
               className="absolute top-0 left-0 w-full h-full"
               style={{
                 border: "none",
-                transform: "scale(1.5)",
-                transformOrigin: "center center",
+                objectFit: "fill",
               }}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
@@ -123,15 +132,53 @@ export default function HomePage() {
           </div>
 
           <div className="grid-6 justify-end">
-            {sampleWorks.map((work) => (
-              <div key={work.id} className="col-2">
-                <WorkCard
-                  {...work}
-                  onImageLoad={(height) => handleImageLoad(work.id, height)}
-                  imageHeight={minHeight}
-                />
-              </div>
-            ))}
+            {Array.from({ length: Math.ceil(sampleWorks.length / 3) }, (_, groupIndex) => {
+              const startIndex = groupIndex * 3;
+              const groupWorks = sampleWorks.slice(startIndex, startIndex + 3);
+              
+              return [
+                // 上部ボーダー
+                <div key={`border-top-${groupIndex}`} className="col-6">
+                  <Image
+                    src="/svg/border.svg"
+                    alt="3つのカードの上部のボーダー"
+                    width={800}
+                    height={10}
+                    className="w-full"
+                  />
+                </div>,
+                // 画像3つ
+                ...groupWorks.map((work) => (
+                  <div key={`image-${work.id}`} className="col-2">
+                    <WorkCard
+                      {...work}
+                      onImageLoad={(height) => handleImageLoad(work.id, height)}
+                      imageHeight={minHeight}
+                      imageOnly
+                    />
+                  </div>
+                )),
+                // 中間ボーダー
+                <div key={`border-middle-${groupIndex}`} className="col-6">
+                  <Image
+                    src="/svg/border.svg"
+                    alt="画像と文章の間のボーダー"
+                    width={800}
+                    height={10}
+                    className="w-full"
+                  />
+                </div>,
+                // テキスト3つ
+                ...groupWorks.map((work) => (
+                  <div key={`text-${work.id}`} className={`col-2 ${groupIndex === Math.ceil(sampleWorks.length / 3) - 1 ? 'mb-[80px]' : ''}`}>
+                    <WorkCard
+                      {...work}
+                      textOnly
+                    />
+                  </div>
+                )),
+              ];
+            }).flat()}
           </div>
 
           {/* More Works and Releases */}

@@ -13,9 +13,11 @@ interface WorkCardProps {
   tags: string[];
   onImageLoad?: (height: number) => void;
   imageHeight?: number;
+  imageOnly?: boolean;
+  textOnly?: boolean;
 }
 
-export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, imageHeight }: WorkCardProps) {
+export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, imageHeight, imageOnly = false, textOnly = false }: WorkCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasReportedRef = useRef(false);
 
@@ -53,12 +55,12 @@ export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, im
     }
   }, [onImageLoad, thumbnail]);
 
-  return (
-    <Link href={`/works/${slug}`} className="block card-hover">
-      <article className="border-t border-black/10 pt-6">
+  if (imageOnly) {
+    return (
+      <Link href={`/works/${slug}`} className="block card-hover">
         <div
           ref={containerRef}
-          className="relative bg-gray-100 mb-4 overflow-hidden flex items-center justify-center"
+          className="relative bg-white overflow-hidden flex items-center justify-center"
           style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
         >
           <Image
@@ -67,20 +69,58 @@ export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, im
             width={800}
             height={600}
             className="object-contain"
-            style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: "100%" }}
+            style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <div className="space-y-2">
-          <p className="text-xs text-gray-500">{client}</p>
-          <h3 className="font-medium text-sm leading-snug">{title}</h3>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+      </Link>
+    );
+  }
+
+  if (textOnly) {
+    return (
+      <Link href={`/works/${slug}`} className="block card-hover">
+        <div className="">
+          <p className="text-[10pt] text-black font-bold">{client}</p>
+          <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
+          <div className="flex flex-wrap justify-between gap-x-20 gap-y-[2px] text-[7pt] text-black mt-[16px]">
             {tags.map((tag, index) => (
               <span key={index}>{tag}</span>
             ))}
           </div>
         </div>
-      </article>
-    </Link>
+      </Link>
+    );
+  }
+
+  return (
+    <div className="">
+      <Link href={`/works/${slug}`} className="block card-hover">
+      <div
+        ref={containerRef}
+        className="relative bg-white mb-4 overflow-hidden flex items-center justify-center"
+        style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
+      >
+        <Image
+          src={thumbnail}
+          alt={title}
+          width={800}
+          height={600}
+          className="object-contain"
+          style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+      <div className="">
+        <p className="text-[10pt] text-black font-bold">{client}</p>
+        <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
+        <div className="flex flex-wrap justify-between gap-x-20 gap-y-[2px] text-[7pt] text-black mt-[16px]">
+          {tags.map((tag, index) => (
+            <span key={index}>{tag}</span>
+          ))}
+        </div>
+      </div>
+      </Link>
+    </div>
   );
 }

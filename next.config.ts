@@ -2,7 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "wordpress-production-4042.up.railway.app",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
   },
 };
 

@@ -5,10 +5,11 @@
 :root {
   --foreground: #000000;
   --background: #ffffff;
-  --wave-blue: #0066FF;
+  --wave-blue: #536cdb;
   --wave-purple: #8B7BE8;
   --wave-lime: #C8FF00;
   --wave-lavender: #B8C4FF;
+  --bg-wave-blue: #536cdb;
 }
 
 * {
@@ -106,7 +107,7 @@ code, pre, .font-mono {
 
 /* Button Styles */
 .btn-primary {
-  @apply bg-wave-blue text-white px-8 py-3 text-sm font-medium tracking-wider transition-all duration-200;
+  @apply bg-[#536cdb] text-white px-8 py-3 text-sm font-medium tracking-wider transition-all duration-200;
 }
 
 .btn-primary:hover {

@@ -18,6 +18,19 @@ class WAVE_Custom_Post_Types {
         add_action('rest_api_init', array($this, 'register_rest_fields'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post', array($this, 'save_meta_boxes'));
+
+        // カスタム投稿タイプでクラシックエディターを使用（メタボックス表示のため）
+        add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg_for_custom_types'), 10, 2);
+    }
+
+    /**
+     * カスタム投稿タイプでGutenbergを無効化
+     */
+    public function disable_gutenberg_for_custom_types($use_block_editor, $post_type) {
+        if (in_array($post_type, array('work', 'release', 'member'))) {
+            return false;
+        }
+        return $use_block_editor;
     }
 
     /**
@@ -84,6 +97,7 @@ class WAVE_Custom_Post_Types {
             'rest_base' => 'members',
             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
             'menu_icon' => 'dashicons-groups',
+            'show_in_menu' => true,
         ));
     }
 
@@ -172,10 +186,17 @@ class WAVE_Custom_Post_Types {
         // Member fields
         register_rest_field('member', 'member_meta', array(
             'get_callback' => function($post) {
+                $mobile_image_id = get_post_meta($post['id'], '_member_mobile_image', true);
+                $mobile_image_url = null;
+                if ($mobile_image_id) {
+                    $image = wp_get_attachment_image_src($mobile_image_id, 'full');
+                    $mobile_image_url = $image ? $image[0] : null;
+                }
                 return array(
                     'name_en' => get_post_meta($post['id'], '_member_name_en', true),
                     'role' => get_post_meta($post['id'], '_member_role', true),
                     'achievements' => get_post_meta($post['id'], '_member_achievements', true),
+                    'mobile_image_url' => $mobile_image_url,
                 );
             },
             'schema' => array(
@@ -324,6 +345,8 @@ class WAVE_Custom_Post_Types {
         $name_en = get_post_meta($post->ID, '_member_name_en', true);
         $role = get_post_meta($post->ID, '_member_role', true);
         $achievements = get_post_meta($post->ID, '_member_achievements', true);
+        $mobile_image_id = get_post_meta($post->ID, '_member_mobile_image', true);
+        $mobile_image_url = $mobile_image_id ? wp_get_attachment_image_url($mobile_image_id, 'thumbnail') : '';
         ?>
         <table class="form-table">
             <tr>
@@ -338,7 +361,51 @@ class WAVE_Custom_Post_Types {
                 <th><label for="member_achievements">Achievements (one per line)</label></th>
                 <td><textarea id="member_achievements" name="member_achievements" rows="6" class="large-text"><?php echo esc_textarea($achievements); ?></textarea></td>
             </tr>
+            <tr>
+                <th><label for="member_mobile_image">Mobile Image</label></th>
+                <td>
+                    <input type="hidden" id="member_mobile_image" name="member_mobile_image" value="<?php echo esc_attr($mobile_image_id); ?>">
+                    <div id="mobile_image_preview" style="margin-bottom: 10px;">
+                        <?php if ($mobile_image_url): ?>
+                            <img src="<?php echo esc_url($mobile_image_url); ?>" style="max-width: 150px; height: auto;">
+                        <?php endif; ?>
+                    </div>
+                    <button type="button" class="button" id="upload_mobile_image_button">Select Image</button>
+                    <button type="button" class="button" id="remove_mobile_image_button" <?php echo $mobile_image_id ? '' : 'style="display:none;"'; ?>>Remove</button>
+                    <p class="description">モバイル表示用の画像（オプション）。指定しない場合はアイキャッチ画像が使用されます。</p>
+                </td>
+            </tr>
         </table>
+        <script>
+        jQuery(document).ready(function($) {
+            var mediaUploader;
+            $('#upload_mobile_image_button').click(function(e) {
+                e.preventDefault();
+                if (mediaUploader) {
+                    mediaUploader.open();
+                    return;
+                }
+                mediaUploader = wp.media({
+                    title: 'Select Mobile Image',
+                    button: { text: 'Use this image' },
+                    multiple: false
+                });
+                mediaUploader.on('select', function() {
+                    var attachment = mediaUploader.state().get('selection').first().toJSON();
+                    $('#member_mobile_image').val(attachment.id);
+                    $('#mobile_image_preview').html('<img src="' + attachment.sizes.thumbnail.url + '" style="max-width: 150px; height: auto;">');
+                    $('#remove_mobile_image_button').show();
+                });
+                mediaUploader.open();
+            });
+            $('#remove_mobile_image_button').click(function(e) {
+                e.preventDefault();
+                $('#member_mobile_image').val('');
+                $('#mobile_image_preview').html('');
+                $(this).hide();
+            });
+        });
+        </script>
         <?php
     }
 
@@ -369,7 +436,7 @@ class WAVE_Custom_Post_Types {
 
         // Member meta
         if (isset($_POST['wave_member_meta_nonce']) && wp_verify_nonce($_POST['wave_member_meta_nonce'], 'wave_member_meta')) {
-            $fields = array('member_name_en', 'member_role', 'member_achievements');
+            $fields = array('member_name_en', 'member_role', 'member_achievements', 'member_mobile_image');
             foreach ($fields as $field) {
                 if (isset($_POST[$field])) {
                     $value = $field === 'member_achievements' ? sanitize_textarea_field($_POST[$field]) : sanitize_text_field($_POST[$field]);
