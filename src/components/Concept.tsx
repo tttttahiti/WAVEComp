@@ -6,7 +6,7 @@ interface ConceptProps {
 export function Concept({ showTitle = true, className = "" }: ConceptProps) {
   return (
     <section className={`py-20 md:py-32 px-6 md:px-16 ${className}`}>
-      <div className="max-w-7xl mx-auto grid-6 overflow-visible">
+      <div className="grid-6 overflow-visible">
         {showTitle && (
           <h2 className="heading-section col-1">CONCEPT</h2>
         )}

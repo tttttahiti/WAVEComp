@@ -3,37 +3,37 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-[#E5E5E5] py-12 px-6 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+    <footer className="bg-[#E5E5E5] py-12 px-6 md:px-16 h-[322px]">
+      <div className="">
+        <div className="grid-6">
           {/* Logo */}
           <div>
             <Link href="/">
               <Image
                 src="/svg/logo-wave.svg"
                 alt="WA/VE"
-                width={100}
-                height={28}
-                className="w-[100px] h-auto"
+                width={120}
+                height={34}
+                className="w-auto h-[34px]"
               />
             </Link>
           </div>
 
           {/* Navigation */}
           <div className="space-y-3">
-            <Link href="/about" className="block text-sm text-black hover:text-wave-blue transition-colors">
+            <Link href="/about" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
               ABOUT
             </Link>
-            <Link href="/hal-ca" className="block text-sm text-black hover:text-wave-blue transition-colors">
+            <Link href="/hal-ca" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
               HAL CA
             </Link>
-            <Link href="/releases" className="block text-sm text-black hover:text-wave-blue transition-colors">
+            <Link href="/releases" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
               RELEASE
             </Link>
-            <Link href="/works" className="block text-sm text-black hover:text-wave-blue transition-colors">
+            <Link href="/works" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
               WORKS
             </Link>
-            <Link href="/contact" className="block text-sm text-black hover:text-wave-blue transition-colors">
+            <Link href="/contact" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
               CONTACT
             </Link>
           </div>
@@ -44,7 +44,7 @@ export function Footer() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-black hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
             >
               INSTAGRAM
             </a>
@@ -52,7 +52,7 @@ export function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-black hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
             >
               FACEBOOK
             </a>
@@ -60,7 +60,7 @@ export function Footer() {
               href="https://music.apple.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-black hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -68,7 +68,7 @@ export function Footer() {
               href="https://spotify.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-black hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
             >
               SPOTIFY
             </a>
@@ -76,22 +76,34 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="text-sm text-black font-medium mb-2">CONTACT:</p>
+            <p className="text-[12pt] text-black font-en font-bold mb-2">CONTACT:</p>
             <a
               href="mailto:info@wa-ve.jp"
-              className="text-sm text-wave-blue hover:underline"
+              className="text-[12pt] text-wave-blue font-en font-bold hover:underline"
             >
               info@wa-ve.jp
             </a>
           </div>
-        </div>
 
-        {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-black/20 text-center md:text-right">
-          <p className="text-xs text-black">
-            © WA/VE 2025, ALL RIGHT RESERVED.
-          </p>
-        </div>
+          {/* Grid Blank */}
+          <div className="col-1"></div>
+
+          {/* Copyright */}
+          <div className="col-1">
+            <div className="flex flex-row justify-between">
+              <p className="text-[7pt] text-black font-en">©</p>
+              <p className="text-[7pt] text-black font-en">WA/VE</p>
+              <p className="text-[7pt] text-black font-en">2025.</p>
+            </div>
+            <div className="flex flex-row justify-between">
+              <p className="text-[7pt] text-black font-en">ALL</p>
+              <p className="text-[7pt] text-black font-en">RIGHT</p>
+              <p className="text-[7pt] text-black font-en">RESERVED.</p>
+            </div>
+          </div>
+
+        </div>        
+
       </div>
     </footer>
   );

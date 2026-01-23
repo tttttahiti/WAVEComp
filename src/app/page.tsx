@@ -110,7 +110,7 @@ export default function HomePage() {
 
       {/* Selected Works Section */}
       <section className="py-24 px-6 md:px-16 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div className="">
           <div className="grid-6 mb-12">
             <h2 className="heading-section col-3">FEATURED</h2>
             <h2 className="heading-section col-3 text-right">WORKS</h2>
