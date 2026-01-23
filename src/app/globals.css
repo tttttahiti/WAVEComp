@@ -83,18 +83,18 @@ code, pre, .font-mono {
 .gradient-bg {
   background:
     linear-gradient(180deg,
-      rgba(0, 102, 255, 0.9) 0%,
+      rgba(83, 108, 219, 0.9) 0%,
       rgba(139, 123, 232, 0.7) 30%,
       rgba(184, 196, 255, 0.8) 50%,
       rgba(200, 255, 0, 0.6) 70%,
       rgba(200, 255, 0, 0.8) 100%
     ),
     linear-gradient(90deg,
-      #0066ff 0%,
+      #536cdb 0%,
       #8B7BE8 25%,
       #B8C4FF 50%,
       #C8FF00 75%,
-      #0066ff 100%
+      #536cdb 100%
     );
   background-size: 100% 100%, 200% 100%;
 }

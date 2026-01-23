@@ -33,7 +33,7 @@ export function Header() {
         </button>
 
         {/* Menu Content - APPLE MUSIC centered vertically */}
-        <div className="h-full flex flex-col justify-center px-6 md:px-16">
+        <div className="h-full flex flex-col justify-center px-6 md:px-16 whitespace-nowrap">
           {/* Main Navigation */}
           <nav className="space-y-4">
             <Link
@@ -82,7 +82,7 @@ export function Header() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -90,7 +90,7 @@ export function Header() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -98,7 +98,7 @@ export function Header() {
               href="https://music.apple.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -106,7 +106,7 @@ export function Header() {
               href="https://spotify.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
