@@ -6,18 +6,19 @@ interface ConceptProps {
 export function Concept({ showTitle = true, className = "" }: ConceptProps) {
   return (
     <section className={`py-20 md:py-32 px-6 md:px-16 ${className}`}>
-      <div className="max-w-7xl mx-auto grid-6">
+      <div className="max-w-7xl mx-auto grid-6 overflow-visible">
         {showTitle && (
-          <h2 className="text-2xl md:text-3xl font-bold col-1">CONCEPT</h2>
+          <h2 className="heading-section col-1">CONCEPT</h2>
         )}
 
         {/* 縦書きテキスト */}
-        <div className={`flex justify-end overflow-x-auto ${showTitle ? "col-start-2 col-5" : "col-6"}`}>
+        <div className={`flex justify-end overflow-visible ${showTitle ? "col-start-5 col-2" : "col-6"}`}>
           <div
-            className="writing-vertical-rl text-base md:text-lg leading-[2.5] h-[400px] md:h-[450px]"
+            className="writing-vertical-rl font-jp font-medium leading-[2.5]"
             style={{
               writingMode: "vertical-rl",
               textOrientation: "mixed",
+              fontSize: "18pt",
             }}
           >
             <p>音のある時間を豊かに、</p>
@@ -28,8 +29,8 @@ export function Concept({ showTitle = true, className = "" }: ConceptProps) {
             <p>私たちは、</p>
             <p>「目的地」だけを語りません。</p>
             <p className="w-8"></p>
-            <p>迷い、</p>
-            <p>寄り道し、</p>
+            <p className="w-8"></p>
+            <p>迷い、寄り道し、</p>
             <p>波に揺られながら進むプロセスを</p>
             <p>創造の本質だと考え、</p>
             <p>心に響く音や体験を</p>

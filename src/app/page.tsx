@@ -79,7 +79,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center overflow-hidden">
+      <section className="relative h-screen overflow-hidden">
         {/* Background */}
         <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left">
           <Image
@@ -91,15 +91,17 @@ export default function HomePage() {
           />
         </div>
         {/* Logo */}
-        <div className="relative z-10 px-6 md:px-16">
-          <Image
-            src="/svg/logo-wave.svg"
-            alt="WA/VE"
-            width={278}
-            height={79}
-            className="w-[200px] md:w-[278px] h-auto"
-            priority
-          />
+        <div className="relative h-full px-6 md:px-16 grid-6 items-center">
+          <div className="col-6 flex justify-end items-end z-10">
+            <Image
+              src="/svg/logo-wave.svg"
+              alt="WA/VE"
+              width={278}
+              height={79}
+              className="w-[200px] md:w-[278px] h-auto"
+              priority
+            />
+          </div>
         </div>
       </section>
 
@@ -110,11 +112,11 @@ export default function HomePage() {
       <section className="py-24 px-6 md:px-16 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid-6 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold col-3">SELECTED</h2>
-            <h2 className="text-3xl md:text-4xl font-bold col-3 text-right">WORKS</h2>
+            <h2 className="heading-section col-3">FEATURED</h2>
+            <h2 className="heading-section col-3 text-right">WORKS</h2>
           </div>
 
-          <div className="grid-6">
+          <div className="grid-6 justify-end">
             {sampleWorks.map((work) => (
               <div key={work.id} className="col-2">
                 <WorkCard

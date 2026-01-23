@@ -71,6 +71,13 @@ code, pre, .font-mono {
   font-family: var(--font-noto-sans-jp), sans-serif;
 }
 
+/* Section heading style - DM Sans Bold, 30pt */
+.heading-section {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-weight: 700;
+  font-size: 30pt;
+}
+
 /* Gradient Background - matching PDF design */
 .gradient-bg {
   background:
@@ -198,7 +205,7 @@ main {
 /* 6-column grid system */
 .grid-6 {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -208,13 +215,13 @@ main {
   }
 }
 
-/* Grid column spans */
-.col-1 { grid-column: span 1; }
-.col-2 { grid-column: span 2; }
-.col-3 { grid-column: span 3; }
-.col-4 { grid-column: span 4; }
-.col-5 { grid-column: span 5; }
-.col-6 { grid-column: span 6; }
+/* Grid column spans - fixed width, content can overflow */
+.col-1 { grid-column: span 1; min-width: 0; }
+.col-2 { grid-column: span 2; min-width: 0; }
+.col-3 { grid-column: span 3; min-width: 0; }
+.col-4 { grid-column: span 4; min-width: 0; }
+.col-5 { grid-column: span 5; min-width: 0; }
+.col-6 { grid-column: span 6; min-width: 0; }
 
 /* Grid column start positions */
 .col-start-1 { grid-column-start: 1; }
