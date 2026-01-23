@@ -7,6 +7,14 @@
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'http://localhost:8080/wp-json/wp/v2';
 
 // Types
+export interface WPGalleryImage {
+  id: number;
+  url: string;
+  width: number;
+  height: number;
+  thumbnail: string;
+}
+
 export interface WPWork {
   id: number;
   slug: string;
@@ -19,10 +27,11 @@ export interface WPWork {
     date: string;
     role: string;
     url: string;
-    video_url: string;
+    video_urls: string[];
     credits: string;
-    gallery: string;
-    listen_url: string;
+    audio_url: string | null;
+    gallery_images: WPGalleryImage[];
+    layout_order: string[];
   };
   work_tag: number[];
   work_category: number[];
@@ -56,6 +65,7 @@ export interface WPMember {
     role: string;
     achievements: string;
     mobile_image_url: string | null;
+    display_order: number;
   };
 }
 
@@ -159,7 +169,8 @@ export async function getMembers(params?: {
   const url = `${WORDPRESS_API_URL}/members?${searchParams.toString()}`;
 
   const res = await fetch(url, {
-    next: { revalidate: 60 },
+    next: { revalidate: 0 }, // キャッシュ無効化（デバッグ用）
+    cache: 'no-store',
   });
 
   if (!res.ok) {
@@ -253,8 +264,10 @@ export function transformWork(work: WPWork) {
     date: work.work_meta.date || '',
     role: work.work_meta.role || '',
     url: work.work_meta.url || '',
-    videoUrl: work.work_meta.video_url || '',
-    listenUrl: work.work_meta.listen_url || '',
+    videoUrls: work.work_meta.video_urls || [],
+    audioUrl: work.work_meta.audio_url || null,
+    galleryImages: work.work_meta.gallery_images || [],
+    layoutOrder: work.work_meta.layout_order || ['video', 'content', 'gallery', 'audio'],
     tags: [], // タグ名は別途取得が必要
   };
 }
@@ -307,5 +320,6 @@ export function transformMember(member: WPMember) {
     title: member.member_meta.role || '',
     biography: parseBiographyToArray(member.content.rendered),
     achievements: parseAchievementsToArray(member.member_meta.achievements),
+    displayOrder: member.member_meta.display_order || 99,
   };
 }

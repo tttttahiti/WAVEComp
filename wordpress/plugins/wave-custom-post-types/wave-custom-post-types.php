@@ -18,9 +18,20 @@ class WAVE_Custom_Post_Types {
         add_action('rest_api_init', array($this, 'register_rest_fields'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post', array($this, 'save_meta_boxes'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 
         // カスタム投稿タイプでクラシックエディターを使用（メタボックス表示のため）
         add_filter('use_block_editor_for_post_type', array($this, 'disable_gutenberg_for_custom_types'), 10, 2);
+    }
+
+    /**
+     * Enqueue admin scripts
+     */
+    public function enqueue_admin_scripts($hook) {
+        global $post_type;
+        if (($hook === 'post.php' || $hook === 'post-new.php') && $post_type === 'work') {
+            wp_enqueue_script('jquery-ui-sortable');
+        }
     }
 
     /**
@@ -151,15 +162,51 @@ class WAVE_Custom_Post_Types {
         // Work fields
         register_rest_field('work', 'work_meta', array(
             'get_callback' => function($post) {
+                // Audio file
+                $audio_id = get_post_meta($post['id'], '_work_audio_file', true);
+                $audio_url = null;
+                if ($audio_id) {
+                    $audio_url = wp_get_attachment_url($audio_id);
+                }
+
+                // Video URLs (multiple, newline separated)
+                $video_urls_raw = get_post_meta($post['id'], '_work_video_urls', true);
+                $video_urls = array_filter(array_map('trim', explode("\n", $video_urls_raw)));
+
+                // Gallery images (multiple IDs, comma separated)
+                $gallery_ids_raw = get_post_meta($post['id'], '_work_gallery_images', true);
+                $gallery_images = array();
+                if ($gallery_ids_raw) {
+                    $ids = array_filter(array_map('intval', explode(',', $gallery_ids_raw)));
+                    foreach ($ids as $id) {
+                        $image = wp_get_attachment_image_src($id, 'full');
+                        $thumb = wp_get_attachment_image_src($id, 'medium');
+                        if ($image) {
+                            $gallery_images[] = array(
+                                'id' => $id,
+                                'url' => $image[0],
+                                'width' => $image[1],
+                                'height' => $image[2],
+                                'thumbnail' => $thumb ? $thumb[0] : $image[0],
+                            );
+                        }
+                    }
+                }
+
+                // Layout order (default: video, content, gallery, audio)
+                $layout_order_raw = get_post_meta($post['id'], '_work_layout_order', true);
+                $layout_order = $layout_order_raw ? array_map('trim', explode(',', $layout_order_raw)) : array('video', 'content', 'gallery', 'audio');
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
                     'role' => get_post_meta($post['id'], '_work_role', true),
                     'url' => get_post_meta($post['id'], '_work_url', true),
-                    'video_url' => get_post_meta($post['id'], '_work_video_url', true),
+                    'video_urls' => $video_urls,
                     'credits' => get_post_meta($post['id'], '_work_credits', true),
-                    'gallery' => get_post_meta($post['id'], '_work_gallery', true),
-                    'listen_url' => get_post_meta($post['id'], '_work_listen_url', true),
+                    'audio_url' => $audio_url,
+                    'gallery_images' => $gallery_images,
+                    'layout_order' => $layout_order,
                 );
             },
             'schema' => array(
@@ -192,11 +239,13 @@ class WAVE_Custom_Post_Types {
                     $image = wp_get_attachment_image_src($mobile_image_id, 'full');
                     $mobile_image_url = $image ? $image[0] : null;
                 }
+                $display_order = get_post_meta($post['id'], '_member_display_order', true);
                 return array(
                     'name_en' => get_post_meta($post['id'], '_member_name_en', true),
                     'role' => get_post_meta($post['id'], '_member_role', true),
                     'achievements' => get_post_meta($post['id'], '_member_achievements', true),
                     'mobile_image_url' => $mobile_image_url,
+                    'display_order' => $display_order ? intval($display_order) : 99,
                 );
             },
             'schema' => array(
@@ -267,9 +316,27 @@ class WAVE_Custom_Post_Types {
         $date = get_post_meta($post->ID, '_work_date', true);
         $role = get_post_meta($post->ID, '_work_role', true);
         $url = get_post_meta($post->ID, '_work_url', true);
-        $video_url = get_post_meta($post->ID, '_work_video_url', true);
-        $listen_url = get_post_meta($post->ID, '_work_listen_url', true);
+        $video_urls = get_post_meta($post->ID, '_work_video_urls', true);
+        $audio_file_id = get_post_meta($post->ID, '_work_audio_file', true);
+        $audio_file_url = $audio_file_id ? wp_get_attachment_url($audio_file_id) : '';
+        $gallery_ids = get_post_meta($post->ID, '_work_gallery_images', true);
+        $layout_order = get_post_meta($post->ID, '_work_layout_order', true);
+        if (!$layout_order) {
+            $layout_order = 'video,content,gallery,audio';
+        }
         ?>
+        <style>
+            .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+            .gallery-preview img { max-width: 100px; height: auto; border: 1px solid #ddd; }
+            .gallery-item { position: relative; }
+            .gallery-item .remove-image { position: absolute; top: -5px; right: -5px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; line-height: 1; }
+            .layout-order-list { max-width: 300px; }
+            .layout-item { background: #f0f0f1; border: 1px solid #c3c4c7; padding: 10px 12px; margin-bottom: 4px; cursor: move; display: flex; align-items: center; gap: 8px; }
+            .layout-item:hover { background: #e0e0e0; }
+            .layout-item .dashicons { color: #787c82; }
+            .layout-item.ui-sortable-helper { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+            .layout-item.ui-sortable-placeholder { visibility: visible !important; background: #ddd; border: 1px dashed #999; }
+        </style>
         <table class="form-table">
             <tr>
                 <th><label for="work_client">Client</label></th>
@@ -288,14 +355,151 @@ class WAVE_Custom_Post_Types {
                 <td><input type="url" id="work_url" name="work_url" value="<?php echo esc_attr($url); ?>" class="regular-text"></td>
             </tr>
             <tr>
-                <th><label for="work_video_url">Video URL</label></th>
-                <td><input type="url" id="work_video_url" name="work_video_url" value="<?php echo esc_attr($video_url); ?>" class="regular-text"></td>
+                <th><label for="work_video_urls">Video URLs</label></th>
+                <td>
+                    <textarea id="work_video_urls" name="work_video_urls" rows="4" class="large-text"><?php echo esc_textarea($video_urls); ?></textarea>
+                    <p class="description">1行に1つのURL（YouTube, Vimeo等）</p>
+                </td>
             </tr>
             <tr>
-                <th><label for="work_listen_url">Listen URL</label></th>
-                <td><input type="url" id="work_listen_url" name="work_listen_url" value="<?php echo esc_attr($listen_url); ?>" class="regular-text"></td>
+                <th><label for="work_audio_file">Audio File</label></th>
+                <td>
+                    <input type="hidden" id="work_audio_file" name="work_audio_file" value="<?php echo esc_attr($audio_file_id); ?>">
+                    <div id="audio_preview" style="margin-bottom: 10px;">
+                        <?php if ($audio_file_url): ?>
+                            <audio controls src="<?php echo esc_url($audio_file_url); ?>" style="max-width: 300px;"></audio>
+                        <?php endif; ?>
+                    </div>
+                    <button type="button" class="button" id="upload_audio_button">Select Audio</button>
+                    <button type="button" class="button" id="remove_audio_button" <?php echo $audio_file_id ? '' : 'style="display:none;"'; ?>>Remove</button>
+                    <p class="description">音声ファイル（MP3, WAV等）をアップロード</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="work_gallery_images">Gallery Images</label></th>
+                <td>
+                    <input type="hidden" id="work_gallery_images" name="work_gallery_images" value="<?php echo esc_attr($gallery_ids); ?>">
+                    <div id="gallery_preview" class="gallery-preview">
+                        <?php
+                        if ($gallery_ids) {
+                            $ids = array_filter(array_map('intval', explode(',', $gallery_ids)));
+                            foreach ($ids as $id) {
+                                $thumb = wp_get_attachment_image_url($id, 'thumbnail');
+                                if ($thumb) {
+                                    echo '<div class="gallery-item" data-id="' . $id . '"><img src="' . esc_url($thumb) . '"><button type="button" class="remove-image">&times;</button></div>';
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                    <button type="button" class="button" id="add_gallery_images_button">Add Images</button>
+                    <p class="description">ギャラリーに表示する画像を選択（複数選択可）</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="work_layout_order">要素の表示順序</label></th>
+                <td>
+                    <input type="hidden" id="work_layout_order" name="work_layout_order" value="<?php echo esc_attr($layout_order); ?>">
+                    <div id="layout_order_sortable" class="layout-order-list">
+                        <?php
+                        $order_items = explode(',', $layout_order);
+                        $labels = array(
+                            'video' => 'Video',
+                            'content' => 'Content (本文)',
+                            'gallery' => 'Gallery',
+                            'audio' => 'Audio',
+                        );
+                        foreach ($order_items as $item) {
+                            $item = trim($item);
+                            if (isset($labels[$item])) {
+                                echo '<div class="layout-item" data-value="' . esc_attr($item) . '"><span class="dashicons dashicons-menu"></span> ' . esc_html($labels[$item]) . '</div>';
+                            }
+                        }
+                        ?>
+                    </div>
+                    <p class="description">ドラッグ＆ドロップで表示順序を変更できます</p>
+                </td>
             </tr>
         </table>
+        <script>
+        jQuery(document).ready(function($) {
+            // Audio upload
+            var audioUploader;
+            $('#upload_audio_button').click(function(e) {
+                e.preventDefault();
+                if (audioUploader) { audioUploader.open(); return; }
+                audioUploader = wp.media({
+                    title: 'Select Audio File',
+                    button: { text: 'Use this audio' },
+                    library: { type: 'audio' },
+                    multiple: false
+                });
+                audioUploader.on('select', function() {
+                    var attachment = audioUploader.state().get('selection').first().toJSON();
+                    $('#work_audio_file').val(attachment.id);
+                    $('#audio_preview').html('<audio controls src="' + attachment.url + '" style="max-width: 300px;"></audio>');
+                    $('#remove_audio_button').show();
+                });
+                audioUploader.open();
+            });
+            $('#remove_audio_button').click(function(e) {
+                e.preventDefault();
+                $('#work_audio_file').val('');
+                $('#audio_preview').html('');
+                $(this).hide();
+            });
+
+            // Gallery images
+            var galleryUploader;
+            $('#add_gallery_images_button').click(function(e) {
+                e.preventDefault();
+                if (galleryUploader) { galleryUploader.open(); return; }
+                galleryUploader = wp.media({
+                    title: 'Select Gallery Images',
+                    button: { text: 'Add to gallery' },
+                    library: { type: 'image' },
+                    multiple: true
+                });
+                galleryUploader.on('select', function() {
+                    var attachments = galleryUploader.state().get('selection').toJSON();
+                    var currentIds = $('#work_gallery_images').val() ? $('#work_gallery_images').val().split(',') : [];
+                    attachments.forEach(function(attachment) {
+                        if (currentIds.indexOf(String(attachment.id)) === -1) {
+                            currentIds.push(attachment.id);
+                            var thumb = attachment.sizes.thumbnail ? attachment.sizes.thumbnail.url : attachment.url;
+                            $('#gallery_preview').append('<div class="gallery-item" data-id="' + attachment.id + '"><img src="' + thumb + '"><button type="button" class="remove-image">&times;</button></div>');
+                        }
+                    });
+                    $('#work_gallery_images').val(currentIds.join(','));
+                });
+                galleryUploader.open();
+            });
+
+            // Remove gallery image
+            $(document).on('click', '.gallery-item .remove-image', function(e) {
+                e.preventDefault();
+                var $item = $(this).closest('.gallery-item');
+                var removeId = String($item.data('id'));
+                var currentIds = $('#work_gallery_images').val().split(',').filter(function(id) {
+                    return id !== removeId;
+                });
+                $('#work_gallery_images').val(currentIds.join(','));
+                $item.remove();
+            });
+
+            // Layout order sortable
+            $('#layout_order_sortable').sortable({
+                placeholder: 'ui-sortable-placeholder',
+                update: function(event, ui) {
+                    var order = [];
+                    $('#layout_order_sortable .layout-item').each(function() {
+                        order.push($(this).data('value'));
+                    });
+                    $('#work_layout_order').val(order.join(','));
+                }
+            });
+        });
+        </script>
         <?php
     }
 
@@ -345,10 +549,18 @@ class WAVE_Custom_Post_Types {
         $name_en = get_post_meta($post->ID, '_member_name_en', true);
         $role = get_post_meta($post->ID, '_member_role', true);
         $achievements = get_post_meta($post->ID, '_member_achievements', true);
+        $display_order = get_post_meta($post->ID, '_member_display_order', true);
         $mobile_image_id = get_post_meta($post->ID, '_member_mobile_image', true);
         $mobile_image_url = $mobile_image_id ? wp_get_attachment_image_url($mobile_image_id, 'thumbnail') : '';
         ?>
         <table class="form-table">
+            <tr>
+                <th><label for="member_display_order">表示順</label></th>
+                <td>
+                    <input type="number" id="member_display_order" name="member_display_order" value="<?php echo esc_attr($display_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">小さい数字が先に表示されます（例: 1, 2, 3...）</p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="member_name_en">Name (English)</label></th>
                 <td><input type="text" id="member_name_en" name="member_name_en" value="<?php echo esc_attr($name_en); ?>" class="regular-text"></td>
@@ -415,11 +627,27 @@ class WAVE_Custom_Post_Types {
     public function save_meta_boxes($post_id) {
         // Work meta
         if (isset($_POST['wave_work_meta_nonce']) && wp_verify_nonce($_POST['wave_work_meta_nonce'], 'wave_work_meta')) {
-            $fields = array('work_client', 'work_date', 'work_role', 'work_url', 'work_video_url', 'work_listen_url');
-            foreach ($fields as $field) {
+            // Text fields
+            $text_fields = array('work_client', 'work_date', 'work_role', 'work_url');
+            foreach ($text_fields as $field) {
                 if (isset($_POST[$field])) {
                     update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
                 }
+            }
+            // Textarea fields
+            if (isset($_POST['work_video_urls'])) {
+                update_post_meta($post_id, '_work_video_urls', sanitize_textarea_field($_POST['work_video_urls']));
+            }
+            // Media fields
+            if (isset($_POST['work_audio_file'])) {
+                update_post_meta($post_id, '_work_audio_file', intval($_POST['work_audio_file']));
+            }
+            if (isset($_POST['work_gallery_images'])) {
+                update_post_meta($post_id, '_work_gallery_images', sanitize_text_field($_POST['work_gallery_images']));
+            }
+            // Layout order
+            if (isset($_POST['work_layout_order'])) {
+                update_post_meta($post_id, '_work_layout_order', sanitize_text_field($_POST['work_layout_order']));
             }
         }
 
@@ -436,10 +664,16 @@ class WAVE_Custom_Post_Types {
 
         // Member meta
         if (isset($_POST['wave_member_meta_nonce']) && wp_verify_nonce($_POST['wave_member_meta_nonce'], 'wave_member_meta')) {
-            $fields = array('member_name_en', 'member_role', 'member_achievements', 'member_mobile_image');
+            $fields = array('member_name_en', 'member_role', 'member_achievements', 'member_mobile_image', 'member_display_order');
             foreach ($fields as $field) {
                 if (isset($_POST[$field])) {
-                    $value = $field === 'member_achievements' ? sanitize_textarea_field($_POST[$field]) : sanitize_text_field($_POST[$field]);
+                    if ($field === 'member_achievements') {
+                        $value = sanitize_textarea_field($_POST[$field]);
+                    } elseif ($field === 'member_display_order') {
+                        $value = intval($_POST[$field]);
+                    } else {
+                        $value = sanitize_text_field($_POST[$field]);
+                    }
                     update_post_meta($post_id, '_' . $field, $value);
                 }
             }

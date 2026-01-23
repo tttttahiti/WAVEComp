@@ -11,13 +11,16 @@ interface WorkCardProps {
   client: string;
   title: string;
   tags: string[];
+  role?: string;
   onImageLoad?: (height: number) => void;
   imageHeight?: number;
   imageOnly?: boolean;
   textOnly?: boolean;
 }
 
-export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, imageHeight, imageOnly = false, textOnly = false }: WorkCardProps) {
+export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLoad, imageHeight, imageOnly = false, textOnly = false }: WorkCardProps) {
+  // Parse role into array (split by ", " only, keep " / " intact)
+  const roleItems = role ? role.split(/\s*,\s*/).filter(r => r.trim()) : [];
   const containerRef = useRef<HTMLDivElement>(null);
   const hasReportedRef = useRef(false);
 
@@ -83,10 +86,19 @@ export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, im
         <div className="">
           <p className="text-[10pt] text-black font-bold">{client}</p>
           <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
-          <div className="flex flex-wrap justify-between gap-x-20 gap-y-[2px] text-[7pt] text-black mt-[16px]">
-            {tags.map((tag, index) => (
-              <span key={index}>{tag}</span>
-            ))}
+          <div className="text-[7pt] text-black mt-[16px] space-y-[2px]">
+            <div className="flex flex-wrap justify-between gap-x-20">
+              {tags.map((tag, index) => (
+                <span key={index}>{tag}</span>
+              ))}
+            </div>
+            {roleItems.length > 0 && (
+              <div className="flex flex-wrap justify-between gap-x-20">
+                {roleItems.map((item, index) => (
+                  <span key={index}>{item}</span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </Link>
@@ -114,10 +126,19 @@ export function WorkCard({ slug, thumbnail, client, title, tags, onImageLoad, im
       <div className="">
         <p className="text-[10pt] text-black font-bold">{client}</p>
         <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
-        <div className="flex flex-wrap justify-between gap-x-20 gap-y-[2px] text-[7pt] text-black mt-[16px]">
-          {tags.map((tag, index) => (
-            <span key={index}>{tag}</span>
-          ))}
+        <div className="text-[7pt] text-black mt-[16px] space-y-[2px]">
+          <div className="flex flex-wrap justify-between gap-x-20">
+            {tags.map((tag, index) => (
+              <span key={index}>{tag}</span>
+            ))}
+          </div>
+          {roleItems.length > 0 && (
+            <div className="flex flex-wrap justify-between gap-x-20">
+              {roleItems.map((item, index) => (
+                <span key={index}>{item}</span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       </Link>

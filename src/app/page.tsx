@@ -14,7 +14,8 @@ const sampleWorks = [
     thumbnail: "/images/works/taste-woods.jpg",
     client: "虎ノ門ヒルズ・ステーションアトリウム",
     title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation"],
+    role: "Music produce,/,Music Creation",
   },
   {
     id: "2",
@@ -22,7 +23,8 @@ const sampleWorks = [
     thumbnail: "/images/works/bmw-museum.jpg",
     client: "BMW",
     title: "The Seven Art Museum",
-    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation"],
+    role: "Music produce,/,Music Creation",
   },
   {
     id: "3",
@@ -30,14 +32,8 @@ const sampleWorks = [
     thumbnail: "/images/works/suntory.jpg",
     client: "Suntory",
     title: "登美の丘ワイナリー",
-    tags: [
-      "#HAL ca",
-      "#Movie",
-      "#Installation",
-      "#Experience Design",
-      "#Event Produce",
-      "Sound Design / Sound Production",
-    ],
+    tags: ["#HAL ca", "#Movie", "#Installation", "#Experience Design", "#Event Produce"],
+    role: "Sound Design,/,Sound Production",
   },
   {
     id: "4",
@@ -45,7 +41,8 @@ const sampleWorks = [
     thumbnail: "/images/works/afterimage.jpg",
     client: "RELEASE",
     title: "Afterimage",
-    tags: ["#HAL ca", "#Release", "Release Date: 2018.12"],
+    tags: ["#HAL ca", "#Release"],
+    role: "Release,Date: 2018.12",
   },
   {
     id: "5",
@@ -53,7 +50,8 @@ const sampleWorks = [
     thumbnail: "/images/works/matsumoto.jpg",
     client: "長野県松本市",
     title: "松本城 ~氷晶きらめく水鏡~",
-    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation"],
+    role: "Music produce,/,Music Creation",
   },
   {
     id: "6",
@@ -61,7 +59,8 @@ const sampleWorks = [
     thumbnail: "/images/works/yamaha.jpg",
     client: "YAMAHA",
     title: "I'm a HERO Program",
-    tags: ["#HAL ca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HAL ca", "#Installation"],
+    role: "Music produce,/,Music Creation",
   },
 ];
 

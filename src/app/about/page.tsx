@@ -51,7 +51,10 @@ async function getMembersData() {
   try {
     const wpMembers = await getMembers();
     if (wpMembers && wpMembers.length > 0) {
-      return wpMembers.map(transformMember);
+      // 表示順でソート
+      return wpMembers
+        .map(transformMember)
+        .sort((a, b) => (a.displayOrder || 99) - (b.displayOrder || 99));
     }
   } catch (error) {
     console.error("Failed to fetch members from WordPress:", error);

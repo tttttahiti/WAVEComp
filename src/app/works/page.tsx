@@ -11,7 +11,8 @@ const allWorks = [
     thumbnail: "/images/works/taste-woods.jpg",
     client: "虎ノ門ヒルズ・ステーションアトリウム",
     title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    tags: ["#HALca", "#Movie", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HALca", "#Movie", "#Installation"],
+    role: "Music produce / Music Creation",
   },
   {
     id: "2",
@@ -19,7 +20,8 @@ const allWorks = [
     thumbnail: "/images/works/bmw-museum.jpg",
     client: "BMW",
     title: "The Seven Art Museum",
-    tags: ["#HALca", "#Installation", "Music produce / Music Creation"],
+    tags: ["#HALca", "#Installation"],
+    role: "Music produce / Music Creation",
   },
   {
     id: "3",
@@ -27,7 +29,8 @@ const allWorks = [
     thumbnail: "/images/works/yamaha.jpg",
     client: "YAMAHA",
     title: "I'm a HERO Program",
-    tags: ["#HALca", "#Movie", "Music produce / Music Creation"],
+    tags: ["#HALca", "#Movie"],
+    role: "Music produce / Music Creation",
   },
   {
     id: "4",
@@ -35,14 +38,8 @@ const allWorks = [
     thumbnail: "/images/works/suntory.jpg",
     client: "Suntory",
     title: "登美の丘ワイナリー",
-    tags: [
-      "#HAL ca",
-      "#Movie",
-      "#Installation",
-      "#Experience Design",
-      "#Event Produce",
-      "Sound Design / Sound Production",
-    ],
+    tags: ["#HAL ca", "#Movie", "#Installation", "#Experience Design", "#Event Produce"],
+    role: "Sound Design / Sound Production",
   },
 ];
 
