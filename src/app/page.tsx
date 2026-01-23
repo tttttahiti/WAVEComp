@@ -87,23 +87,14 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        {/* Background Video - Vimeo Streaming */}
-        <div className="absolute inset-y-0 left-0 w-screen h-full squish-on-menu transition-transform duration-500 origin-left overflow-hidden">
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{ height: "100%" }}
-          >
-            <iframe
-              src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
-              className="absolute top-0 left-0 w-full h-full"
-              style={{
-                border: "none",
-                objectFit: "fill",
-              }}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+        {/* Background Video - Vimeo Streaming (Cover方式) */}
+        <div className="hero-video-container absolute inset-0 overflow-hidden">
+          <iframe
+            src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
+            className="hero-video-iframe absolute top-1/2 left-1/2 border-none pointer-events-none"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
         </div>
         {/* Logo */}
         <div className="relative h-full px-6 md:px-16 grid-6 items-center">

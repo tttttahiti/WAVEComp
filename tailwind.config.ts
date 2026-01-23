@@ -10,10 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         wave: {
-          blue: "#0066FF",
+          blue: "#536CDB", // --wave-blue
           purple: "#8B7BE8",
-          lime: "#C8FF00",
+          lime: "#C2DE6D", // --wave-lime
           lavender: "#B8C4FF",
+        },
+        bg: {
+          waveBlue: "#536CDB",
         },
       },
       fontFamily: {

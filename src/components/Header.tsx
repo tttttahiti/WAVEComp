@@ -9,16 +9,16 @@ export function Header() {
 
   return (
     <>
-      {/* Menu Overlay - Right side, 20% width */}
+      {/* Menu Overlay - Right side, fixed pixel width */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[80vw] md:w-[20vw] z-40 bg-white transition-transform duration-500 ease-out ${
+        className={`fixed top-0 right-0 bottom-0 w-full md:w-[400px] z-40 transition-transform duration-500 ease-out menu-overlay ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Close Button */}
         <button
           onClick={toggleMenu}
-          className="absolute top-6 right-6 p-2 -m-2"
+          className="absolute top-12 left-6 p-2 -m-2"
           aria-label="メニューを閉じる"
         >
           <Image
@@ -31,7 +31,7 @@ export function Header() {
         </button>
 
         {/* Menu Content - APPLE MUSIC centered vertically */}
-        <div className="h-full flex flex-col justify-center px-6 md:px-8">
+        <div className="h-full flex flex-col justify-center px-6 md:px-16">
           {/* Main Navigation */}
           <nav className="space-y-4">
             <Link

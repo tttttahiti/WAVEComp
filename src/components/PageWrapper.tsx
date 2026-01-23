@@ -92,7 +92,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       {/* Fixed Header - stays at full width */}
       <header
         className={`fixed top-0 left-0 z-50 px-6 pt-12 md:px-16 transition-[width] duration-500 ease-out ${
-          isMenuOpen ? "md:w-[80vw] w-full" : "w-full"
+          isMenuOpen ? "md:w-[calc(100vw-400px)]" : "w-full"
         }`}
       >
         <div className="grid-6 items-start">
@@ -135,7 +135,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       {/* Page Content - width shrinks when menu opens */}
       <div
         className={`min-h-screen bg-white transition-[width] duration-500 ease-out overflow-hidden ${
-          isMenuOpen ? "md:w-[80vw]" : "w-full"
+          isMenuOpen ? "md:w-[calc(100vw-400px)]" : "w-full"
         }`}
       >
         {children}
