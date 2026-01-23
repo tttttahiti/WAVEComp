@@ -21,19 +21,19 @@ export function Footer() {
 
           {/* Navigation */}
           <div className="space-y-3">
-            <Link href="/about" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
+            <Link href="/about" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               ABOUT
             </Link>
-            <Link href="/hal-ca" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
+            <Link href="/hal-ca" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               HAL CA
             </Link>
-            <Link href="/releases" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
+            <Link href="/releases" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               RELEASE
             </Link>
-            <Link href="/works" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
+            <Link href="/works" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               WORKS
             </Link>
-            <Link href="/contact" className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors">
+            <Link href="/contact" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               CONTACT
             </Link>
           </div>
@@ -44,7 +44,7 @@ export function Footer() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -52,7 +52,7 @@ export function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -60,7 +60,7 @@ export function Footer() {
               href="https://music.apple.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -68,7 +68,7 @@ export function Footer() {
               href="https://spotify.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-wave-blue transition-colors"
+              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
@@ -79,7 +79,7 @@ export function Footer() {
             <p className="text-[12pt] text-black font-en font-bold mb-2">CONTACT:</p>
             <a
               href="mailto:info@wa-ve.jp"
-              className="text-[12pt] text-wave-blue font-en font-bold hover:underline"
+              className="text-[12pt] text-wave-blue font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               info@wa-ve.jp
             </a>

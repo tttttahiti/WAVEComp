@@ -109,7 +109,7 @@ export default function HomePage() {
       <Concept />
 
       {/* Selected Works Section */}
-      <section className="py-24 px-6 md:px-16 bg-white">
+      <section className="py-[92px] px-6 md:px-16 bg-white">
         <div className="">
           <div className="grid-6 mb-12">
             <h2 className="heading-section col-3">FEATURED</h2>
@@ -128,13 +128,24 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <Link
-              href="/works"
-              className="inline-block text-wave-blue hover:underline font-medium"
-            >
-              MORE WORKS →
-            </Link>
+          {/* More Works and Releases */}
+          <div className="h-[143px] mt-[92px] mb-[52px]">
+            <div className="grid-6">
+              <Link
+                href="/works"
+                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+              >
+                MORE WORKS
+              </Link>
+            </div>
+            <div className="mt-2 grid-6">
+              <Link
+                href="/works"
+                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+              >
+                MORE RELEASE
+              </Link>
+            </div>
           </div>
         </div>
       </section>

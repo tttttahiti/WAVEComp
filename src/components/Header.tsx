@@ -37,35 +37,35 @@ export function Header() {
             <Link
               href="/about"
               onClick={closeMenu}
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               ABOUT
             </Link>
             <Link
               href="/hal-ca"
               onClick={closeMenu}
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               HAL CA
             </Link>
             <Link
               href="/releases"
               onClick={closeMenu}
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               RELEASE
             </Link>
             <Link
               href="/works"
               onClick={closeMenu}
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               WORKS
             </Link>
             <Link
               href="/contact"
               onClick={closeMenu}
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               CONTACT
             </Link>
@@ -80,7 +80,7 @@ export function Header() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -88,7 +88,7 @@ export function Header() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -96,7 +96,7 @@ export function Header() {
               href="https://music.apple.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -104,7 +104,7 @@ export function Header() {
               href="https://spotify.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-lg md:text-xl font-medium hover:text-wave-blue transition-colors"
+              className="block text-lg md:text-xl font-medium hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
