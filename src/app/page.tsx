@@ -1,197 +1,86 @@
-"use client";
+import { HomeClient, type FeaturedItem } from "./HomeClient";
+import { getWorks, getReleases, transformWork, transformRelease } from "@/lib/wordpress";
 
-import { useState, useCallback, useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { WorkCard } from "@/components/WorkCard";
-import { Concept } from "@/components/Concept";
+/**
+ * 日付文字列をDateオブジェクトに変換
+ * 対応フォーマット: "2024/12/13", "2024.12", "2024-12-13" など
+ */
+function parseDate(dateStr: string): Date | null {
+  if (!dateStr) return null;
+  // "2024/12/13" or "2024.12" or "2024-12-13"
+  const normalized = dateStr.replace(/[.\/]/g, "-");
+  const parts = normalized.split("-").map(Number);
+  if (parts.length >= 2) {
+    const [year, month, day = 1] = parts;
+    return new Date(year, month - 1, day);
+  }
+  return null;
+}
 
-// Sample works data - will be replaced with WordPress data
-const sampleWorks = [
-  {
-    id: "1",
-    slug: "taste-in-the-woods",
-    thumbnail: "/images/works/taste-woods.jpg",
-    client: "虎ノ門ヒルズ・ステーションアトリウム",
-    title: "諏訪綾子「森をあじわう TASTE in the woods」",
-    tags: ["#HAL ca", "#Installation"],
-    role: "Music produce,/,Music Creation",
-  },
-  {
-    id: "2",
-    slug: "bmw-seven-art-museum",
-    thumbnail: "/images/works/bmw-museum.jpg",
-    client: "BMW",
-    title: "The Seven Art Museum",
-    tags: ["#HAL ca", "#Installation"],
-    role: "Music produce,/,Music Creation",
-  },
-  {
-    id: "3",
-    slug: "suntory-winery",
-    thumbnail: "/images/works/suntory.jpg",
-    client: "Suntory",
-    title: "登美の丘ワイナリー",
-    tags: ["#HAL ca", "#Movie", "#Installation", "#Experience Design", "#Event Produce"],
-    role: "Sound Design,/,Sound Production",
-  },
-  {
-    id: "4",
-    slug: "afterimage",
-    thumbnail: "/images/works/afterimage.jpg",
-    client: "RELEASE",
-    title: "Afterimage",
-    tags: ["#HAL ca", "#Release"],
-    role: "Release,Date: 2018.12",
-  },
-  {
-    id: "5",
-    slug: "matsumoto-castle",
-    thumbnail: "/images/works/matsumoto.jpg",
-    client: "長野県松本市",
-    title: "松本城 ~氷晶きらめく水鏡~",
-    tags: ["#HAL ca", "#Installation"],
-    role: "Music produce,/,Music Creation",
-  },
-  {
-    id: "6",
-    slug: "yamaha-hero",
-    thumbnail: "/images/works/yamaha.jpg",
-    client: "YAMAHA",
-    title: "I'm a HERO Program",
-    tags: ["#HAL ca", "#Installation"],
-    role: "Music produce,/,Music Creation",
-  },
-];
+export default async function HomePage() {
+  let featuredItems: FeaturedItem[] = [];
 
-export default function HomePage() {
-  const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
+  try {
+    const [wpWorks, wpReleases] = await Promise.all([
+      getWorks({ per_page: 100 }),
+      getReleases({ per_page: 100 }),
+    ]);
 
-  const handleImageLoad = useCallback((id: string, height: number) => {
-    setImageHeights((prev) => {
-      if (prev[id] === height) return prev;
-      return { ...prev, [id]: height };
+    // Works を変換
+    const works: FeaturedItem[] = wpWorks.map((work) => {
+      const transformed = transformWork(work);
+      return {
+        type: "work" as const,
+        id: transformed.id,
+        slug: transformed.slug,
+        thumbnail: transformed.thumbnail,
+        client: transformed.client,
+        title: transformed.title,
+        tags: transformed.tags,
+        role: transformed.role,
+        displayOrder: transformed.displayOrder ?? 99,
+        date: transformed.date,
+      };
     });
-  }, []);
 
-  const minHeight = useMemo(() => {
-    const heights = Object.values(imageHeights);
-    if (heights.length === sampleWorks.length) {
-      return Math.min(...heights);
-    }
-    return undefined;
-  }, [imageHeights]);
+    // Releases を変換
+    const releases: FeaturedItem[] = wpReleases.map((release) => {
+      const transformed = transformRelease(release);
+      return {
+        type: "release" as const,
+        id: transformed.id,
+        slug: transformed.slug,
+        thumbnail: transformed.coverImage,
+        client: "",
+        title: transformed.title,
+        tags: transformed.tags,
+        displayOrder: transformed.displayOrder ?? 99,
+        date: transformed.releaseDate,
+      };
+    });
 
-  return (
-    <>
-      {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
-        {/* Background Video - Vimeo Streaming (Cover方式) */}
-        <div className="hero-video-container absolute inset-0 overflow-hidden">
-          <iframe
-            src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
-            className="hero-video-iframe absolute top-1/2 left-1/2 border-none pointer-events-none"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-        {/* Logo */}
-        <div className="relative h-full px-6 md:px-16 grid-6 items-center">
-          <div className="col-6 flex justify-end items-end z-10">
-            <Image
-              src="/svg/logo-wave.svg"
-              alt="WA/VE"
-              width={278}
-              height={79}
-              className="w-[200px] md:w-[278px] h-auto"
-              priority
-            />
-          </div>
-        </div>
-      </section>
+    // 統合してソート
+    featuredItems = [...works, ...releases].sort((a, b) => {
+      // 1. 表示順でソート（小さい数字が先）
+      if (a.displayOrder !== b.displayOrder) {
+        return a.displayOrder - b.displayOrder;
+      }
 
-      {/* Concept Section */}
-      <Concept />
+      // 2. 日付でソート（新しい順）
+      const dateA = parseDate(a.date);
+      const dateB = parseDate(b.date);
+      if (dateA && dateB) {
+        return dateB.getTime() - dateA.getTime();
+      }
+      if (dateA) return -1;
+      if (dateB) return 1;
 
-      {/* Selected Works Section */}
-      <section className="py-[92px] px-6 md:px-16 bg-white">
-        <div className="">
-          <div className="grid-6 mb-12">
-            <h2 className="heading-section col-3">FEATURED</h2>
-            <h2 className="heading-section col-3 text-right">WORKS</h2>
-          </div>
+      // 3. 取得順（元の順序を維持）
+      return 0;
+    });
+  } catch (error) {
+    console.error("Failed to fetch data from WordPress:", error);
+  }
 
-          <div className="grid-6 justify-end">
-            {Array.from({ length: Math.ceil(sampleWorks.length / 3) }, (_, groupIndex) => {
-              const startIndex = groupIndex * 3;
-              const groupWorks = sampleWorks.slice(startIndex, startIndex + 3);
-              
-              return [
-                // 上部ボーダー
-                <div key={`border-top-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="3つのカードの上部のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // 画像3つ
-                ...groupWorks.map((work) => (
-                  <div key={`image-${work.id}`} className="col-2">
-                    <WorkCard
-                      {...work}
-                      onImageLoad={(height) => handleImageLoad(work.id, height)}
-                      imageHeight={minHeight}
-                      imageOnly
-                    />
-                  </div>
-                )),
-                // 中間ボーダー
-                <div key={`border-middle-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="画像と文章の間のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // テキスト3つ
-                ...groupWorks.map((work) => (
-                  <div key={`text-${work.id}`} className={`col-2 ${groupIndex === Math.ceil(sampleWorks.length / 3) - 1 ? 'mb-[80px]' : ''}`}>
-                    <WorkCard
-                      {...work}
-                      textOnly
-                    />
-                  </div>
-                )),
-              ];
-            }).flat()}
-          </div>
-
-          {/* More Works and Releases */}
-          <div className="h-[143px] mt-[92px] mb-[52px]">
-            <div className="grid-6">
-              <Link
-                href="/works"
-                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
-              >
-                MORE WORKS
-              </Link>
-            </div>
-            <div className="mt-2 grid-6">
-              <Link
-                href="/works"
-                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
-              >
-                MORE RELEASE
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <HomeClient featuredItems={featuredItems} />;
 }

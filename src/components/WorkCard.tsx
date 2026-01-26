@@ -16,9 +16,11 @@ interface WorkCardProps {
   imageHeight?: number;
   imageOnly?: boolean;
   textOnly?: boolean;
+  linkHref?: string; // カスタムリンク先（指定しない場合は /works/{slug}）
 }
 
-export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLoad, imageHeight, imageOnly = false, textOnly = false }: WorkCardProps) {
+export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLoad, imageHeight, imageOnly = false, textOnly = false, linkHref }: WorkCardProps) {
+  const href = linkHref ?? `/works/${slug}`;
   // Parse role into array (split by ", " only, keep " / " intact)
   const roleItems = role ? role.split(/\s*,\s*/).filter(r => r.trim()) : [];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -60,7 +62,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   if (imageOnly) {
     return (
-      <Link href={`/works/${slug}`} className="block card-hover">
+      <Link href={href} className="block card-hover">
         <div
           ref={containerRef}
           className="relative bg-white overflow-hidden flex items-center justify-center"
@@ -82,54 +84,21 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   if (textOnly) {
     return (
-      <Link href={`/works/${slug}`} className="block card-hover">
-        <div className="">
+      <div className="">
+        <Link href={href} className="block card-hover">
           <p className="text-[10pt] text-black font-bold">{client}</p>
           <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
-          <div className="text-[7pt] text-black mt-[16px] space-y-[2px]">
-            <div className="flex flex-wrap justify-between gap-x-20">
-              {tags.map((tag, index) => (
-                <span key={index}>{tag}</span>
-              ))}
-            </div>
-            {roleItems.length > 0 && (
-              <div className="flex flex-wrap justify-between gap-x-20">
-                {roleItems.map((item, index) => (
-                  <span key={index}>{item}</span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </Link>
-    );
-  }
-
-  return (
-    <div className="">
-      <Link href={`/works/${slug}`} className="block card-hover">
-      <div
-        ref={containerRef}
-        className="relative bg-white mb-4 overflow-hidden flex items-center justify-center"
-        style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
-      >
-        <Image
-          src={thumbnail}
-          alt={title}
-          width={800}
-          height={600}
-          className="object-contain"
-          style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-      <div className="">
-        <p className="text-[10pt] text-black font-bold">{client}</p>
-        <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
+        </Link>
         <div className="text-[7pt] text-black mt-[16px] space-y-[2px]">
           <div className="flex flex-wrap justify-between gap-x-20">
             {tags.map((tag, index) => (
-              <span key={index}>{tag}</span>
+              <Link
+                key={index}
+                href={`/works?tag=${encodeURIComponent(tag)}`}
+                className="hashtag hover:text-wave-blue transition-colors"
+              >
+                {tag}
+              </Link>
             ))}
           </div>
           {roleItems.length > 0 && (
@@ -141,7 +110,52 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
           )}
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="">
+      <Link href={href} className="block card-hover">
+        <div
+          ref={containerRef}
+          className="relative bg-white mb-4 overflow-hidden flex items-center justify-center"
+          style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
+        >
+          <Image
+            src={thumbnail}
+            alt={title}
+            width={800}
+            height={600}
+            className="object-contain"
+            style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+        <div className="">
+          <p className="text-[10pt] text-black font-bold">{client}</p>
+          <h3 className="font-bold text-[14pt] leading-snug">{title}</h3>
+        </div>
       </Link>
+      <div className="text-[7pt] text-black mt-[16px] space-y-[2px]">
+        <div className="flex flex-wrap justify-between gap-x-20">
+          {tags.map((tag, index) => (
+            <Link
+              key={index}
+              href={`/works?tag=${encodeURIComponent(tag)}`}
+              className="hashtag hover:text-wave-blue transition-colors"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
+        {roleItems.length > 0 && (
+          <div className="flex flex-wrap justify-between gap-x-20">
+            {roleItems.map((item, index) => (
+              <span key={index}>{item}</span>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

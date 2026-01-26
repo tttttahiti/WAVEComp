@@ -63,6 +63,11 @@ code, pre, .font-mono {
   font-family: var(--font-dm-mono), var(--font-noto-sans-jp), monospace;
 }
 
+/* Hashtag style - DM Sans Mono */
+.hashtag {
+  font-family: var(--font-dm-mono), monospace;
+}
+
 /* Utility classes for explicit font control */
 .font-en {
   font-family: var(--font-dm-sans), sans-serif;

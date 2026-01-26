@@ -15,6 +15,17 @@ export interface WPGalleryImage {
   thumbnail: string;
 }
 
+export interface WPCredit {
+  role: string;
+  name: string;
+}
+
+export interface WPTagData {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface WPWork {
   id: number;
   slug: string;
@@ -32,9 +43,11 @@ export interface WPWork {
     audio_url: string | null;
     gallery_images: WPGalleryImage[];
     layout_order: string[];
+    display_order: number;
   };
   work_tag: number[];
   work_category: number[];
+  work_tags_data: WPTagData[];
 }
 
 export interface WPRelease {
@@ -50,8 +63,11 @@ export interface WPRelease {
     listen_url: string;
     apple_music_url: string;
     spotify_url: string;
+    display_order: number;
   };
   release_type: number[];
+  release_tag: number[];
+  release_tags_data: WPTagData[];
 }
 
 export interface WPMember {
@@ -225,13 +241,53 @@ export async function getReleaseTypes(): Promise<WPTerm[]> {
   return res.json();
 }
 
+/**
+ * Release タグを取得
+ */
+export async function getReleaseTags(): Promise<WPTerm[]> {
+  const res = await fetch(`${WORDPRESS_API_URL}/release-tags`, {
+    next: { revalidate: 300 },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch release tags: ${res.status}`);
+  }
+
+  return res.json();
+}
+
 // Utility functions
 
 /**
- * HTML タグを除去
+ * HTML タグを除去し、HTMLエンティティをデコード
  */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '');
+  // HTMLタグを除去
+  let text = html.replace(/<[^>]*>/g, '');
+  // HTMLエンティティをデコード
+  const textarea = typeof document !== 'undefined' 
+    ? document.createElement('textarea')
+    : null;
+  if (textarea) {
+    textarea.innerHTML = text;
+    text = textarea.value;
+  } else {
+    // サーバーサイドでのデコード（Node.js環境）
+    text = text
+      .replace(/&#8217;/g, "'")
+      .replace(/&#8220;/g, '"')
+      .replace(/&#8221;/g, '"')
+      .replace(/&#8211;/g, '–')
+      .replace(/&#8212;/g, '—')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'");
+  }
+  return text;
 }
 
 /**
@@ -251,18 +307,29 @@ export function parseAchievementsToArray(achievements: string): string[] {
 }
 
 /**
+ * Credits JSON文字列を配列に変換
+ */
+export function parseCredits(creditsJson: string): WPCredit[] {
+  if (!creditsJson) return [];
+  try {
+    const parsed = JSON.parse(creditsJson);
+    if (Array.isArray(parsed)) {
+      return parsed.filter(c => c.role && c.name);
+    }
+  } catch {
+    // JSON parse error
+  }
+  return [];
+}
+
+/**
  * WPWork を フロントエンド用の形式に変換
  */
 export function transformWork(work: WPWork) {
-  // タグを取得（work_tag は ID の配列なので、別途取得が必要）
-  // ここでは簡易的に role からタグを生成するか、空配列を返す
-  const tags: string[] = [];
-  
-  // role からタグを抽出（例: "Music produce / Music Creation" → ["#Music produce", "#Music Creation"]）
-  if (work.work_meta.role) {
-    const roleParts = work.work_meta.role.split(/[,\/]/).map(r => r.trim()).filter(r => r);
-    tags.push(...roleParts.map(r => `#${r}`));
-  }
+  // work_tags_data から直接タグ名を取得（#が含まれていない場合のみ追加）
+  const tags = (work.work_tags_data || []).map((tag) =>
+    tag.name.startsWith('#') ? tag.name : `#${tag.name}`
+  );
 
   return {
     id: String(work.id),
@@ -278,6 +345,8 @@ export function transformWork(work: WPWork) {
     audioUrl: work.work_meta.audio_url || null,
     galleryImages: work.work_meta.gallery_images || [],
     layoutOrder: work.work_meta.layout_order || ['video', 'content', 'gallery', 'audio'],
+    credits: parseCredits(work.work_meta.credits || ''),
+    displayOrder: work.work_meta.display_order ?? 99,
     tags,
   };
 }
@@ -286,17 +355,29 @@ export function transformWork(work: WPWork) {
  * WPRelease を フロントエンド用の形式に変換
  */
 export function transformRelease(release: WPRelease) {
+  // リリース日から年を抽出
+  const releaseDate = release.release_meta.release_date || '';
+  const year = releaseDate.split('/')[0] || '';
+
+  // release_tags_data から直接タグ名を取得（#が含まれていない場合のみ追加）
+  const tags = (release.release_tags_data || []).map((tag) =>
+    tag.name.startsWith('#') ? tag.name : `#${tag.name}`
+  );
+
   return {
     id: String(release.id),
     slug: release.slug,
     coverImage: release.featured_image_url || '/images/placeholder.jpg',
     title: stripHtml(release.title.rendered),
     description: stripHtml(release.content.rendered),
-    releaseDate: release.release_meta.release_date || '',
+    releaseDate,
+    year,
     tracks: parseTracksToArray(release.release_meta.tracks),
     listenUrl: release.release_meta.listen_url || '',
     appleMusicUrl: release.release_meta.apple_music_url || '',
     spotifyUrl: release.release_meta.spotify_url || '',
+    displayOrder: release.release_meta.display_order ?? 99,
+    tags,
   };
 }
 

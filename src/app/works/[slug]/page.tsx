@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getWorkBySlug } from "@/lib/wordpress";
+import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 
 interface WorkDetailPageProps {
   params: Promise<{
@@ -28,18 +29,23 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         }
       }
 
+      // タグを取得
+      const tags = (wpWork.work_tags_data || []).map((tag: { name: string }) =>
+        tag.name.startsWith('#') ? tag.name : `#${tag.name}`
+      );
+
       work = {
         client: wpWork.work_meta.client || '',
-        title: wpWork.title.rendered.replace(/<[^>]*>/g, ''),
+        title: stripHtml(wpWork.title.rendered),
         date: wpWork.work_meta.date || '',
-        description: wpWork.content.rendered.replace(/<[^>]*>/g, ''),
+        description: stripHtml(wpWork.content.rendered),
         role: wpWork.work_meta.role || '',
-        tags: [], // タグは別途取得が必要
+        tags,
         url: wpWork.work_meta.url || '',
         clientRole: '', // clientRole は work_meta にない場合は空文字
         heroImage: wpWork.featured_image_url || '/images/placeholder.jpg',
         galleryImages: wpWork.work_meta.gallery_images?.map((img: { url: string }) => img.url) || [],
-        videoUrl: wpWork.work_meta.video_urls?.[0] || '',
+        videoUrls: wpWork.work_meta.video_urls || [],
         credits,
         listenUrl: wpWork.work_meta.audio_url || '',
       };
@@ -95,7 +101,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
             <div className="border-t border-black/10 pt-4 space-y-3">
               <div className="flex gap-4 text-sm">
                 {work.tags.map((tag, index) => (
-                  <span key={index} className="text-gray-500">
+                  <span key={index} className="text-gray-500 hashtag">
                     {tag}
                   </span>
                 ))}
@@ -162,23 +168,14 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       )}
 
       {/* Video Section */}
-      {work.videoUrl && (
+      {work.videoUrls.length > 0 && (
         <section className="py-8 px-6 md:px-16">
           <div className="max-w-7xl mx-auto grid-6">
-            <div className="col-6 aspect-video relative bg-gray-900">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                  >
-                    <polygon points="5,3 19,12 5,21" />
-                  </svg>
-                </button>
+            {work.videoUrls.map((videoUrl, index) => (
+              <div key={index} className="col-6 aspect-video relative bg-gray-900 mb-8 last:mb-0">
+                <YouTubeEmbed url={videoUrl} />
               </div>
-            </div>
+            ))}
           </div>
         </section>
       )}

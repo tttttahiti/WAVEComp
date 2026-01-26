@@ -65,6 +65,7 @@ class WAVE_Custom_Post_Types {
             'show_in_rest' => true,
             'rest_base' => 'works',
             'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+            'taxonomies' => array('work_category', 'work_tag'),
             'menu_icon' => 'dashicons-portfolio',
             'rewrite' => array('slug' => 'works'),
         ));
@@ -86,6 +87,7 @@ class WAVE_Custom_Post_Types {
             'show_in_rest' => true,
             'rest_base' => 'releases',
             'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+            'taxonomies' => array('release_type', 'release_tag'),
             'menu_icon' => 'dashicons-album',
             'rewrite' => array('slug' => 'releases'),
         ));
@@ -153,6 +155,19 @@ class WAVE_Custom_Post_Types {
             'show_in_rest' => true,
             'rest_base' => 'release-types',
         ));
+
+        // Release Tags
+        register_taxonomy('release_tag', 'release', array(
+            'labels' => array(
+                'name' => 'Release Tags',
+                'singular_name' => 'Release Tag',
+                'add_new_item' => '新規タグ追加',
+            ),
+            'public' => true,
+            'hierarchical' => false,
+            'show_in_rest' => true,
+            'rest_base' => 'release-tags',
+        ));
     }
 
     /**
@@ -197,6 +212,9 @@ class WAVE_Custom_Post_Types {
                 $layout_order_raw = get_post_meta($post['id'], '_work_layout_order', true);
                 $layout_order = $layout_order_raw ? array_map('trim', explode(',', $layout_order_raw)) : array('video', 'content', 'gallery', 'audio');
 
+                // Display order
+                $display_order = get_post_meta($post['id'], '_work_display_order', true);
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
@@ -207,6 +225,7 @@ class WAVE_Custom_Post_Types {
                     'audio_url' => $audio_url,
                     'gallery_images' => $gallery_images,
                     'layout_order' => $layout_order,
+                    'display_order' => $display_order ? intval($display_order) : 99,
                 );
             },
             'schema' => array(
@@ -217,12 +236,14 @@ class WAVE_Custom_Post_Types {
         // Release fields
         register_rest_field('release', 'release_meta', array(
             'get_callback' => function($post) {
+                $display_order = get_post_meta($post['id'], '_release_display_order', true);
                 return array(
                     'release_date' => get_post_meta($post['id'], '_release_date', true),
                     'tracks' => get_post_meta($post['id'], '_release_tracks', true),
                     'listen_url' => get_post_meta($post['id'], '_release_listen_url', true),
                     'apple_music_url' => get_post_meta($post['id'], '_release_apple_music_url', true),
                     'spotify_url' => get_post_meta($post['id'], '_release_spotify_url', true),
+                    'display_order' => $display_order ? intval($display_order) : 99,
                 );
             },
             'schema' => array(
@@ -269,6 +290,46 @@ class WAVE_Custom_Post_Types {
                 ),
             ));
         }
+
+        // Work tags (タクソノミーのterm情報を含む)
+        register_rest_field('work', 'work_tags_data', array(
+            'get_callback' => function($post) {
+                $terms = wp_get_post_terms($post['id'], 'work_tag', array('fields' => 'all'));
+                if (is_wp_error($terms) || empty($terms)) {
+                    return array();
+                }
+                return array_map(function($term) {
+                    return array(
+                        'id' => $term->term_id,
+                        'name' => $term->name,
+                        'slug' => $term->slug,
+                    );
+                }, $terms);
+            },
+            'schema' => array(
+                'type' => 'array',
+            ),
+        ));
+
+        // Release tags (タクソノミーのterm情報を含む)
+        register_rest_field('release', 'release_tags_data', array(
+            'get_callback' => function($post) {
+                $terms = wp_get_post_terms($post['id'], 'release_tag', array('fields' => 'all'));
+                if (is_wp_error($terms) || empty($terms)) {
+                    return array();
+                }
+                return array_map(function($term) {
+                    return array(
+                        'id' => $term->term_id,
+                        'name' => $term->name,
+                        'slug' => $term->slug,
+                    );
+                }, $terms);
+            },
+            'schema' => array(
+                'type' => 'array',
+            ),
+        ));
     }
 
     /**
@@ -312,6 +373,7 @@ class WAVE_Custom_Post_Types {
     public function render_work_meta_box($post) {
         wp_nonce_field('wave_work_meta', 'wave_work_meta_nonce');
 
+        $display_order = get_post_meta($post->ID, '_work_display_order', true);
         $client = get_post_meta($post->ID, '_work_client', true);
         $date = get_post_meta($post->ID, '_work_date', true);
         $role = get_post_meta($post->ID, '_work_role', true);
@@ -342,6 +404,13 @@ class WAVE_Custom_Post_Types {
             .layout-item.ui-sortable-placeholder { visibility: visible !important; background: #ddd; border: 1px dashed #999; }
         </style>
         <table class="form-table">
+            <tr>
+                <th><label for="work_display_order">表示順</label></th>
+                <td>
+                    <input type="number" id="work_display_order" name="work_display_order" value="<?php echo esc_attr($display_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">小さい数字が先に表示されます（例: 1, 2, 3...）</p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="work_client">Client</label></th>
                 <td><input type="text" id="work_client" name="work_client" value="<?php echo esc_attr($client); ?>" class="regular-text"></td>
@@ -520,6 +589,7 @@ class WAVE_Custom_Post_Types {
     public function render_release_meta_box($post) {
         wp_nonce_field('wave_release_meta', 'wave_release_meta_nonce');
 
+        $display_order = get_post_meta($post->ID, '_release_display_order', true);
         $release_date = get_post_meta($post->ID, '_release_date', true);
         $tracks = get_post_meta($post->ID, '_release_tracks', true);
         $listen_url = get_post_meta($post->ID, '_release_listen_url', true);
@@ -527,6 +597,13 @@ class WAVE_Custom_Post_Types {
         $spotify_url = get_post_meta($post->ID, '_release_spotify_url', true);
         ?>
         <table class="form-table">
+            <tr>
+                <th><label for="release_display_order">表示順</label></th>
+                <td>
+                    <input type="number" id="release_display_order" name="release_display_order" value="<?php echo esc_attr($display_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">小さい数字が先に表示されます（例: 1, 2, 3...）</p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="release_date">Release Date</label></th>
                 <td><input type="text" id="release_date" name="release_date" value="<?php echo esc_attr($release_date); ?>" class="regular-text" placeholder="2024/12/13"></td>
@@ -638,6 +715,10 @@ class WAVE_Custom_Post_Types {
     public function save_meta_boxes($post_id) {
         // Work meta
         if (isset($_POST['wave_work_meta_nonce']) && wp_verify_nonce($_POST['wave_work_meta_nonce'], 'wave_work_meta')) {
+            // Display order
+            if (isset($_POST['work_display_order'])) {
+                update_post_meta($post_id, '_work_display_order', intval($_POST['work_display_order']));
+            }
             // Text fields
             $text_fields = array('work_client', 'work_date', 'work_role', 'work_url');
             foreach ($text_fields as $field) {
@@ -651,11 +732,12 @@ class WAVE_Custom_Post_Types {
             }
             // Credits field (JSON)
             if (isset($_POST['work_credits'])) {
-                // JSON形式を検証して保存
-                $credits = sanitize_textarea_field($_POST['work_credits']);
-                $decoded = json_decode($credits, true);
+                // wp_unslashでエスケープを解除してからJSONをパース
+                $credits_raw = wp_unslash($_POST['work_credits']);
+                $decoded = json_decode($credits_raw, true);
                 if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    update_post_meta($post_id, '_work_credits', $credits);
+                    // 有効なJSONの場合、再エンコードして保存（整形）
+                    update_post_meta($post_id, '_work_credits', wp_json_encode($decoded, JSON_UNESCAPED_UNICODE));
                 } else {
                     // JSON形式が無効な場合は空配列を保存
                     update_post_meta($post_id, '_work_credits', '[]');
@@ -676,6 +758,10 @@ class WAVE_Custom_Post_Types {
 
         // Release meta
         if (isset($_POST['wave_release_meta_nonce']) && wp_verify_nonce($_POST['wave_release_meta_nonce'], 'wave_release_meta')) {
+            // Display order
+            if (isset($_POST['release_display_order'])) {
+                update_post_meta($post_id, '_release_display_order', intval($_POST['release_display_order']));
+            }
             $fields = array('release_date', 'release_tracks', 'release_listen_url', 'release_apple_music_url', 'release_spotify_url');
             foreach ($fields as $field) {
                 if (isset($_POST[$field])) {
