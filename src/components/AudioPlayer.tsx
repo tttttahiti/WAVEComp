@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 interface AudioPlayerProps {
   src: string;
@@ -71,16 +72,16 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   };
 
   const formatTime = (time: number) => {
-    if (isNaN(time)) return "0:00";
+    if (isNaN(time)) return "00:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg">
+    <div className="py-4">
       <audio ref={audioRef} src={src} preload="metadata" />
 
       {title && (
@@ -91,40 +92,99 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         {/* Play/Pause Button */}
         <button
           onClick={togglePlay}
-          className="w-10 h-10 flex items-center justify-center bg-wave-blue text-white rounded-full hover:opacity-90 transition-opacity"
+          className="w-[15px] h-[18px] flex-shrink-0 flex items-center justify-center transition-opacity hover:opacity-80"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? (
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <rect x="6" y="4" width="4" height="16" />
-              <rect x="14" y="4" width="4" height="16" />
-            </svg>
+            <Image
+              src="/player/pause.svg"
+              alt="Pause"
+              width={20}
+              height={27}
+              className="w-full h-full"
+            />
           ) : (
-            <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <polygon points="5,3 19,12 5,21" />
-            </svg>
+            <Image
+              src="/player/play.svg"
+              alt="Play"
+              width={15}
+              height={18}
+              className="w-full h-full"
+            />
           )}
         </button>
 
-        {/* Progress Bar */}
-        <div className="flex-1 flex items-center gap-3">
-          <span className="text-xs text-gray-500 w-10">
-            {formatTime(currentTime)}
-          </span>
-          <div
-            ref={progressRef}
-            onClick={handleProgressClick}
-            className="flex-1 h-2 bg-gray-300 rounded-full cursor-pointer overflow-hidden"
+        {/* Progress Bar Container */}
+        <div
+          ref={progressRef}
+          onClick={handleProgressClick}
+          className="flex-1 h-[10px] relative cursor-pointer"
+        >
+          {/* Background outline - sequence_outline style */}
+          <svg
+            viewBox="0 0 100 10"
+            className="absolute inset-0 w-full h-full"
+            preserveAspectRatio="none"
           >
-            <div
-              className="h-full bg-wave-blue rounded-full transition-all duration-100"
-              style={{ width: `${progressPercentage}%` }}
+            {/* Left vertical cap */}
+            <line
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="10"
+              stroke="#536cdb"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
             />
+            {/* Horizontal line */}
+            <line
+              x1="0"
+              y1="10"
+              x2="100"
+              y2="10"
+              stroke="#536cdb"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
+            />
+            {/* Right vertical cap */}
+            <line
+              x1="100"
+              y1="0"
+              x2="100"
+              y2="10"
+              stroke="#536cdb"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          {/* Progress bar fill - sequence_bar style */}
+          <div
+            className="absolute top-0 left-0 h-full transition-[width] duration-100 ease-linear"
+            style={{ width: `${progressPercentage}%` }}
+          >
+            <svg
+              viewBox="0 0 100 10"
+              className="w-full h-full"
+              preserveAspectRatio="none"
+            >
+              <line
+                x1="2"
+                y1="5"
+                x2="98"
+                y2="5"
+                stroke="#536cdb"
+                strokeWidth="4"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
           </div>
-          <span className="text-xs text-gray-500 w-10">
-            {formatTime(duration)}
-          </span>
         </div>
+
+        {/* Time Display */}
+        <span className="text-[12pt] text-wave-blue hashtag flex-shrink-0 min-w-[100px] text-right">
+          {formatTime(currentTime)}/{formatTime(duration)}
+        </span>
       </div>
     </div>
   );

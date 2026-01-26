@@ -89,7 +89,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
         </div>
         <div className="relative z-10 w-full pb-12">
           <div className="grid-6 px-6 md:px-16">
-            <h2 className="text-white heading-section col-3">ABOUT</h2>
+            <h2 className="text-white heading-section col-3">WORKS</h2>
             <div className="col-3 flex justify-end items-end">
               <Link href="/">
                 <Image
@@ -134,7 +134,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
           {/* Works Grid - 2 columns with line separator */}
           {filteredWorks.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-gray-500">Works not found</p>
+              <p className="text-[12pt]">Works not found</p>
             </div>
           ) : (
             <div className="grid-6 justify-end">

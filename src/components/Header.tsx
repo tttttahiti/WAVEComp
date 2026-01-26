@@ -48,7 +48,7 @@ export function Header() {
               onClick={closeMenu}
               className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
-              HAL CA
+              HAL ca
             </Link>
             <Link
               href="/releases"

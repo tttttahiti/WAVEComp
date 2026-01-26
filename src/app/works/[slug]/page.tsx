@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
+import { AudioPlayer } from "@/components/AudioPlayer";
 
 interface WorkDetailPageProps {
   params: Promise<{
@@ -83,33 +84,37 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         <div className="max-w-7xl mx-auto grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-3">
-            <p className="text-sm text-gray-500 mb-2">{work.client}</p>
-            <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-4">
+            <p className="text-[12pt] mb-2">{work.client}</p>
+            <h1 className="text-[30pt] font-bold leading-snug mb-4">
               {work.title}
             </h1>
-            <p className="text-sm text-gray-500">Date: {work.date}</p>
+            <p className="text-[12pt]">Date: {work.date}</p>
           </div>
 
           {/* Right Column - Description & Details */}
           <div className="col-3">
-            <div className="text-sm leading-[2] whitespace-pre-line mb-8">
+            <div className="text-[12pt] leading-[2] whitespace-pre-line mb-8">
               {work.description}
             </div>
 
-            <p className="text-sm mb-6">{work.role}</p>
+            <p className="text-[12pt] mb-6">{work.role}</p>
 
             <div className="border-t border-black/10 pt-4 space-y-3">
-              <div className="flex gap-4 text-sm">
+              <div className="flex gap-4 text-[12pt]">
                 {work.tags.map((tag, index) => (
-                  <span key={index} className="text-gray-500 hashtag">
+                  <Link
+                    key={index}
+                    href={`/works?tag=${encodeURIComponent(tag)}`}
+                    className="text-[12pt] hashtag hover:text-wave-blue transition-colors"
+                  >
                     {tag}
-                  </span>
+                  </Link>
                 ))}
               </div>
 
               {work.url && (
-                <p className="text-sm">
-                  <span className="text-gray-500">URL: </span>
+                <p className="text-[12pt]">
+                  <span className="text-[12pt]">URL: </span>
                   <a
                     href={work.url}
                     target="_blank"
@@ -122,8 +127,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
               )}
 
               {work.clientRole && (
-                <p className="text-sm">
-                  <span className="text-gray-500">Client: </span>
+                <p className="text-[12pt]">
+                  <span className="text-[12pt]">Client: </span>
                   {work.clientRole}
                 </p>
               )}
@@ -131,14 +136,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
             {work.listenUrl && (
               <div className="mt-8">
-                <Link
-                  href={work.listenUrl}
-                  className="btn-primary inline-block"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LISTEN
-                </Link>
+                <AudioPlayer src={work.listenUrl} />
               </div>
             )}
           </div>
@@ -183,12 +181,12 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       {/* Credits Section */}
       <section className="py-16 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid-6">
-          <div className="col-6 border-t border-black/10 pt-8">
-            <p className="text-sm font-medium mb-4">Credit:</p>
+          <div className="col-start-4 col-span-3 border-t border-black/10 pt-8">
+            <p className="text-sm font-medium mb-1">Credit:</p>
             <ul className="space-y-1">
               {work.credits.map((credit: { role: string; name: string }, index: number) => (
                 <li key={index} className="text-sm">
-                  <span className="text-gray-500">{credit.role}：</span>
+                  <span className="text-[12pt]">{credit.role}：</span>
                   {credit.name}
                 </li>
               ))}

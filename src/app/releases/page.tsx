@@ -52,7 +52,7 @@ export default async function ReleasesPage() {
         <div className="">
           {releases.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-gray-500">Releases not found</p>
+              <p className="text-[12pt]">Releases not found</p>
             </div>
           ) : (
             releases.map((release) => (

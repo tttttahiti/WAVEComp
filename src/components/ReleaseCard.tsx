@@ -62,7 +62,7 @@ export function ReleaseCard({
         {listenUrl && (
           <Link
             href={listenUrl}
-            className="btn-primary inline-block"
+            className="btn-primary inline-block w-[50%]"
             target="_blank"
             rel="noopener noreferrer"
           >

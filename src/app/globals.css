@@ -53,6 +53,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
 }
 
+h2 {
+  font-size: 30pt;
+}
+
 p {
   line-height: 2;
   font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
