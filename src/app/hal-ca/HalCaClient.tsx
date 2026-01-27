@@ -32,7 +32,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
     <>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] bg-gray-100 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
+        <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
           <Image
             src="/images/hal-ca-hero.jpg"
             alt="HAL ca"

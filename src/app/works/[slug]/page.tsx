@@ -4,6 +4,9 @@ import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { AudioPlayer } from "@/components/AudioPlayer";
 
+// 常にサーバーサイドで動的レンダリングを行う
+export const dynamic = 'force-dynamic';
+
 interface WorkDetailPageProps {
   params: Promise<{
     slug: string;
@@ -81,7 +84,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Work Info Section */}
       <section className="py-16 md:py-24 px-6 md:px-16">
-        <div className="max-w-7xl mx-auto grid-6">
+        <div className="grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-3">
             <p className="text-[12pt] mb-2">{work.client}</p>
@@ -146,7 +149,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       {/* Gallery Section */}
       {work.galleryImages.length > 0 && (
         <section className="py-8 px-6 md:px-16">
-          <div className="max-w-7xl mx-auto grid-6">
+          <div className="grid-6">
             {work.galleryImages.map((image, index) => (
               <div
                 key={index}
@@ -168,7 +171,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       {/* Video Section */}
       {work.videoUrls.length > 0 && (
         <section className="py-8 px-6 md:px-16">
-          <div className="max-w-7xl mx-auto grid-6">
+          <div className="grid-6">
             {work.videoUrls.map((videoUrl, index) => (
               <div key={index} className="col-6 aspect-video relative bg-gray-900 mb-8 last:mb-0">
                 <YouTubeEmbed url={videoUrl} />
@@ -180,7 +183,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Credits Section */}
       <section className="py-16 px-6 md:px-16">
-        <div className="max-w-7xl mx-auto grid-6">
+        <div className="grid-6">
           <div className="col-start-4 col-span-3 border-t border-black/10 pt-8">
             <p className="text-sm font-medium mb-1">Credit:</p>
             <ul className="space-y-1">

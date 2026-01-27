@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 interface AudioPlayerProps {
@@ -14,17 +14,46 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // クライアントサイドでのみマウント状態を設定
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const updateDuration = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio && audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
+      setDuration(audio.duration);
+    }
+  }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const audio = audioRef.current;
     if (!audio) return;
 
     const handleLoadedMetadata = () => {
-      setDuration(audio.duration);
+      updateDuration();
+    };
+
+    const handleCanPlay = () => {
+      updateDuration();
+    };
+
+    const handleDurationChange = () => {
+      updateDuration();
     };
 
     const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
+      if (audio) {
+        setCurrentTime(audio.currentTime);
+        // durationがまだ取得できていない場合、再度試行
+        if (audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
+          setDuration(audio.duration);
+        }
+      }
     };
 
     const handleEnded = () => {
@@ -32,16 +61,47 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
       setCurrentTime(0);
     };
 
+    const handleError = (e: Event) => {
+      console.error("Audio error:", e);
+    };
+
+    const handlePlay = () => {
+      setIsPlaying(true);
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+    };
+
+    // 複数のイベントでdurationを取得を試みる
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("canplay", handleCanPlay);
+    audio.addEventListener("durationchange", handleDurationChange);
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("error", handleError);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+
+    // 既にメタデータが読み込まれている場合
+    if (audio.readyState >= 1) {
+      updateDuration();
+    }
+
+    // 手動でloadを呼び出してメタデータを取得
+    audio.load();
 
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("canplay", handleCanPlay);
+      audio.removeEventListener("durationchange", handleDurationChange);
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("error", handleError);
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
     };
-  }, []);
+  }, [isMounted, updateDuration]);
 
   const togglePlay = async () => {
     const audio = audioRef.current;
@@ -50,10 +110,8 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
     try {
       if (isPlaying) {
         audio.pause();
-        setIsPlaying(false);
       } else {
         await audio.play();
-        setIsPlaying(true);
       }
     } catch (error) {
       console.error("Audio playback error:", error);
@@ -63,7 +121,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const audio = audioRef.current;
     const progress = progressRef.current;
-    if (!audio || !progress) return;
+    if (!audio || !progress || !duration) return;
 
     const rect = progress.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -72,7 +130,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
   };
 
   const formatTime = (time: number) => {
-    if (isNaN(time)) return "00:00";
+    if (isNaN(time) || !isFinite(time)) return "00:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
@@ -82,7 +140,11 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
 
   return (
     <div className="py-4">
-      <audio ref={audioRef} src={src} preload="metadata" />
+      <audio
+        ref={audioRef}
+        src={src}
+        preload="metadata"
+      />
 
       {title && (
         <p className="text-sm font-medium mb-3">{title}</p>
@@ -159,26 +221,31 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
           </svg>
 
           {/* Progress bar fill - sequence_bar style */}
-          <div
-            className="absolute top-0 left-0 h-full transition-[width] duration-100 ease-linear"
-            style={{ width: `${progressPercentage}%` }}
-          >
-            <svg
-              viewBox="0 0 100 10"
-              className="w-full h-full"
-              preserveAspectRatio="none"
+          {isMounted && (
+            <div
+              className="absolute top-0 left-2 h-full"
+              style={{
+                width: `${progressPercentage}%`,
+                transition: isPlaying ? 'width 0.1s linear' : 'none'
+              }}
             >
-              <line
-                x1="2"
-                y1="5"
-                x2="98"
-                y2="5"
-                stroke="#536cdb"
-                strokeWidth="4"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
-          </div>
+              <svg
+                viewBox="0 0 100 10"
+                className="w-full h-full"
+                preserveAspectRatio="none"
+              >
+                <line
+                  x1="0"
+                  y1="4"
+                  x2="98"
+                  y2="4"
+                  stroke="#536cdb"
+                  strokeWidth="3"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </div>
+          )}
         </div>
 
         {/* Time Display */}

@@ -734,13 +734,20 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_credits'])) {
                 // wp_unslashでエスケープを解除してからJSONをパース
                 $credits_raw = wp_unslash($_POST['work_credits']);
-                $decoded = json_decode($credits_raw, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    // 有効なJSONの場合、再エンコードして保存（整形）
-                    update_post_meta($post_id, '_work_credits', wp_json_encode($decoded, JSON_UNESCAPED_UNICODE));
-                } else {
-                    // JSON形式が無効な場合は空配列を保存
+                $credits_raw = trim($credits_raw);
+
+                // 空の場合は空配列を保存
+                if (empty($credits_raw)) {
                     update_post_meta($post_id, '_work_credits', '[]');
+                } else {
+                    $decoded = json_decode($credits_raw, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                        // 有効なJSONの場合、再エンコードして保存（整形）
+                        update_post_meta($post_id, '_work_credits', wp_json_encode($decoded, JSON_UNESCAPED_UNICODE));
+                    } else {
+                        // JSON形式が無効な場合でも入力値を保存（ユーザーが修正できるように）
+                        update_post_meta($post_id, '_work_credits', $credits_raw);
+                    }
                 }
             }
             // Media fields

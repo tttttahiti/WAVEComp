@@ -138,6 +138,15 @@ code, pre, .font-mono {
     transform: scaleX(calc((100vw - 233px) / 100vw));
     transform-origin: left;
   }
+
+  /* hal-ca hero image - maintain aspect ratio, scale up to fill width */
+  body.menu-open .hal-ca-hero-image {
+    width: calc(100vw - 233px);
+  }
+  
+  .hal-ca-hero-image {
+    width: 100%;
+  }
 }
 
 /* Hero Video Container - 幅変更方式（scaleXではなく） */
