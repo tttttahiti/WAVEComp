@@ -34,7 +34,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >
-        <div className="flex justify-between items-start">
+        <div className={`flex justify-between items-start ${isMenuOpen ? "hidden md:flex" : ""}`}>
           <button
             onClick={toggleSound}
             className={`font-en font-bold transition-colors duration-300 text-left ${isScrolled ? "text-black" : "text-white"}`}
