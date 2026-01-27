@@ -79,7 +79,7 @@ export default async function AboutPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-6 md:px-[45px]">
+          <div className="grid-6 px-[45px] md:px-[45px]">
             <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">ABOUT</h2>
             <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
@@ -97,7 +97,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6 overflow-visible">
           <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-6 md:mb-0">CONCEPT</h2>
 
@@ -131,7 +131,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
@@ -153,7 +153,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6 h-auto md:h-[50px] mb-4 md:mb-0">
           <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
@@ -175,7 +175,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Info Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
             <h2 className="text-[20pt] md:text-[30pt] font-bold">INFO</h2>
@@ -201,7 +201,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
             <h2 className="text-[20pt] md:text-[30pt] font-bold">CONTACT</h2>

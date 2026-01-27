@@ -33,7 +33,7 @@ export function Header() {
         </button>
 
         {/* Menu Content - APPLE MUSIC centered vertically */}
-        <div className="h-full flex flex-col justify-center px-6 md:px-[45px] whitespace-nowrap">
+        <div className="h-full flex flex-col justify-center px-[45px] md:px-[45px] whitespace-nowrap">
           {/* Main Navigation */}
           <nav className="space-y-3 md:space-y-4">
             <Link

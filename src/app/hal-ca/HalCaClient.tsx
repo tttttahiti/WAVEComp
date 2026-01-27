@@ -47,7 +47,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Artist Info Section */}
-      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
             <h2 className="text-[20pt] md:text-[30pt] font-bold mb-4 md:mb-8">HAL ca</h2>
@@ -105,11 +105,11 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Selected Works Section */}
-      <section className="py-12 md:py-[92px] px-6 md:px-[45px] bg-white">
+      <section className="py-12 md:py-[92px] px-[45px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">FEATURED</h2>
-            <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-3 text-left md:text-right">WORKS</h2>
+            <h2 className="text-[20pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
+            <h2 className="text-[20pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">

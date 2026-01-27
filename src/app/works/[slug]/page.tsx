@@ -83,7 +83,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       </section>
 
       {/* Work Info Section */}
-      <section className="py-8 md:py-24 px-6 md:px-[45px]">
+      <section className="py-8 md:py-24 px-[45px] md:px-[45px]">
         <div className="grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-3">
@@ -148,7 +148,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Gallery Section */}
       {work.galleryImages.length > 0 && (
-        <section className="py-4 md:py-8 px-6 md:px-[45px]">
+        <section className="py-4 md:py-8 px-[45px] md:px-[45px]">
           <div className="grid-6">
             {work.galleryImages.map((image, index) => (
               <div
@@ -170,7 +170,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
       {/* Video Section */}
       {work.videoUrls.length > 0 && (
-        <section className="py-4 md:py-8 px-6 md:px-[45px]">
+        <section className="py-4 md:py-8 px-[45px] md:px-[45px]">
           <div className="grid-6">
             {work.videoUrls.map((videoUrl, index) => (
               <div key={index} className="col-6 aspect-video relative bg-gray-900 mb-4 md:mb-8 last:mb-0">
@@ -182,7 +182,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       )}
 
       {/* Credits Section */}
-      <section className="py-8 md:py-16 px-6 md:px-[45px]">
+      <section className="py-8 md:py-16 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-start-4 md:col-span-3 border-t border-black/10 pt-4 md:pt-8">
             <p className="text-xs md:text-sm font-medium mb-1">Credit:</p>

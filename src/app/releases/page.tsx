@@ -30,7 +30,7 @@ export default async function ReleasesPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-6 md:px-[45px]">
+          <div className="grid-6 px-[45px] md:px-[45px]">
             <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">RELEASES</h2>
             <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
@@ -48,7 +48,7 @@ export default async function ReleasesPage() {
       </section>
 
       {/* Releases List */}
-      <section className="py-8 md:py-24 px-6 md:px-[45px]">
+      <section className="py-8 md:py-24 px-[45px] md:px-[45px]">
         <div className="">
           {releases.length === 0 ? (
             <div className="text-center py-8 md:py-16">
