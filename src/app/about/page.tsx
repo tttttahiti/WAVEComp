@@ -68,7 +68,7 @@ export default async function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[215px] min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -78,10 +78,10 @@ export default async function AboutPage() {
             priority
           />
         </div>
-        <div className="relative z-10 w-full pb-12">
-          <div className="grid-6 px-6 md:px-16">
-            <h2 className="text-white heading-section col-3">ABOUT</h2>
-            <div className="col-3 flex justify-end items-end">
+        <div className="relative z-10 w-full pb-6 md:pb-12">
+          <div className="grid-6 px-6 md:px-[45px]">
+            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">ABOUT</h2>
+            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
@@ -97,29 +97,29 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6 overflow-visible">
-          <h2 className="heading-section col-1 col-start-2">CONCEPT</h2>
+          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-6 md:mb-0">CONCEPT</h2>
 
           {/* 縦書きテキスト */}
-          <div className="flex justify-end overflow-visible col-start-5 col-2">
+          <div className="flex justify-start md:justify-end overflow-visible col-6 md:col-start-5 md:col-2">
             <div
               className="writing-vertical-rl font-jp font-medium leading-[2.5]"
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
-                fontSize: "18pt",
+                fontSize: "14pt",
               }}
             >
               <p>音のある時間を豊かに、</p>
               <p>緻密に、</p>
               <p>そして大胆に。</p>
-              <p className="w-8"></p>
-              <p className="w-8"></p>
+              <p className="w-6 md:w-8"></p>
+              <p className="w-6 md:w-8"></p>
               <p>私たちは、</p>
               <p>「目的地」だけを語りません。</p>
-              <p className="w-8"></p>
-              <p className="w-8"></p>
+              <p className="w-6 md:w-8"></p>
+              <p className="w-6 md:w-8"></p>
               <p>迷い、寄り道し、</p>
               <p>波に揺られながら進むプロセスを</p>
               <p>創造の本質だと考え、</p>
@@ -131,14 +131,14 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6">
-          <h2 className="heading-section col-4 col-start-2 whitespace-nowrap">
+          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
           <ul
-            className="text-[18pt] col-start-4 col-3"
-            style={{ lineHeight: "31.5pt" }}
+            className="text-[12pt] md:text-[18pt] col-6 md:col-start-4 md:col-3"
+            style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
               HAL ca アーティストマネージメント
@@ -153,9 +153,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
-        <div className="grid-6 h-[50px]">
-          <h2 className="heading-section col-4 col-start-2 whitespace-nowrap">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
+        <div className="grid-6 h-auto md:h-[50px] mb-4 md:mb-0">
+          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>
@@ -169,22 +169,22 @@ export default async function AboutPage() {
             title={member.title}
             biography={member.biography}
             achievements={member.achievements}
-            marginTop={index === 0 ? "mt-[15px]" : "mt-[90px]"}
+            marginTop={index === 0 ? "mt-2 md:mt-[15px]" : "mt-12 md:mt-[90px]"}
           />
         ))}
       </section>
 
       {/* Info Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-1 col-start-2">
-            <h2 className="heading-section">INFO</h2>
+          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
+            <h2 className="text-[20pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
-          <div className="col-start-4 col-span-2">
-            <div className="text-[12pt] font-medium leading-[2]">
+          <div className="col-6 md:col-start-4 md:col-span-2">
+            <div className="text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
-              <p className="mt-4">設立日：2026年4月1日</p>
+              <p className="mt-2 md:mt-4">設立日：2026年4月1日</p>
               <p>代表取締役（共同代表）：</p>
               <p>菊地晴夏 / 島田舞</p>
               <p>
@@ -201,10 +201,10 @@ export default async function AboutPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-1 col-start-2">
-            <h2 className="heading-section">CONTACT</h2>
+          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
+            <h2 className="text-[20pt] md:text-[30pt] font-bold">CONTACT</h2>
           </div>
         </div>
         <ContactForm />

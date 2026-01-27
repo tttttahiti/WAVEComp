@@ -77,7 +77,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[215px] min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -87,10 +87,10 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
             priority
           />
         </div>
-        <div className="relative z-10 w-full pb-12">
-          <div className="grid-6 px-6 md:px-16">
-            <h2 className="text-white heading-section col-3">WORKS</h2>
-            <div className="col-3 flex justify-end items-end">
+        <div className="relative z-10 w-full pb-6 md:pb-12">
+          <div className="grid-6 px-6 md:px-[45px]">
+            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">WORKS</h2>
+            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
@@ -106,11 +106,11 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       </section>
 
       {/* Filter & Works Grid */}
-      <section className="py-16 md:py-24 px-6 md:px-16">
+      <section className="py-8 md:py-24 px-6 md:px-[45px]">
         <div className="">
           {/* Filter Selector */}
-          <div className="grid-6 mb-8">
-            <div className="col-start-6 col-1 flex justify-end">
+          <div className="grid-6 mb-6 md:mb-8">
+            <div className="col-6 md:col-start-6 md:col-1 flex justify-end">
               <div className="relative">
                 <select
                   value={filterTag}
@@ -133,8 +133,8 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
           {/* Works Grid - 2 columns with line separator */}
           {filteredWorks.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-[12pt]">Works not found</p>
+            <div className="text-center py-8 md:py-16">
+              <p className="text-[10pt] md:text-[12pt]">Works not found</p>
             </div>
           ) : (
             <div className="grid-6 justify-end">
@@ -176,7 +176,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                   </div>,
                   // テキスト2つ
                   ...groupWorks.map((work) => (
-                    <div key={`text-${work.id}`} className={`col-3 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
+                    <div key={`text-${work.id}`} className={`col-3 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-10 md:mb-[80px]' : ''}`}>
                       <WorkCard
                         {...work}
                         textOnly

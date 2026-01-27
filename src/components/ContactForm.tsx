@@ -34,24 +34,25 @@ export function ContactForm() {
   };
 
   return (
-    <div className="grid-6 mt-[30px]">
-      <div className="col-1 col-start-2 space-y-[18px] text-[12pt] height-[20px] font-medium leading-[2]">
+    <div className="grid-6 mt-4 md:mt-[30px]">
+      <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2] mb-4 md:mb-0">
         <p>
           お名前
         </p>
-        <p>
+        <p className="hidden md:block">
           会社名
         </p>
-        <p>
+        <p className="hidden md:block">
           メールアドレス
         </p>
-        <p>
+        <p className="hidden md:block">
           内容
         </p>
       </div>
-      <div className="col-start-3 col-span-3">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="col-6 md:col-start-3 md:col-span-3">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
         <div>
+          <label className="block md:hidden text-[10pt] font-medium mb-1">お名前</label>
           <input
             type="text"
             id="name"
@@ -59,22 +60,24 @@ export function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full h-[20px] bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+            className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
           />
         </div>
 
         <div>
+          <label className="block md:hidden text-[10pt] font-medium mb-1">会社名</label>
           <input
             type="text"
             id="company"
             name="company"
             value={formData.company}
             onChange={handleChange}
-            className="w-full h-[20px] bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+            className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
           />
         </div>
 
         <div>
+          <label className="block md:hidden text-[10pt] font-medium mb-1">メールアドレス</label>
           <input
             type="email"
             id="email"
@@ -82,11 +85,12 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full h-[20px] bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors"
+            className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
           />
         </div>
 
         <div>
+          <label className="block md:hidden text-[10pt] font-medium mb-1">内容</label>
           <textarea
             id="content"
             name="content"
@@ -94,7 +98,7 @@ export function ContactForm() {
             onChange={handleChange}
             required
             rows={6}
-            className="w-full h-[155px] bg-white text-black border border-black/20 px-4 py-3 text-sm focus:outline-none focus:border-wave-blue transition-colors resize-none"
+            className="w-full h-[120px] md:h-[155px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors resize-none"
           />
         </div>
 

@@ -19,7 +19,7 @@ export default async function ReleasesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[215px] min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -29,10 +29,10 @@ export default async function ReleasesPage() {
             priority
           />
         </div>
-        <div className="relative z-10 w-full pb-12">
-          <div className="grid-6 px-6 md:px-16">
-            <h2 className="text-white heading-section col-3">RELEASES</h2>
-            <div className="col-3 flex justify-end items-end">
+        <div className="relative z-10 w-full pb-6 md:pb-12">
+          <div className="grid-6 px-6 md:px-[45px]">
+            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">RELEASES</h2>
+            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
@@ -48,11 +48,11 @@ export default async function ReleasesPage() {
       </section>
 
       {/* Releases List */}
-      <section className="py-16 md:py-24 px-6 md:px-16">
+      <section className="py-8 md:py-24 px-6 md:px-[45px]">
         <div className="">
           {releases.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-[12pt]">Releases not found</p>
+            <div className="text-center py-8 md:py-16">
+              <p className="text-[10pt] md:text-[12pt]">Releases not found</p>
             </div>
           ) : (
             releases.map((release) => (

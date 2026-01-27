@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[215px] min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -16,10 +16,10 @@ export default function ContactPage() {
             priority
           />
         </div>
-        <div className="relative z-10 w-full pb-12">
-          <div className="grid-6 px-6 md:px-16">
-            <h2 className="text-white heading-section col-3">CONTACT</h2>
-            <div className="col-3 flex justify-end items-end">
+        <div className="relative z-10 w-full pb-6 md:pb-12">
+          <div className="grid-6 px-6 md:px-[45px]">
+            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">CONTACT</h2>
+            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
@@ -35,16 +35,16 @@ export default function ContactPage() {
       </section>
 
       {/* Info Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-1 col-start-2">
-            <h2 className="heading-section">INFO</h2>
+          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
+            <h2 className="text-[20pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
-          <div className="col-start-4 col-span-2">
-            <div className="text-[12pt] font-medium leading-[2]">
+          <div className="col-6 md:col-start-4 md:col-span-2">
+            <div className="text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
-              <p className="mt-4">設立日：2026年4月1日</p>
+              <p className="mt-2 md:mt-4">設立日：2026年4月1日</p>
               <p>代表取締役（共同代表）：</p>
               <p>菊地晴夏 / 島田舞</p>
               <p>
@@ -61,10 +61,10 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 md:py-32 px-6 md:px-16">
+      <section className="py-12 md:py-32 px-6 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-1 col-start-2">
-            <h2 className="heading-section">CONTACT</h2>
+          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
+            <h2 className="text-[20pt] md:text-[30pt] font-bold">CONTACT</h2>
           </div>
         </div>
         <ContactForm />

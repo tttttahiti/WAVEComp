@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode, useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useMenu } from "./MenuContext";
 import { useSound } from "./SoundContext";
@@ -31,44 +30,42 @@ export function PageWrapper({ children }: PageWrapperProps) {
     <>
       {/* Fixed Header - stays at full width */}
       <header
-        className={`fixed top-0 left-0 z-50 px-6 pt-12 md:px-16 transition-[width] duration-500 ease-out ${
+        className={`fixed top-0 left-0 z-50 pt-[45px] px-[45px] transition-[width] duration-500 ease-out ${
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >
-        <div className="grid-6 items-start">
+        <div className="flex justify-between items-start">
           <button
             onClick={toggleSound}
-            className={`col-1 font-en font-bold transition-colors duration-300 text-left ${isScrolled ? 'text-black' : 'text-white'}`}
-            style={{ fontSize: '10pt' }}
-            aria-label={isSoundOn ? '音声をオフ' : '音声をオン'}
+            className={`font-en font-bold transition-colors duration-300 text-left ${isScrolled ? "text-black" : "text-white"}`}
+            style={{ fontSize: "10pt" }}
+            aria-label={isSoundOn ? "音声をオフ" : "音声をオン"}
           >
-            SOUND {isSoundOn ? '/' : '\\'}
+            SOUND {isSoundOn ? "/" : "\\"}
           </button>
-          <div className="col-start-6 col-1 flex justify-end">
-            <button
-              onClick={toggleMenu}
-              className="p-2 -m-2"
-              aria-label="メニューを開く"
-            >
-              {isScrolled ? (
-                <Image
-                  src="/svg/icon-menu-black.svg"
-                  alt="メニュー"
-                  width={23}
-                  height={21}
-                  className="h-[21px] w-auto"
-                />
-              ) : (
-                <Image
-                  src="/svg/icon-menu.svg"
-                  alt="メニュー"
-                  width={23}
-                  height={21}
-                  className="h-[21px] w-auto"
-                />
-              )}
-            </button>
-          </div>
+          <button
+            onClick={toggleMenu}
+            className="p-2 -m-2"
+            aria-label="メニューを開く"
+          >
+            {isScrolled ? (
+              <Image
+                src="/svg/icon-menu-black.svg"
+                alt="メニュー"
+                width={23}
+                height={21}
+                className="h-[21px] w-auto"
+              />
+            ) : (
+              <Image
+                src="/svg/icon-menu.svg"
+                alt="メニュー"
+                width={23}
+                height={21}
+                className="h-[21px] w-auto"
+              />
+            )}
+          </button>
         </div>
       </header>
 

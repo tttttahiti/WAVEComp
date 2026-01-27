@@ -150,11 +150,11 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         <p className="text-sm font-medium mb-3">{title}</p>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 md:gap-4">
         {/* Play/Pause Button */}
         <button
           onClick={togglePlay}
-          className="w-[15px] h-[18px] flex-shrink-0 flex items-center justify-center transition-opacity hover:opacity-80"
+          className="w-[12px] md:w-[15px] h-[15px] md:h-[18px] flex-shrink-0 flex items-center justify-center transition-opacity hover:opacity-80"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? (
@@ -249,7 +249,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         </div>
 
         {/* Time Display */}
-        <span className="text-[12pt] text-wave-blue hashtag flex-shrink-0 min-w-[100px] text-right">
+        <span className="text-[10pt] md:text-[12pt] text-wave-blue hashtag flex-shrink-0 min-w-[80px] md:min-w-[100px] text-right">
           {formatTime(currentTime)}/{formatTime(duration)}
         </span>
       </div>

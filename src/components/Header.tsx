@@ -20,7 +20,7 @@ export function Header() {
         {/* Close Button */}
         <button
           onClick={toggleMenu}
-          className="absolute top-12 left-16"
+          className="absolute top-6 left-6 md:top-12 md:left-16"
           aria-label="メニューを閉じる"
         >
           <Image
@@ -28,14 +28,14 @@ export function Header() {
             alt="閉じる"
             width={21}
             height={23}
-            className="h-[23px] w-auto"
+            className="h-[18px] md:h-[23px] w-auto"
           />
         </button>
 
         {/* Menu Content - APPLE MUSIC centered vertically */}
-        <div className="h-full flex flex-col justify-center px-6 md:px-16 whitespace-nowrap">
+        <div className="h-full flex flex-col justify-center px-6 md:px-[45px] whitespace-nowrap">
           {/* Main Navigation */}
-          <nav className="space-y-4">
+          <nav className="space-y-3 md:space-y-4">
             <Link
               href="/about"
               onClick={closeMenu}
@@ -74,10 +74,10 @@ export function Header() {
           </nav>
 
           {/* Separator */}
-          <div className="my-8 border-t border-black" />
+          <div className="my-6 md:my-8 border-t border-black" />
 
           {/* Social Links - Same font size as nav, left-aligned */}
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -113,9 +113,9 @@ export function Header() {
           </div>
 
           {/* Separator */}
-          <div className="my-8 border-t border-black" />
+          <div className="my-6 md:my-8 border-t border-black" />
 
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             <button
               onClick={toggleSound}
               className="text-[12pt] md:text-[12pt] font-en font-bold transition-colors duration-300 text-left text-black"

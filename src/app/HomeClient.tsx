@@ -55,7 +55,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
           />
         </div>
         {/* Logo */}
-        <div className="relative h-full px-6 md:px-16 grid-6 items-center">
+        <div className="relative h-full px-6 md:px-[45px] grid-6 items-center">
           <div className="col-6 flex justify-end items-end z-10">
             <Image
               src="/svg/logo-wave.svg"
@@ -73,90 +73,112 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
       <Concept />
 
       {/* Selected Works Section */}
-      <section className="py-[92px] px-6 md:px-16 bg-white">
+      <section className="py-12 md:py-[92px] px-6 md:px-[45px] bg-white">
         <div className="">
-          <div className="grid-6 mb-12">
-            <h2 className="heading-section col-3">FEATURED</h2>
-            <h2 className="heading-section col-3 text-right">WORKS</h2>
+          <div className="grid-6 mb-8 md:mb-12">
+            <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">FEATURED</h2>
+            <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-3 text-left md:text-right">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">
-            {Array.from({ length: Math.ceil(featuredItems.length / 3) }, (_, groupIndex) => {
-              const startIndex = groupIndex * 3;
-              const groupItems = featuredItems.slice(startIndex, startIndex + 3);
+            {Array.from(
+              { length: Math.ceil(featuredItems.length / 3) },
+              (_, groupIndex) => {
+                const startIndex = groupIndex * 3;
+                const groupItems = featuredItems.slice(
+                  startIndex,
+                  startIndex + 3,
+                );
 
-              return [
-                // 上部ボーダー
-                <div key={`border-top-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="3つのカードの上部のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // 画像3つ
-                ...groupItems.map((item) => (
-                  <div key={`image-${item.type}-${item.id}`} className="col-2">
-                    <WorkCard
-                      id={item.id}
-                      slug={item.slug}
-                      thumbnail={item.thumbnail}
-                      client={item.client}
-                      title={item.title}
-                      tags={item.tags}
-                      linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
-                      onImageLoad={(height) => handleImageLoad(item.id, height)}
-                      imageHeight={minHeight}
-                      imageOnly
+                return [
+                  // 上部ボーダー
+                  <div key={`border-top-${groupIndex}`} className="col-6">
+                    <Image
+                      src="/svg/border.svg"
+                      alt="3つのカードの上部のボーダー"
+                      width={800}
+                      height={10}
+                      className="w-full"
                     />
-                  </div>
-                )),
-                // 中間ボーダー
-                <div key={`border-middle-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="画像と文章の間のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // テキスト3つ
-                ...groupItems.map((item) => (
-                  <div key={`text-${item.type}-${item.id}`} className={`col-2 ${groupIndex === Math.ceil(featuredItems.length / 3) - 1 ? 'mb-[80px]' : ''}`}>
-                    <WorkCard
-                      id={item.id}
-                      slug={item.slug}
-                      thumbnail={item.thumbnail}
-                      client={item.client}
-                      title={item.title}
-                      tags={item.tags}
-                      role={item.role}
-                      linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
-                      textOnly
+                  </div>,
+                  // 画像3つ
+                  ...groupItems.map((item) => (
+                    <div
+                      key={`image-${item.type}-${item.id}`}
+                      className="col-2"
+                    >
+                      <WorkCard
+                        id={item.id}
+                        slug={item.slug}
+                        thumbnail={item.thumbnail}
+                        client={item.client}
+                        title={item.title}
+                        tags={item.tags}
+                        linkHref={
+                          item.type === "release"
+                            ? `/releases#${item.slug}`
+                            : `/works/${item.slug}`
+                        }
+                        onImageLoad={(height) =>
+                          handleImageLoad(item.id, height)
+                        }
+                        imageHeight={minHeight}
+                        imageOnly
+                      />
+                    </div>
+                  )),
+                  // 中間ボーダー
+                  <div key={`border-middle-${groupIndex}`} className="col-6">
+                    <Image
+                      src="/svg/border.svg"
+                      alt="画像と文章の間のボーダー"
+                      width={800}
+                      height={10}
+                      className="w-full"
                     />
-                  </div>
-                )),
-              ];
-            }).flat()}
+                  </div>,
+                  // テキスト3つ
+                  ...groupItems.map((item) => (
+                    <div
+                      key={`text-${item.type}-${item.id}`}
+                      className={`col-2 ${groupIndex === Math.ceil(featuredItems.length / 3) - 1 ? "mb-10 md:mb-[80px]" : ""}`}
+                    >
+                      <WorkCard
+                        id={item.id}
+                        slug={item.slug}
+                        thumbnail={item.thumbnail}
+                        client={item.client}
+                        title={item.title}
+                        tags={item.tags}
+                        role={item.role}
+                        linkHref={
+                          item.type === "release"
+                            ? `/releases#${item.slug}`
+                            : `/works/${item.slug}`
+                        }
+                        textOnly
+                      />
+                    </div>
+                  )),
+                ];
+              },
+            ).flat()}
           </div>
 
           {/* More Works and Releases */}
-          <div className="h-[143px] mt-[92px] mb-[52px]">
+          <div className="h-auto md:h-[143px] mt-12 md:mt-[92px] mb-8 md:mb-[52px]">
             <div className="grid-6">
               <Link
                 href="/works"
-                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE WORKS
               </Link>
             </div>
             <div className="mt-2 grid-6">
               <Link
-                href="/works"
-                className="inline-block text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                href="/releases"
+                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE RELEASE
               </Link>
