@@ -215,6 +215,11 @@ class WAVE_Custom_Post_Types {
                 // Display order
                 $display_order = get_post_meta($post['id'], '_work_display_order', true);
 
+                // Gallery settings
+                $gallery_columns_desktop = get_post_meta($post['id'], '_work_gallery_columns_desktop', true);
+                $gallery_columns_mobile = get_post_meta($post['id'], '_work_gallery_columns_mobile', true);
+                $gallery_gutter = get_post_meta($post['id'], '_work_gallery_gutter', true);
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
@@ -224,6 +229,9 @@ class WAVE_Custom_Post_Types {
                     'credits' => get_post_meta($post['id'], '_work_credits', true),
                     'audio_url' => $audio_url,
                     'gallery_images' => $gallery_images,
+                    'gallery_columns_desktop' => $gallery_columns_desktop ? intval($gallery_columns_desktop) : null,
+                    'gallery_columns_mobile' => $gallery_columns_mobile ? intval($gallery_columns_mobile) : null,
+                    'gallery_gutter' => $gallery_gutter !== '' ? intval($gallery_gutter) : null,
                     'layout_order' => $layout_order,
                     'display_order' => $display_order ? intval($display_order) : 99,
                 );
@@ -388,7 +396,7 @@ class WAVE_Custom_Post_Types {
         }
         $credits = get_post_meta($post->ID, '_work_credits', true);
         if (!$credits) {
-            $credits = '[]';
+            $credits = '';
         }
         ?>
         <style>
@@ -470,6 +478,29 @@ class WAVE_Custom_Post_Types {
                 </td>
             </tr>
             <tr>
+                <th><label>Gallery Settings</label></th>
+                <td>
+                    <?php
+                    $gallery_columns_desktop = get_post_meta($post->ID, '_work_gallery_columns_desktop', true);
+                    $gallery_columns_mobile = get_post_meta($post->ID, '_work_gallery_columns_mobile', true);
+                    $gallery_gutter = get_post_meta($post->ID, '_work_gallery_gutter', true);
+                    ?>
+                    <p>
+                        <label for="work_gallery_columns_desktop">デスクトップ列数:</label>
+                        <input type="number" id="work_gallery_columns_desktop" name="work_gallery_columns_desktop" value="<?php echo esc_attr($gallery_columns_desktop); ?>" class="small-text" min="1" max="6" placeholder="2">
+                    </p>
+                    <p>
+                        <label for="work_gallery_columns_mobile">モバイル列数:</label>
+                        <input type="number" id="work_gallery_columns_mobile" name="work_gallery_columns_mobile" value="<?php echo esc_attr($gallery_columns_mobile); ?>" class="small-text" min="1" max="4" placeholder="2">
+                    </p>
+                    <p>
+                        <label for="work_gallery_gutter">間隔 (px):</label>
+                        <input type="number" id="work_gallery_gutter" name="work_gallery_gutter" value="<?php echo esc_attr($gallery_gutter); ?>" class="small-text" min="0" max="100" placeholder="20">
+                    </p>
+                    <p class="description">空欄の場合はデフォルト値（列数: 2、間隔: 20px）が使用されます</p>
+                </td>
+            </tr>
+            <tr>
                 <th><label for="work_layout_order">要素の表示順序</label></th>
                 <td>
                     <input type="hidden" id="work_layout_order" name="work_layout_order" value="<?php echo esc_attr($layout_order); ?>">
@@ -497,7 +528,7 @@ class WAVE_Custom_Post_Types {
                 <th><label for="work_credits">Credits</label></th>
                 <td>
                     <textarea id="work_credits" name="work_credits" rows="8" class="large-text"><?php echo esc_textarea($credits); ?></textarea>
-                    <p class="description">JSON形式で入力してください。例: [{"role":"Artist","name":"諏訪綾子"},{"role":"Sound Installation","name":"HAL ca"}]</p>
+                    <p class="description">1行に1つのクレジットを入力してください。例:<br>Artist：諏訪綾子<br>Sound Installation：HAL ca</p>
                 </td>
             </tr>
         </table>
@@ -730,25 +761,9 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_video_urls'])) {
                 update_post_meta($post_id, '_work_video_urls', sanitize_textarea_field($_POST['work_video_urls']));
             }
-            // Credits field (JSON)
+            // Credits field (plain text, one per line)
             if (isset($_POST['work_credits'])) {
-                // wp_unslashでエスケープを解除してからJSONをパース
-                $credits_raw = wp_unslash($_POST['work_credits']);
-                $credits_raw = trim($credits_raw);
-
-                // 空の場合は空配列を保存
-                if (empty($credits_raw)) {
-                    update_post_meta($post_id, '_work_credits', '[]');
-                } else {
-                    $decoded = json_decode($credits_raw, true);
-                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                        // 有効なJSONの場合、再エンコードして保存（整形）
-                        update_post_meta($post_id, '_work_credits', wp_json_encode($decoded, JSON_UNESCAPED_UNICODE));
-                    } else {
-                        // JSON形式が無効な場合でも入力値を保存（ユーザーが修正できるように）
-                        update_post_meta($post_id, '_work_credits', $credits_raw);
-                    }
-                }
+                update_post_meta($post_id, '_work_credits', sanitize_textarea_field($_POST['work_credits']));
             }
             // Media fields
             if (isset($_POST['work_audio_file'])) {
@@ -756,6 +771,19 @@ class WAVE_Custom_Post_Types {
             }
             if (isset($_POST['work_gallery_images'])) {
                 update_post_meta($post_id, '_work_gallery_images', sanitize_text_field($_POST['work_gallery_images']));
+            }
+            // Gallery settings
+            if (isset($_POST['work_gallery_columns_desktop'])) {
+                $val = intval($_POST['work_gallery_columns_desktop']);
+                update_post_meta($post_id, '_work_gallery_columns_desktop', $val > 0 ? $val : '');
+            }
+            if (isset($_POST['work_gallery_columns_mobile'])) {
+                $val = intval($_POST['work_gallery_columns_mobile']);
+                update_post_meta($post_id, '_work_gallery_columns_mobile', $val > 0 ? $val : '');
+            }
+            if (isset($_POST['work_gallery_gutter'])) {
+                $val = intval($_POST['work_gallery_gutter']);
+                update_post_meta($post_id, '_work_gallery_gutter', $val >= 0 ? $val : '');
             }
             // Layout order
             if (isset($_POST['work_layout_order'])) {

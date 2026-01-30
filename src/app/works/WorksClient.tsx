@@ -106,7 +106,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       </section>
 
       {/* Filter & Works Grid */}
-      <section className="py-[30px] pb-[20px] px-[45px] md:px-[45px]">
+      <section className="py-[30px] pb-[20px] px-[45px] md:px-[45px] mb-[55px]">
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
@@ -172,7 +172,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
               </div>
 
               {/* デスクトップ用 (md以上): 2カード表示 */}
-              <div className="col-6 hidden md:block">
+              <div className="col-6 hidden md:block mb-[200px]">
                 <div className="grid-6">
                   {Array.from({ length: Math.ceil(filteredWorks.length / 2) }, (_, groupIndex) => {
                     const startIndex = groupIndex * 2;

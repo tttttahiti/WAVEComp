@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { AudioPlayer } from "@/components/AudioPlayer";
+import { MasonryGallery } from "@/components/MasonryGallery";
 
 // 常にサーバーサイドで動的レンダリングを行う
 export const dynamic = 'force-dynamic';
@@ -20,18 +21,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   try {
     const wpWork = await getWorkBySlug(slug);
     if (wpWork) {
-      // credits をパース（JSON文字列の場合と配列の場合の両方に対応）
-      let credits: { role: string; name: string }[] = [];
-      if (wpWork.work_meta.credits) {
-        try {
-          const parsed = typeof wpWork.work_meta.credits === 'string' 
-            ? JSON.parse(wpWork.work_meta.credits) 
-            : wpWork.work_meta.credits;
-          credits = Array.isArray(parsed) ? parsed : [];
-        } catch {
-          credits = [];
-        }
-      }
+      // credits はプレーンテキスト（改行区切り）
+      const credits = wpWork.work_meta.credits || '';
 
       // タグを取得
       const tags = (wpWork.work_tags_data || []).map((tag: { name: string }) =>
@@ -49,6 +40,9 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         clientRole: '', // clientRole は work_meta にない場合は空文字
         heroImage: wpWork.featured_image_url || '/images/placeholder.jpg',
         galleryImages: wpWork.work_meta.gallery_images?.map((img: { url: string }) => img.url) || [],
+        galleryColumnsDesktop: wpWork.work_meta.gallery_columns_desktop ?? 2,
+        galleryColumnsMobile: wpWork.work_meta.gallery_columns_mobile ?? 2,
+        galleryGutter: wpWork.work_meta.gallery_gutter ?? 20,
         videoUrls: wpWork.work_meta.video_urls || [],
         credits,
         listenUrl: wpWork.work_meta.audio_url || '',
@@ -86,8 +80,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       <section className="py-8 md:py-24 px-[45px] md:px-[45px]">
         <div className="grid-6">
           {/* Left Column - Title & Date */}
-          <div className="col-3">
-            <p className="text-[10pt] md:text-[12pt] mb-1 md:mb-2">{work.client}</p>
+          <div className="col-6 md:col-span-3">
+            <p className="text-[12pt] font-bold mb-1 md:mb-2">{work.client}</p>
             <h1 className="text-[30pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
               {work.title}
             </h1>
@@ -95,7 +89,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           </div>
 
           {/* Right Column - Description & Details */}
-          <div className="col-3">
+          <div className="col-6 md:col-span-3">
             <div className="text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2] whitespace-pre-line mb-4 md:mb-8">
               {work.description}
             </div>
@@ -146,25 +140,16 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Section with Masonry */}
       {work.galleryImages.length > 0 && (
         <section className="py-4 md:py-8 px-[45px] md:px-[45px]">
-          <div className="grid-6">
-            {work.galleryImages.map((image, index) => (
-              <div
-                key={index}
-                className="col-3 aspect-[4/3] relative bg-gray-100"
-              >
-                <Image
-                  src={image}
-                  alt={`${work.title} - ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-            ))}
-          </div>
+          <MasonryGallery
+            images={work.galleryImages}
+            title={work.title}
+            columnsDesktop={work.galleryColumnsDesktop}
+            columnsMobile={work.galleryColumnsMobile}
+            gutter={work.galleryGutter}
+          />
         </section>
       )}
 
@@ -182,21 +167,18 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
       )}
 
       {/* Credits Section */}
-      <section className="py-8 md:py-16 px-[45px] md:px-[45px]">
-        <div className="grid-6">
-          <div className="col-6 md:col-start-4 md:col-span-3 border-t border-black/10 pt-4 md:pt-8">
-            <p className="text-xs md:text-sm font-medium mb-1">Credit:</p>
-            <ul className="space-y-1">
-              {work.credits.map((credit: { role: string; name: string }, index: number) => (
-                <li key={index} className="text-xs md:text-sm">
-                  <span className="text-[10pt] md:text-[12pt]">{credit.role}：</span>
-                  {credit.name}
-                </li>
-              ))}
-            </ul>
+      {work.credits && (
+        <section className="py-8 md:py-16 px-[45px] md:px-[45px]">
+          <div className="grid-6">
+            <div className="col-6 md:col-start-4 md:col-span-3 border-t border-black/10 pt-4 md:pt-8">
+              <p className="text-xs md:text-sm font-medium mb-1">Credit:</p>
+              <div className="text-[10pt] md:text-[12pt] whitespace-pre-line">
+                {work.credits}
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

@@ -42,6 +42,9 @@ export interface WPWork {
     credits: string;
     audio_url: string | null;
     gallery_images: WPGalleryImage[];
+    gallery_columns_desktop: number | null;
+    gallery_columns_mobile: number | null;
+    gallery_gutter: number | null;
     layout_order: string[];
     display_order: number;
   };
