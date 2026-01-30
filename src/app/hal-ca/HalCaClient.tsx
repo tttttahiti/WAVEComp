@@ -31,7 +31,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] md:min-h-[70vh] bg-gray-100 overflow-hidden">
+      <section className="relative min-h-[498px] bg-gray-100 overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
           <Image
             src="/images/hal-ca-hero.jpg"
@@ -47,17 +47,17 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Artist Info Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
+      <section className="py-[94px] md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
-            <h2 className="text-[20pt] md:text-[30pt] font-bold mb-4 md:mb-8">HAL ca</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
-            <p className="text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2] font-medium mb-4 md:mb-8">
+            <p className="text-[12pt] font-medium letter-height-[14pt] mb-4 md:mb-8">
               HAL caは、アンビエント・実験音楽を軸とするコンポーザー /
               サウンドアーティスト。
             </p>
 
-            <div className="text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2.2] font-medium space-y-4 md:space-y-6">
+            <div className="text-[12pt] font-medium letter-height-[14pt] space-y-4 md:space-y-6">
               <p>
                 東京生まれ。国立音楽大学を経て渡仏し、パリ・エコールノルマル音楽院映画音楽作曲科を首席で修了、またパリ地方音楽院エレクトロアコースティック作曲科にて電子音響を学ぶ。
                 <br />
@@ -72,14 +72,14 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             </div>
           </div>
           <div className="hidden md:block md:col-1"></div>
-          <div className="col-6 md:col-1 mt-6 md:mt-0">
+          <div className="col-6 md:col-1 mt-[105px] md:mt-0">
             {/* External Links */}
-            <div className="mt-0 md:mt-12 flex flex-row md:flex-col gap-4 md:gap-0">
+            <div className="mt-0 md:mt-12 flex flex-col gap-4 md:gap-0">
               <a
                 href="https://music.apple.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10pt] md:text-[12pt] font-bold text-wave-blue hover:underline"
+                className="text-[12pt] font-bold text-wave-blue hover:underline"
               >
                 APPLE MUSIC
               </a>
@@ -87,7 +87,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://spotify.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10pt] md:text-[12pt] font-bold text-wave-blue hover:underline"
+                className="text-[12pt] font-bold text-wave-blue hover:underline"
               >
                 SPOTIFY
               </a>
@@ -95,7 +95,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10pt] md:text-[12pt] font-bold text-wave-blue hover:underline"
+                className="text-[12pt] font-bold text-wave-blue hover:underline"
               >
                 INSTAGRAM (HAL ca)
               </a>
@@ -108,29 +108,21 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section className="py-12 md:py-[92px] px-[45px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="text-[20pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
-            <h2 className="text-[20pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">
-            {Array.from({ length: Math.ceil(featuredItems.length / 3) }, (_, groupIndex) => {
-              const startIndex = groupIndex * 3;
-              const groupItems = featuredItems.slice(startIndex, startIndex + 3);
-
-              return [
-                // 上部ボーダー
-                <div key={`border-top-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="3つのカードの上部のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // 画像3つ
-                ...groupItems.map((item) => (
-                  <div key={`image-${item.type}-${item.id}`} className="col-2">
+            {/* モバイル用 (md未満): 1カード表示 */}
+            <div className="col-6 md:hidden">
+              <div className="grid-6">
+                {featuredItems.map((item, index) => [
+                  // 上部ボーダー
+                  <div key={`border-top-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                  // 画像
+                  <div key={`image-${item.type}-${item.id}`} className="col-6">
                     <WorkCard
                       id={item.id}
                       slug={item.slug}
@@ -141,24 +133,15 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                       role={item.role}
                       linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
                       onImageLoad={(height) => handleImageLoad(item.id, height)}
-                      imageHeight={minHeight}
                       imageOnly
                     />
-                  </div>
-                )),
-                // 中間ボーダー
-                <div key={`border-middle-${groupIndex}`} className="col-6">
-                  <Image
-                    src="/svg/border.svg"
-                    alt="画像と文章の間のボーダー"
-                    width={800}
-                    height={10}
-                    className="w-full"
-                  />
-                </div>,
-                // テキスト3つ
-                ...groupItems.map((item) => (
-                  <div key={`text-${item.type}-${item.id}`} className={`col-2 ${groupIndex === Math.ceil(featuredItems.length / 3) - 1 ? 'mb-10 md:mb-[80px]' : ''}`}>
+                  </div>,
+                  // 中間ボーダー
+                  <div key={`border-middle-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                  // テキスト
+                  <div key={`text-${item.type}-${item.id}`} className={`col-6 ${index === featuredItems.length - 1 ? 'mb-10' : ''}`}>
                     <WorkCard
                       id={item.id}
                       slug={item.slug}
@@ -170,10 +153,77 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                       linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
                       textOnly
                     />
-                  </div>
-                )),
-              ];
-            }).flat()}
+                  </div>,
+                ]).flat()}
+              </div>
+            </div>
+
+            {/* デスクトップ用 (md以上): 3カード表示 */}
+            <div className="col-6 hidden md:block">
+              <div className="grid-6">
+                {Array.from({ length: Math.ceil(featuredItems.length / 3) }, (_, groupIndex) => {
+                  const startIndex = groupIndex * 3;
+                  const groupItems = featuredItems.slice(startIndex, startIndex + 3);
+
+                  return [
+                    // 上部ボーダー
+                    <div key={`border-top-${groupIndex}`} className="col-6">
+                      <Image
+                        src="/svg/border.svg"
+                        alt=""
+                        width={800}
+                        height={10}
+                        className="w-full"
+                      />
+                    </div>,
+                    // 画像3つ
+                    ...groupItems.map((item) => (
+                      <div key={`image-${item.type}-${item.id}`} className="col-2">
+                        <WorkCard
+                          id={item.id}
+                          slug={item.slug}
+                          thumbnail={item.thumbnail}
+                          client={item.client}
+                          title={item.title}
+                          tags={item.tags}
+                          role={item.role}
+                          linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
+                          onImageLoad={(height) => handleImageLoad(item.id, height)}
+                          imageHeight={minHeight}
+                          imageOnly
+                        />
+                      </div>
+                    )),
+                    // 中間ボーダー
+                    <div key={`border-middle-${groupIndex}`} className="col-6">
+                      <Image
+                        src="/svg/border.svg"
+                        alt=""
+                        width={800}
+                        height={10}
+                        className="w-full"
+                      />
+                    </div>,
+                    // テキスト3つ
+                    ...groupItems.map((item) => (
+                      <div key={`text-${item.type}-${item.id}`} className={`col-2 ${groupIndex === Math.ceil(featuredItems.length / 3) - 1 ? 'mb-[80px]' : ''}`}>
+                        <WorkCard
+                          id={item.id}
+                          slug={item.slug}
+                          thumbnail={item.thumbnail}
+                          client={item.client}
+                          title={item.title}
+                          tags={item.tags}
+                          role={item.role}
+                          linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
+                          textOnly
+                        />
+                      </div>
+                    )),
+                  ];
+                }).flat()}
+              </div>
+            </div>
           </div>
 
           {/* More Works and Releases */}
@@ -181,7 +231,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             <div className="grid-6">
               <Link
                 href="/works"
-                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE WORKS
               </Link>
@@ -189,7 +239,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             <div className="mt-2 grid-6">
               <Link
                 href="/releases"
-                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE RELEASE
               </Link>

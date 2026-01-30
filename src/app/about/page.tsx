@@ -5,10 +5,22 @@ import { Concept } from "@/components/Concept";
 import { MemberCard } from "@/components/MemberCard";
 import { getMembers, transformMember } from "@/lib/wordpress";
 
+// メンバーデータの型
+interface MemberData {
+  imageSrc: string;
+  imageSrcMobile?: string;
+  imageAlt: string;
+  name: string;
+  title: string;
+  biography: string[];
+  achievements: string[];
+}
+
 // フォールバック用のメンバーデータ
-const fallbackMembers = [
+const fallbackMembers: MemberData[] = [
   {
     imageSrc: "/images/members/shimada.jpg",
+    imageSrcMobile: undefined,
     imageAlt: "島田 舞",
     name: "島田 舞 / Mai Shimada",
     title: "Producer / Manager",
@@ -28,6 +40,7 @@ const fallbackMembers = [
   },
   {
     imageSrc: "/images/members/kikuchi.jpg",
+    imageSrcMobile: undefined,
     imageAlt: "菊地 晴夏",
     name: "菊地 晴夏 / Haruka Kikuchi",
     title: "Planner / Producer / Composer",
@@ -68,7 +81,7 @@ export default async function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[270px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -79,16 +92,16 @@ export default async function AboutPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[45px] md:px-[45px]">
-            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">ABOUT</h2>
-            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
+          <div className="grid-6 px-[45px]">
+            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">ABOUT</h2>
+            <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
                   alt="WA/VE"
                   width={140}
                   height={40}
-                  className="w-[100px] md:w-[140px] h-auto"
+                  className="w-[140px] h-auto"
                 />
               </Link>
             </div>
@@ -97,12 +110,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
+      <section className="pt-[120px] pb-[109px] px-[45px]">
         <div className="grid-6 overflow-visible">
-          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-6 md:mb-0">CONCEPT</h2>
+          <h2 className="text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-[41px] md:mb-0">CONCEPT</h2>
 
           {/* 縦書きテキスト */}
-          <div className="flex justify-start md:justify-end overflow-visible col-6 md:col-start-5 md:col-2">
+          <div className="flex justify-center md:justify-end overflow-visible col-6 md:col-start-5 md:col-2">
             <div
               className="writing-vertical-rl font-jp font-medium leading-[2.5]"
               style={{
@@ -131,13 +144,13 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
+      <section className="pt-[30px] pb-[20px] px-[45px] md:px-[45px]">
         <div className="grid-6">
-          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
           <ul
-            className="text-[12pt] md:text-[18pt] col-6 md:col-start-4 md:col-3"
+            className="text-[18pt] mt-[52px] h-[320px] col-start-2 col-4 md:col-start-4 md:col-3"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
@@ -153,9 +166,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
-        <div className="grid-6 h-auto md:h-[50px] mb-4 md:mb-0">
-          <h2 className="text-[20pt] md:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
+      <section className="px-[45px]">
+        <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>
@@ -164,6 +177,7 @@ export default async function AboutPage() {
           <MemberCard
             key={member.name}
             imageSrc={member.imageSrc}
+            imageSrcMobile={member.imageSrcMobile}
             imageAlt={member.imageAlt}
             name={member.name}
             title={member.title}
@@ -175,18 +189,21 @@ export default async function AboutPage() {
       </section>
 
       {/* Info Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
+      <section className="pt-0 md:pt-[30px] pb-[20px] px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[20pt] md:text-[30pt] font-bold">INFO</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
-          <div className="col-6 md:col-start-4 md:col-span-2">
-            <div className="text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
+          <div className="col-start-2 col-span-4 md:col-start-4 md:col-span-2">
+            <div className="text-[12pt] font-medium">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
-              <p className="mt-2 md:mt-4">設立日：2026年4月1日</p>
+              <br/>
+              <p>設立日：2026年4月1日</p>
               <p>代表取締役（共同代表）：</p>
               <p>菊地晴夏 / 島田舞</p>
+              <br/>
+
               <p>
                 <a
                   href="mailto:info@wa-ve.jp"
@@ -201,10 +218,10 @@ export default async function AboutPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
+      <section className="py-12 md:py-32 px-[45px] md:px-[45px] pb-[98px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[20pt] md:text-[30pt] font-bold">CONTACT</h2>
+            <h2 className="text-[30pt] font-bold">CONTACT</h2>
           </div>
         </div>
         <ContactForm />

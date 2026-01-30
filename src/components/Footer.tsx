@@ -7,7 +7,7 @@ export function Footer() {
       <div className="">
         <div className="grid-6">
           {/* Logo */}
-          <div className="col-3 md:col-1">
+          <div className="col-span-3 md:col-span-1">
             <Link href="/">
               <Image
                 src="/svg/logo-wave.svg"
@@ -89,7 +89,7 @@ export function Footer() {
           <div className="hidden md:block col-1"></div>
 
           {/* Copyright */}
-          <div className="col-2 md:col-1 col-start-6 md:col-auto flex flex-col items-end md:items-start">
+          <div className="col-2 md:col-1 col-start-6 md:col-start-auto flex flex-col items-end md:items-start">
             <div className="flex flex-row justify-between gap-2 md:gap-0 w-full md:w-full">
               <p className="text-[6pt] md:text-[7pt] text-black font-en">©</p>
               <p className="text-[6pt] md:text-[7pt] text-black font-en">WA/VE</p>

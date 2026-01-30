@@ -88,7 +88,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           {/* Left Column - Title & Date */}
           <div className="col-3">
             <p className="text-[10pt] md:text-[12pt] mb-1 md:mb-2">{work.client}</p>
-            <h1 className="text-[20pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
+            <h1 className="text-[30pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
               {work.title}
             </h1>
             <p className="text-[10pt] md:text-[12pt]">Date: {work.date}</p>

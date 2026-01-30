@@ -19,16 +19,13 @@ export function MemberCard({
   title,
   biography,
   achievements,
-  marginTop = "mt-2 md:mt-[15px]",
+  marginTop = "mt-0 md:mt-[15px]",
 }: MemberCardProps) {
   return (
-    <div className={`grid-6 ${marginTop}`}>
-      {/* モバイル: 全幅、デスクトップ: col-2から開始して1.5列分 */}
+    <div className={`grid-6 ${marginTop} mb-[200px]`}>
+      {/* モバイル: 4列・中央・正方形、デスクトップ: col-2から開始して1.5列分・3:4 */}
       <div
-        className="relative aspect-[3/4] bg-gray-100 col-span-4 md:col-span-1"
-        style={{
-          gridColumnStart: undefined,
-        }}
+        className="relative aspect-square md:aspect-[3/4] bg-gray-100 col-span-4 col-start-2 md:col-span-2 md:col-start-2 w-full md:w-[75%] mb-[132px] "
       >
         {/* デスクトップ用画像 */}
         <Image
@@ -53,21 +50,23 @@ export function MemberCard({
       {/* モバイル: 全幅、デスクトップ: col-4からcol-6 */}
       <div className="col-6 md:col-span-2 mt-4 md:mt-0">
         <p
-          className="text-[14pt] md:text-[18pt] font-bold"
+          className="text-[18pt] font-bold letter-height-[40pt]"
           style={{ lineHeight: "1.4" }}
         >
           <span>{name}</span>
           <br />
           <span>{title}</span>
+          <br />
+          <br />
         </p>
-        <div className="text-[10pt] md:text-[12pt] leading-[1.5] space-y-3 md:space-y-4 mt-3 md:mt-4">
+        <div className="text-[12pt] letter-height-[14pt]">
           {biography.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
-        <div className="mt-6 md:mt-8">
-          <p className="text-[10pt] md:text-[12pt] font-medium mb-2">実績：</p>
-          <ul className="text-[10pt] md:text-[12pt] space-y-1">
+        <div className="mt-[14px]">
+          <p className="text-[12pt] font-medium">実績：</p>
+          <ul className="text-[12pt] letter-height-[14pt]">
             {achievements.map((achievement, index) => (
               <li key={index}>{achievement}</li>
             ))}

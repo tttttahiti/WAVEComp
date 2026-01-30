@@ -65,7 +65,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
       <Link href={href} className="block card-hover">
         <div
           ref={containerRef}
-          className="relative bg-white overflow-hidden flex items-center justify-center"
+          className="relative bg-white overflow-hidden py-[22px] flex items-center justify-center"
           style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
         >
           <Image
@@ -84,7 +84,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   if (textOnly) {
     return (
-      <div className="">
+      <div className="pt-[17px] pb-[60px]">
         <Link href={href} className="block card-hover">
           <p className="text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
           <h3 className="font-bold text-[12pt] md:text-[14pt] leading-snug">{title}</h3>

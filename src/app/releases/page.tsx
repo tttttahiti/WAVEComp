@@ -19,7 +19,7 @@ export default async function ReleasesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
+      <section className="relative h-[270px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
           <Image
             src="/svg/bg-gradient.svg"
@@ -30,16 +30,16 @@ export default async function ReleasesPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[45px] md:px-[45px]">
-            <h2 className="text-white text-[20pt] md:text-[30pt] font-bold col-6 md:col-3">RELEASES</h2>
-            <div className="col-6 md:col-3 flex justify-start md:justify-end items-end mt-2 md:mt-0">
+          <div className="grid-6 px-[45px]">
+            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">RELEASES</h2>
+            <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
                   src="/svg/logo-wave.svg"
                   alt="WA/VE"
                   width={140}
                   height={40}
-                  className="w-[100px] md:w-[140px] h-auto"
+                  className="w-[140px] h-auto"
                 />
               </Link>
             </div>

@@ -81,84 +81,59 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
           </div>
 
           <div className="grid-6 justify-end">
-            {/* モバイル: 2列表示, デスクトップ: 3列表示 */}
-            {/* モバイル用 (md未満) */}
+            {/* モバイル: 1列表示, デスクトップ: 3列表示 */}
+            {/* モバイル用 (md未満): 1カード表示 */}
             <div className="col-6 md:hidden">
               <div className="grid-6">
-                {Array.from(
-                  { length: Math.ceil(featuredItems.length / 2) },
-                  (_, groupIndex) => {
-                    const startIndex = groupIndex * 2;
-                    const groupItems = featuredItems.slice(startIndex, startIndex + 2);
-
-                    return [
-                      // 上部ボーダー
-                      <div key={`border-top-${groupIndex}`} className="col-6">
-                        <Image
-                          src="/svg/line.svg"
-                          alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
-                        />
-                      </div>,
-                      // 画像2つ
-                      ...groupItems.map((item) => (
-                        <div key={`image-${item.type}-${item.id}`} className="col-3">
-                          <WorkCard
-                            id={item.id}
-                            slug={item.slug}
-                            thumbnail={item.thumbnail}
-                            client={item.client}
-                            title={item.title}
-                            tags={item.tags}
-                            linkHref={
-                              item.type === "release"
-                                ? `/releases#${item.slug}`
-                                : `/works/${item.slug}`
-                            }
-                            onImageLoad={(height) => handleImageLoad(item.id, height)}
-                            imageHeight={minHeight}
-                            imageOnly
-                          />
-                        </div>
-                      )),
-                      // 中間ボーダー
-                      <div key={`border-middle-${groupIndex}`} className="col-6">
-                        <Image
-                          src="/svg/line.svg"
-                          alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
-                        />
-                      </div>,
-                      // テキスト2つ
-                      ...groupItems.map((item) => (
-                        <div
-                          key={`text-${item.type}-${item.id}`}
-                          className={`col-3 pt-[20px] ${groupIndex === Math.ceil(featuredItems.length / 2) - 1 ? "mb-10" : ""}`}
-                        >
-                          <WorkCard
-                            id={item.id}
-                            slug={item.slug}
-                            thumbnail={item.thumbnail}
-                            client={item.client}
-                            title={item.title}
-                            tags={item.tags}
-                            role={item.role}
-                            linkHref={
-                              item.type === "release"
-                                ? `/releases#${item.slug}`
-                                : `/works/${item.slug}`
-                            }
-                            textOnly
-                          />
-                        </div>
-                      )),
-                    ];
-                  }
-                ).flat()}
+                {featuredItems.map((item, index) => [
+                  // 上部ボーダー
+                  <div key={`border-top-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                  // 画像
+                  <div key={`image-${item.type}-${item.id}`} className="col-6">
+                    <WorkCard
+                      id={item.id}
+                      slug={item.slug}
+                      thumbnail={item.thumbnail}
+                      client={item.client}
+                      title={item.title}
+                      tags={item.tags}
+                      linkHref={
+                        item.type === "release"
+                          ? `/releases#${item.slug}`
+                          : `/works/${item.slug}`
+                      }
+                      onImageLoad={(height) => handleImageLoad(item.id, height)}
+                      imageOnly
+                    />
+                  </div>,
+                  // 中間ボーダー
+                  <div key={`border-middle-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                  // テキスト
+                  <div
+                    key={`text-${item.type}-${item.id}`}
+                    className={`col-6 pt-[20px] ${index === featuredItems.length - 1 ? "mb-10" : ""}`}
+                  >
+                    <WorkCard
+                      id={item.id}
+                      slug={item.slug}
+                      thumbnail={item.thumbnail}
+                      client={item.client}
+                      title={item.title}
+                      tags={item.tags}
+                      role={item.role}
+                      linkHref={
+                        item.type === "release"
+                          ? `/releases#${item.slug}`
+                          : `/works/${item.slug}`
+                      }
+                      textOnly
+                    />
+                  </div>,
+                ]).flat()}
               </div>
             </div>
 
@@ -248,7 +223,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
             <div className="grid-6">
               <Link
                 href="/works"
-                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE WORKS
               </Link>
@@ -256,7 +231,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
             <div className="mt-2 grid-6">
               <Link
                 href="/releases"
-                className="inline-block text-[20pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE RELEASE
               </Link>
