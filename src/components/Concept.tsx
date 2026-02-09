@@ -6,16 +6,16 @@ interface ConceptProps {
 export function Concept({ showTitle = true, className = "" }: ConceptProps) {
   return (
     <section className={`py-[120px] md:py-[154px] px-[45px]${className}`}>
-      <div className="grid-6 overflow-visible">
+      <div className="grid-6 overflow-visible md:items-start">
         {showTitle && (
-          <h2 className="text-[30pt] md:text-[30pt] font-bold col-6 md:col-1 mb-0">
+          <h2 className="text-[30pt] md:text-[30pt] font-bold col-6 md:col-1 md:col-start-1 mb-0">
             CONCEPT
           </h2>
         )}
 
         {/* 縦書きテキスト */}
         <div
-          className={`pt-[40px] flex justify-center md:justify-end overflow-visible ${showTitle ? "col-6 md:col-start-5 md:col-2" : "col-6"}`}
+          className={`pt-[40px] md:pt-0 flex justify-center md:justify-end overflow-visible ${showTitle ? "col-6 md:col-start-5 md:col-2" : "col-6"}`}
         >
           <div
             className="writing-vertical-rl font-jp font-medium leading-[1.2] text-[18pt] md:text-[18pt]"

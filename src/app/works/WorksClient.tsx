@@ -34,13 +34,24 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
     }
   }, [searchParams]);
 
-  // 全ての記事から重複なしのタグ一覧を取得
+  // プルダウン表示順（この順で表示、未定義タグは末尾）
+  const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
+
+  // 全ての記事から重複なしのタグ一覧を取得（指定順でソート）
   const allTags = useMemo(() => {
     const tagSet = new Set<string>();
     initialWorks.forEach((work) => {
       work.tags.forEach((tag) => tagSet.add(tag));
     });
-    return Array.from(tagSet).sort();
+    const list = Array.from(tagSet);
+    return list.sort((a, b) => {
+      const i = TAG_ORDER.indexOf(a);
+      const j = TAG_ORDER.indexOf(b);
+      if (i === -1 && j === -1) return a.localeCompare(b);
+      if (i === -1) return 1;
+      if (j === -1) return -1;
+      return i - j;
+    });
   }, [initialWorks]);
 
   const filteredWorks = useMemo(() => {

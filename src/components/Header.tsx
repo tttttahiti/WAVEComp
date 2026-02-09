@@ -55,7 +55,7 @@ export function Header() {
               onClick={closeMenu}
               className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
-              RELEASE
+              RELEASES
             </Link>
             <Link
               href="/works"
@@ -79,7 +79,7 @@ export function Header() {
           {/* Social Links - Same font size as nav, left-aligned */}
           <div className="space-y-3 md:space-y-4">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/wa_ve.jp/"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
@@ -87,7 +87,7 @@ export function Header() {
               INSTAGRAM
             </a>
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/wave.halca"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
@@ -95,7 +95,7 @@ export function Header() {
               FACEBOOK
             </a>
             <a
-              href="https://music.apple.com"
+              href="https://music.apple.com/jp/artist/hal-ca/1702034837"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
@@ -103,7 +103,7 @@ export function Header() {
               APPLE MUSIC
             </a>
             <a
-              href="https://spotify.com"
+              href="https://open.spotify.com/intl-ja/artist/4PtZB4ONshF7mdbYQgVWtm"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"

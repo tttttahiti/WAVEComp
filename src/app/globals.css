@@ -120,16 +120,16 @@ code, pre, .font-mono {
 }
 
 .btn-primary:hover {
-  @apply opacity-90;
+  @apply bg-[#c2de6d] text-black;
 }
 
 /* Card Hover Effect */
 .card-hover {
-  @apply transition-transform duration-300 ease-out;
+  @apply transition-opacity duration-300 ease-out;
 }
 
 .card-hover:hover {
-  @apply scale-[1.01];
+  @apply opacity-70;
 }
 
 /* Squish background images when menu is open */

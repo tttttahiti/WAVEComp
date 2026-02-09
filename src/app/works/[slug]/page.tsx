@@ -102,7 +102,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
                   <Link
                     key={index}
                     href={`/works?tag=${encodeURIComponent(tag)}`}
-                    className="text-[10pt] md:text-[12pt] hashtag hover:text-wave-blue transition-colors"
+                    className="text-[10pt] md:text-[12pt] hashtag hover:text-[#c2de6d] transition-colors"
                   >
                     {tag}
                   </Link>

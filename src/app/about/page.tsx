@@ -143,14 +143,14 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Our Service Section */}
+      {/* Our Service Section - 見出しとコンテンツを同一行で高さ揃え（CONCEPT同様） */}
       <section className="pt-[30px] pb-[20px] px-[45px] md:px-[45px]">
         <div className="grid-6">
-          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-1 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
           <ul
-            className="text-[18pt] mt-[52px] h-[320px] col-start-2 col-4 md:col-start-4 md:col-3"
+            className="text-[18pt] col-6 md:col-start-4 md:col-4"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">

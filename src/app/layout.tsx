@@ -29,8 +29,14 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "WA/VE - Sound Production Studio",
+  title: "WA/VE",
   description: "音のある時間を豊かに、緻密に、そして大胆に。心に響く音や体験をつくりだします。",
+  icons: {
+    icon: [
+      { url: "/icon_light.png", media: "(prefers-color-scheme: light)" },
+      { url: "/icon_dark.png", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
 };
 
 export default function RootLayout({

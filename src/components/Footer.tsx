@@ -89,8 +89,8 @@ export function Footer() {
           <div className="hidden md:block col-1"></div>
 
           {/* Copyright */}
-          <div className="col-2 md:col-1 col-start-6 md:col-start-auto flex flex-col items-end md:items-start">
-            <div className="flex flex-row justify-between gap-2 md:gap-0 w-full md:w-full">
+          <div className="col-span-2 md:col-span-1 col-start-5 md:col-start-auto flex flex-col items-end md:items-start">
+            <div className="flex flex-row justify-between gap-2 md:gap-0 w-full">
               <p className="text-[6pt] md:text-[7pt] text-black font-en">©</p>
               <p className="text-[6pt] md:text-[7pt] text-black font-en">WA/VE</p>
               <p className="text-[6pt] md:text-[7pt] text-black font-en">2025.</p>
