@@ -100,7 +100,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
           <div className="grid-6 px-[45px] md:px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3 md:col-3">WORKS</h2>
+            <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3 md:col-3">WORKS</h2>
             <div className="col-3 md:col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
@@ -145,7 +145,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
           {/* Works Grid - モバイル: 1列, デスクトップ: 2列 */}
           {filteredWorks.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-[10pt] md:text-[12pt]">Works not found</p>
+              <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">Works not found</p>
             </div>
           ) : (
             <div className="grid-6 justify-end">

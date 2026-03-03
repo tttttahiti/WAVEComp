@@ -253,6 +253,15 @@ textarea:-webkit-autofill:focus {
   }
 }
 
+@media (max-width: 400px) {
+  h2 {
+    font-size: 8pt;
+  }
+  .heading-section {
+    font-size: 8pt;
+  }
+}
+
 /* Page transitions */
 main {
   min-height: 100vh;

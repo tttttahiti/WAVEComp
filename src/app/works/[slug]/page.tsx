@@ -81,28 +81,28 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         <div className="grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-6 md:col-span-3">
-            <p className="text-[12pt] font-bold mb-1 md:mb-2">{work.client}</p>
-            <h1 className="text-[30pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
+            <p className="max-[400px]:text-[4.5pt] text-[12pt] font-bold mb-1 md:mb-2">{work.client}</p>
+            <h1 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
               {work.title}
             </h1>
-            <p className="text-[10pt] md:text-[12pt]">Date: {work.date}</p>
+            <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">Date: {work.date}</p>
           </div>
 
           {/* Right Column - Description & Details */}
           <div className="col-6 md:col-span-3">
-            <div className="text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2] whitespace-pre-line mb-4 md:mb-8">
+            <div className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2] whitespace-pre-line mb-4 md:mb-8">
               {work.description}
             </div>
 
-            <p className="text-[10pt] md:text-[12pt] mb-4 md:mb-6">{work.role}</p>
+            <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] mb-4 md:mb-6">{work.role}</p>
 
             <div className="border-t border-black/10 pt-3 md:pt-4 space-y-2 md:space-y-3">
-              <div className="flex flex-wrap gap-2 md:gap-4 text-[10pt] md:text-[12pt]">
+              <div className="flex flex-wrap gap-2 md:gap-4 max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">
                 {work.tags.map((tag, index) => (
                   <Link
                     key={index}
                     href={`/works?tag=${encodeURIComponent(tag)}`}
-                    className="text-[10pt] md:text-[12pt] hashtag hover:text-[#c2de6d] transition-colors"
+                    className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] hashtag hover:text-[#c2de6d] transition-colors"
                   >
                     {tag}
                   </Link>
@@ -110,8 +110,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
               </div>
 
               {work.url && (
-                <p className="text-[10pt] md:text-[12pt]">
-                  <span className="text-[10pt] md:text-[12pt]">URL: </span>
+                <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">
+                  <span className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">URL: </span>
                   <a
                     href={work.url}
                     target="_blank"
@@ -124,8 +124,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
               )}
 
               {work.clientRole && (
-                <p className="text-[10pt] md:text-[12pt]">
-                  <span className="text-[10pt] md:text-[12pt]">Client: </span>
+                <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">
+                  <span className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">Client: </span>
                   {work.clientRole}
                 </p>
               )}
@@ -172,7 +172,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
           <div className="grid-6">
             <div className="col-6 md:col-start-4 md:col-span-3 border-t border-black/10 pt-4 md:pt-8">
               <p className="text-xs md:text-sm font-medium mb-1">Credit:</p>
-              <div className="text-[10pt] md:text-[12pt] whitespace-pre-line">
+              <div className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] whitespace-pre-line">
                 {work.credits}
               </div>
             </div>

@@ -18,7 +18,7 @@ export default function ContactPage() {
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
           <div className="grid-6 px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">CONTACT</h2>
+            <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">CONTACT</h2>
             <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
@@ -38,10 +38,10 @@ export default function ContactPage() {
       <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
+            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
           <div className="col-6 md:col-start-4 md:col-span-2">
-            <div className="text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
+            <div className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
               <p className="mt-2 md:mt-4">設立日：2026年4月1日</p>
@@ -64,7 +64,7 @@ export default function ContactPage() {
       <section className="py-12 md:py-32 px-[45px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold">CONTACT</h2>
+            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold">CONTACT</h2>
           </div>
         </div>
         <ContactForm />

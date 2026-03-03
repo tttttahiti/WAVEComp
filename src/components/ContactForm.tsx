@@ -35,7 +35,7 @@ export function ContactForm() {
 
   return (
     <div className="grid-6 mt-4 md:mt-[30px]">
-      <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2] mb-4 md:mb-0">
+      <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2] mb-4 md:mb-0">
         <p className="hidden md:block">
           お名前
         </p>
@@ -52,7 +52,7 @@ export function ContactForm() {
       <div className="col-6 md:col-start-3 md:col-span-3">
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
         <div>
-          <label className="block md:hidden text-[12pt] font-medium mb-1">お名前</label>
+          <label className="block md:hidden max-[400px]:text-[4.5pt] text-[12pt] font-medium mb-1">お名前</label>
           <input
             type="text"
             id="name"
@@ -65,7 +65,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label className="block md:hidden text-[12pt] font-medium mb-1">会社名</label>
+          <label className="block md:hidden max-[400px]:text-[4.5pt] text-[12pt] font-medium mb-1">会社名</label>
           <input
             type="text"
             id="company"
@@ -77,7 +77,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label className="block md:hidden text-[12pt] font-medium mb-1">メールアドレス</label>
+          <label className="block md:hidden max-[400px]:text-[4.5pt] text-[12pt] font-medium mb-1">メールアドレス</label>
           <input
             type="email"
             id="email"
@@ -90,7 +90,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label className="block md:hidden text-[12pt] font-medium mb-1">内容</label>
+          <label className="block md:hidden max-[400px]:text-[4.5pt] text-[12pt] font-medium mb-1">内容</label>
           <textarea
             id="content"
             name="content"

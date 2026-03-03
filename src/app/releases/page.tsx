@@ -31,7 +31,7 @@ export default async function ReleasesPage() {
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
           <div className="grid-6 px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">RELEASES</h2>
+            <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">RELEASES</h2>
             <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
@@ -52,7 +52,7 @@ export default async function ReleasesPage() {
         <div className="">
           {releases.length === 0 ? (
             <div className="text-center py-8 md:py-16">
-              <p className="text-[10pt] md:text-[12pt]">Releases not found</p>
+              <p className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt]">Releases not found</p>
             </div>
           ) : (
             releases.map((release) => (

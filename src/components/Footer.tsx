@@ -91,14 +91,14 @@ export function Footer() {
           {/* Copyright */}
           <div className="col-span-2 md:col-span-1 col-start-5 md:col-start-auto flex flex-col items-end md:items-start">
             <div className="flex flex-row justify-between gap-2 md:gap-0 w-full">
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">©</p>
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">WA/VE</p>
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">2025.</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">©</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">WA/VE</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">2025.</p>
             </div>
             <div className="flex flex-row justify-between gap-2 md:gap-0 w-full md:w-full">
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">ALL</p>
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">RIGHT</p>
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">RESERVED.</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">ALL</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">RIGHT</p>
+              <p className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black font-en">RESERVED.</p>
             </div>
           </div>
 
