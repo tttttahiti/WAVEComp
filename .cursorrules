@@ -1,0 +1,27 @@
+# WAVEComp Layout & Styling Rules
+
+## 1. SVG Borders and Lines
+- When rendering `line.svg` or `border.svg` to act as a 10px horizontal separator, **DO NOT** use Next.js `<Image>` components, as it enforces the intrinsic SVG aspect ratio.
+- **ALWAYS** use raw HTML `<img>` tags for horizontal SVG lines.
+- You must strictly enforce the 10px height using inline styling to prevent Tailwind layout conflicts.
+- Example:
+  ```tsx
+  <img
+    src="/svg/line.svg"
+    alt=""
+    style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
+  />
+  ```
+
+## 2. Global Padding
+- The global horizontal padding across the site should be responsive: 15px on mobile, and 45px on desktop.
+- **ALWAYS** write the classes as `px-[15px] md:px-[45px]`.
+- Do not hardcode `px-[45px]` directly without the `md:` breakpoint constraint.
+
+## 3. Custom Grid System
+- This project uses a custom 6-column grid system (`.grid-6`, `.col-n`).
+- In `globals.css`, these `.col-n` utilities **MUST** be wrapped in `@layer utilities { ... }` so Tailwind CSS can dynamically generate responsive variants like `max-[800px]:col-6` and `md:col-3`. Do not expose them outside of this layer.
+- `md:col-3` paired with `.col-6` means "full width on mobile, half width on desktop".
+
+## 4. WorkCard "Release Date" Alignment
+- Inside `WorkCard.tsx`, the `role` text displays as space-between tag pairs. Keep `Release` (or `#Release`) and `Date: [YYYY.MM]` items split with commas in standard arrays passed as `role={roleArray.join(", ")}` so the card correctly justifies them to the left and right corners.
