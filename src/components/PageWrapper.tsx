@@ -30,7 +30,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
     <>
       {/* Fixed Header - stays at full width */}
       <header
-        className={`fixed top-0 left-0 z-50 pt-[45px] px-[45px] transition-[width] duration-500 ease-out ${
+        className={`fixed top-0 left-0 z-50 pt-[45px] px-[20px] md:px-[45px] transition-[width] duration-500 ease-out ${
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >

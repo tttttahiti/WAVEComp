@@ -41,13 +41,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             priority
           />
         </div>
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10">
-          <span className="text-white text-xs md:text-sm tracking-wider">SOUND \</span>
-        </div>
       </section>
 
       {/* Artist Info Section */}
-      <section className="py-[94px] md:py-32 px-[45px] md:px-[45px]">
+      <section className="py-[94px] md:py-32 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
             <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
@@ -72,9 +69,9 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             </div>
           </div>
           <div className="hidden md:block md:col-1"></div>
-          <div className="col-6 md:col-1 mt-[105px] md:mt-0">
+          <div className="col-6 md:col-2 mt-[30px] md:mt-[107px]">
             {/* External Links */}
-            <div className="mt-0 md:mt-12 flex flex-col gap-4 md:gap-0">
+            <div className="flex flex-col gap-4 md:gap-0">
               <a
                 href="https://music.apple.com"
                 target="_blank"
@@ -105,7 +102,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Selected Works Section */}
-      <section className="py-12 md:py-[92px] px-[45px] md:px-[45px] bg-white">
+      <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
             <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
@@ -125,12 +122,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // 画像2つ
@@ -152,12 +147,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // テキスト2つ
@@ -192,12 +185,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                   return [
                     // 上部ボーダー
                     <div key={`border-top-${groupIndex}`} className="col-6">
-                      <Image
+                      <img
                         src="/svg/border.svg"
                         alt=""
-                        width={800}
-                        height={10}
-                        className="w-full"
+                        style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                       />
                     </div>,
                     // 画像3つ
@@ -220,12 +211,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                     )),
                     // 中間ボーダー
                     <div key={`border-middle-${groupIndex}`} className="col-6">
-                      <Image
+                      <img
                         src="/svg/border.svg"
                         alt=""
-                        width={800}
-                        height={10}
-                        className="w-full"
+                        style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                       />
                     </div>,
                     // テキスト3つ

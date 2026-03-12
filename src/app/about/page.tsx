@@ -92,7 +92,7 @@ export default async function AboutPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[45px]">
+          <div className="grid-6 px-[20px] md:px-[45px]">
             <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">ABOUT</h2>
             <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
@@ -110,7 +110,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <section className="pt-[120px] pb-[109px] px-[45px]">
+      <section className="pt-[120px] pb-[109px] px-[20px] md:px-[45px]">
         <div className="grid-6 overflow-visible">
           <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-[41px] md:mb-0">CONCEPT</h2>
 
@@ -143,7 +143,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section - 見出しとコンテンツを同一行で高さ揃え（CONCEPT同様） */}
-      <section className="pt-[30px] pb-[20px] px-[45px] md:px-[45px]">
+      <section className="pt-[30px] pb-[20px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
         <div className="grid-6">
           <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-1 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
@@ -165,7 +165,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="px-[45px]">
+      <section className="px-[20px] md:px-[45px]">
         <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-0">
           <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
@@ -188,7 +188,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Info Section */}
-      <section className="pt-0 md:pt-[30px] pb-[20px] px-[45px]">
+      <section className="pt-0 md:pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
             <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold">INFO</h2>
@@ -217,7 +217,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 md:py-32 px-[45px] md:px-[45px] pb-[98px]">
+      <section className="py-12 md:py-32 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] pb-[98px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
             <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold">CONTACT</h2>

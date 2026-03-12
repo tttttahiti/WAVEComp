@@ -5,7 +5,7 @@ interface ConceptProps {
 
 export function Concept({ showTitle = true, className = "" }: ConceptProps) {
   return (
-    <section className={`py-[120px] md:py-[154px] px-[45px]${className}`}>
+    <section className={`py-[120px] md:py-[154px] px-[20px] md:px-[45px]${className}`}>
       <div className="grid-6 overflow-visible md:items-start">
         {showTitle && (
           <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-6 md:col-1 md:col-start-1 mb-0">

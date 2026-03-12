@@ -99,7 +99,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[45px] md:px-[45px]">
+          <div className="grid-6 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
             <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3 md:col-3">WORKS</h2>
             <div className="col-3 md:col-3 flex justify-end items-end mt-0">
               <Link href="/">
@@ -117,7 +117,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       </section>
 
       {/* Filter & Works Grid */}
-      <section className="py-[30px] pb-[20px] px-[45px] md:px-[45px] mb-[55px]">
+      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] mb-[55px]">
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
@@ -192,12 +192,10 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="h-[10px] col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // 画像2つ
@@ -213,12 +211,10 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="h-[10px] col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // テキスト2つ

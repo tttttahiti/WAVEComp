@@ -55,7 +55,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
           />
         </div>
         {/* Logo */}
-        <div className="relative h-full px-[45px] grid-6 items-center">
+        <div className="relative h-full px-[20px] md:px-[45px] grid-6 items-center">
           <div className="col-6 flex justify-end z-10">
             <Image
               src="/svg/logo-wave.svg"
@@ -73,7 +73,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
       <Concept />
 
       {/* Selected Works Section */}
-      <section className="py-12 md:py-[92px] px-[45px] md:px-[45px] bg-white">
+      <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
             <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-3">FEATURED</h2>
@@ -94,12 +94,10 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // 画像2つ
@@ -124,12 +122,10 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/line.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // テキスト2つ
@@ -173,12 +169,10 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/border.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // 画像3つ
@@ -204,12 +198,10 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="col-6">
-                        <Image
+                        <img
                           src="/svg/border.svg"
                           alt=""
-                          width={800}
-                          height={10}
-                          className="w-full"
+                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
                       // テキスト3つ
