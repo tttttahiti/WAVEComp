@@ -384,7 +384,7 @@ export function transformRelease(release: WPRelease) {
     slug: release.slug,
     coverImage: release.featured_image_url || '/images/placeholder.jpg',
     title: stripHtml(release.title.rendered),
-    description: stripHtml(release.content.rendered),
+    description: release.content.rendered,
     releaseDate,
     year,
     tracks: parseTracksToArray(release.release_meta.tracks),

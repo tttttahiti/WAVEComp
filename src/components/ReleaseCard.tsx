@@ -49,9 +49,14 @@ export function ReleaseCard({
       </div>
 
       <div className="col-6 md:col-span-2 md:pt-[66px]">
-        <p className="max-[400px]:text-[4.5pt] text-[12pt] leading-relaxed mb-4 md:mb-6">
-          {description || "no data"}
-        </p>
+        {description ? (
+          <div
+            className="max-[400px]:text-[4.5pt] text-[12pt] leading-relaxed mb-4 md:mb-6 [&>p]:mb-4 [&>p:last-child]:mb-0"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        ) : (
+          <p className="max-[400px]:text-[4.5pt] text-[12pt] leading-relaxed mb-4 md:mb-6">no data</p>
+        )}
 
         <div className="border-t border-black pt-3 md:pt-4 mb-4 md:mb-6">
           <p className="max-[400px]:text-[4.5pt] text-[12pt]">
