@@ -39,7 +39,7 @@ export default async function HomePage() {
           client: transformed.client,
           title: transformed.title,
           tags: transformed.tags,
-          role: transformed.role,
+          role: transformed.roleEn || transformed.role,
           displayOrder: transformed.displayOrder ?? 99,
           featuredOrder: transformed.featuredOrder ?? 99,
           date: transformed.date,

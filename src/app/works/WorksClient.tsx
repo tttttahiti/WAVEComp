@@ -14,6 +14,7 @@ export interface Work {
   title: string;
   tags: string[];
   role?: string;
+  roleEn?: string;
   displayOrder?: number;
 }
 
@@ -56,9 +57,9 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
   const filteredWorks = useMemo(() => {
     // 表示順でソート（小さい数字が先）
-    const sortedWorks = [...initialWorks].sort(
-      (a, b) => (a.displayOrder ?? 99) - (b.displayOrder ?? 99)
-    );
+    const sortedWorks = [...initialWorks]
+      .sort((a, b) => (a.displayOrder ?? 99) - (b.displayOrder ?? 99))
+      .map((work) => ({ ...work, role: work.roleEn || work.role }));
 
     if (!filterTag) return sortedWorks;
     return sortedWorks.filter((work) =>

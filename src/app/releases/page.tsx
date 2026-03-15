@@ -69,6 +69,7 @@ export default async function ReleasesPage() {
                 listenUrl={release.listenUrl}
                 appleMusicUrl={release.appleMusicUrl}
                 spotifyUrl={release.spotifyUrl}
+                releaseType={release.releaseType}
                 tags={release.tags}
               />
             ))

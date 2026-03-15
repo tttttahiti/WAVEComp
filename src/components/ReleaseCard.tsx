@@ -13,6 +13,7 @@ interface ReleaseCardProps {
   listenUrl?: string;
   appleMusicUrl?: string;
   spotifyUrl?: string;
+  releaseType?: string;
   tags?: string[];
 }
 
@@ -24,6 +25,7 @@ export function ReleaseCard({
   releaseDate,
   tracks,
   listenUrl,
+  releaseType,
   tags = [],
 }: ReleaseCardProps) {
   return (
@@ -34,7 +36,7 @@ export function ReleaseCard({
           {title || "no data"}
         </h3>
         <p className="max-[400px]:text-[4.5pt] text-[12pt] font-bold mb-[0px]">
-          {year || "no data"}. {"Release"}
+          {year || "no data"}. {releaseType || "Release"}
         </p>
       </div>
 

@@ -37,6 +37,7 @@ export interface WPWork {
     client: string;
     date: string;
     role: string;
+    role_en: string;
     url: string;
     video_urls: string[];
     credits: string;
@@ -75,6 +76,7 @@ export interface WPRelease {
     featured_order: number;
     featured_halca: boolean;
     featured_halca_order: number;
+    release_type_label: string;
   };
   release_type: number[];
   release_tag: number[];
@@ -351,6 +353,7 @@ export function transformWork(work: WPWork) {
     description: stripHtml(work.content.rendered),
     date: work.work_meta.date || '',
     role: work.work_meta.role || '',
+    roleEn: work.work_meta.role_en || '',
     url: work.work_meta.url || '',
     videoUrls: work.work_meta.video_urls || [],
     audioUrl: work.work_meta.audio_url || null,
@@ -396,6 +399,7 @@ export function transformRelease(release: WPRelease) {
     featuredOrder: release.release_meta.featured_order ?? 99,
     featuredHalca: !!release.release_meta.featured_halca,
     featuredHalcaOrder: release.release_meta.featured_halca_order ?? 99,
+    releaseType: release.release_meta.release_type_label || '',
     tags,
   };
 }

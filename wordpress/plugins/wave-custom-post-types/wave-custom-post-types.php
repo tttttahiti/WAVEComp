@@ -230,6 +230,7 @@ class WAVE_Custom_Post_Types {
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
                     'role' => get_post_meta($post['id'], '_work_role', true),
+                    'role_en' => get_post_meta($post['id'], '_work_role_en', true),
                     'url' => get_post_meta($post['id'], '_work_url', true),
                     'video_urls' => $video_urls,
                     'credits' => get_post_meta($post['id'], '_work_credits', true),
@@ -270,6 +271,7 @@ class WAVE_Custom_Post_Types {
                     'featured_order' => $featured_order ? intval($featured_order) : 99,
                     'featured_halca' => !empty($featured_halca),
                     'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
+                    'release_type_label' => get_post_meta($post['id'], '_release_type_label', true),
                 );
             },
             'schema' => array(
@@ -470,8 +472,18 @@ class WAVE_Custom_Post_Types {
                 <td><input type="text" id="work_date" name="work_date" value="<?php echo esc_attr($date); ?>" class="regular-text" placeholder="2025.11"></td>
             </tr>
             <tr>
-                <th><label for="work_role">Role</label></th>
-                <td><input type="text" id="work_role" name="work_role" value="<?php echo esc_attr($role); ?>" class="regular-text"></td>
+                <th><label for="work_role">Role（日本語）</label></th>
+                <td>
+                    <input type="text" id="work_role" name="work_role" value="<?php echo esc_attr($role); ?>" class="regular-text">
+                    <p class="description">個別WORKSページ内に表示されます</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="work_role_en">Role（EN）</label></th>
+                <td>
+                    <input type="text" id="work_role_en" name="work_role_en" value="<?php echo esc_attr(get_post_meta($post->ID, '_work_role_en', true)); ?>" class="regular-text">
+                    <p class="description">サムネ下に表示されます（例: Sound Design, Event Produce）</p>
+                </td>
             </tr>
             <tr>
                 <th><label for="work_url">URL</label></th>
@@ -667,6 +679,7 @@ class WAVE_Custom_Post_Types {
         $featured_order = get_post_meta($post->ID, '_release_featured_order', true);
         $featured_halca = get_post_meta($post->ID, '_release_featured_halca', true);
         $featured_halca_order = get_post_meta($post->ID, '_release_featured_halca_order', true);
+        $release_type_label = get_post_meta($post->ID, '_release_type_label', true);
         $release_date = get_post_meta($post->ID, '_release_date', true);
         $tracks = get_post_meta($post->ID, '_release_tracks', true);
         $listen_url = get_post_meta($post->ID, '_release_listen_url', true);
@@ -699,6 +712,13 @@ class WAVE_Custom_Post_Types {
                     <label for="release_featured_halca_order">FEATURED表示順:</label>
                     <input type="number" id="release_featured_halca_order" name="release_featured_halca_order" value="<?php echo esc_attr($featured_halca_order); ?>" class="small-text" min="0" step="1">
                     <p class="description">HAL ca FEATURED内での表示順（小さい数字が先）</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="release_type_label">Release Type</label></th>
+                <td>
+                    <input type="text" id="release_type_label" name="release_type_label" value="<?php echo esc_attr($release_type_label); ?>" class="regular-text" placeholder="Album, EP, Single など">
+                    <p class="description">タイトル下に「2024. Album」のように表示されます</p>
                 </td>
             </tr>
             <tr>
@@ -827,7 +847,7 @@ class WAVE_Custom_Post_Types {
                 update_post_meta($post_id, '_work_featured_halca_order', intval($_POST['work_featured_halca_order']));
             }
             // Text fields
-            $text_fields = array('work_client', 'work_date', 'work_role', 'work_url');
+            $text_fields = array('work_client', 'work_date', 'work_role', 'work_role_en', 'work_url');
             foreach ($text_fields as $field) {
                 if (isset($_POST[$field])) {
                     update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
@@ -882,6 +902,9 @@ class WAVE_Custom_Post_Types {
             update_post_meta($post_id, '_release_featured_halca', isset($_POST['release_featured_halca']) ? '1' : '');
             if (isset($_POST['release_featured_halca_order'])) {
                 update_post_meta($post_id, '_release_featured_halca_order', intval($_POST['release_featured_halca_order']));
+            }
+            if (isset($_POST['release_type_label'])) {
+                update_post_meta($post_id, '_release_type_label', sanitize_text_field($_POST['release_type_label']));
             }
             $fields = array('release_date', 'release_tracks', 'release_listen_url', 'release_apple_music_url', 'release_spotify_url');
             foreach ($fields as $field) {
