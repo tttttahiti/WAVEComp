@@ -15,15 +15,28 @@ export function PageWrapper({ children }: PageWrapperProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const getThreshold = () => {
+      const hero = document.querySelector("[data-hero]");
+      if (hero) {
+        return (hero as HTMLElement).offsetHeight;
+      }
+      // フォールバック（TOPページなど）
+      return window.innerHeight - 48;
+    };
+
     const handleScroll = () => {
-      const viewportHeight = window.innerHeight - 48;
-      setIsScrolled(window.scrollY >= viewportHeight);
+      const threshold = getThreshold();
+      setIsScrolled(window.scrollY >= threshold);
     };
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
     handleScroll(); // 初期状態をチェック
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   return (
