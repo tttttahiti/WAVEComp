@@ -1,0 +1,65 @@
+https://wave-website-seven.vercel.app/　,,,,
+修正オーダー,カテゴリー,進捗,260210_From hayato,260311_MTG MEMO
+全体,,,,
+メニューを出したままスクロールができない,Browser,完了,スクロールできないです。,○
+モバイル版の実装についてモバイル単独で実装できるか確認,Mobile,hayato対応中,,"モバイル・ブラウザ・Ipad用で調整して頂く。
+それぞれで適切な文字サイズ・余白感"
+FEATUREDの画像サイズは揃えたい、WORKSのサムネハ16:9固定で、サイズはブラウザの大小にたいして可変で,Browser,完了,"「コンテナ幅 × 画像の自然なアスペクト比」で算出した高さを onImageLoad で受け取り、表示中の全カードで最小の高さを minHeight として保持。
+各カードに imageHeight={minHeight} を渡し、画像エリアの高さをこの最小値で統一。
+
+サムネはアスペクト比を守る。
+全ての画像の高さを割り出して、グリッドの最大高さを決定する。
+（全てのグリッドの高さを揃えて統一感を出すため）
+横幅は画面幅で決定されてしまうので、高さが揃わない場合があります。
+高さも横さもアスペクト比全てを優先することは不可能なので上記のルールでやっています。",
+ヘッダーの文字列の行間をデザイン通りに,Browser,hayato対応中,ヘッダーの文字列とは？,メニューの行間を調整する
+TOP,,,,
+FEATURED / WORKSの文字列とサムネの端が揃うように,Browser,完了,"スマホとデスクトップを同じptで統一しているので、この感じになります。
+InDesignのスマホ幅は1200pxですが、実際は300pxになるため、30ptだとこんな感じになります。",
+FEATUREDに表示される、WORKSとRELEASEはどのようにセレクトしますか？今入力した分は自動的に反映されるようです。セレクトでき、表示される順番を調整できるようになると嬉しいです。,WP,hayato対応中,,
+TOPページに表示される、RELEASEの文字要素が、「タイトル」と「ハッシュタグ」のみですが、「Release Date:」は表示できるようにできますでしょうか？,Browser,hayato対応中,,
+FEATUREDのテキストにカーソルを合わせた時にも、文字が黄緑になるようにしたいです,Browser,hayato対応中,,
+ABOUT,,,,
+Conceptの文字バランス,Browser,hayato対応中,,"デザインをご参照ください。
+https://www.dropbox.com/scl/fi/8lv1hvrdkyi7i9brutxmk/WAVE_WEBSITE_11.pdf?rlkey=inl8l6i1fnp2yh3yeyxtof6ib&st=lf5s1qqu&dl=0"
+"OUR SERVICEの表記に違和感がある。
+OUR SERVICEと「HAL ca アーティストマネージメント」の高さを揃える
+""HAL ca アーティストマネージメント
+サウンドプロデュース
+コンテンツ制作
+音楽制作
+企画 / 体験デザイン
+イベント企画 / プロデュース""
+を太字に",Browser,hayato対応中,○,"デザインをご参照ください。
+https://www.dropbox.com/scl/fi/8lv1hvrdkyi7i9brutxmk/WAVE_WEBSITE_11.pdf?rlkey=inl8l6i1fnp2yh3yeyxtof6ib&st=lf5s1qqu&dl=0"
+MEMBERと写真の間をデザイン通りの間にして欲しい、タイトに感じます,Browser,hayato対応中,15pxなので指示通りです。,"デザインをご参照ください。
+https://www.dropbox.com/scl/fi/8lv1hvrdkyi7i9brutxmk/WAVE_WEBSITE_11.pdf?rlkey=inl8l6i1fnp2yh3yeyxtof6ib&st=lf5s1qqu&dl=0"
+HAL ca,,,,
+バナーのアー写が見切れているので、全体が見えるようにしたいのですが、画像のトリミングサイズを教えてもらえますか？（こちらで調整可能ですか？）,Browser,hayato対応中,○,"デザインをご参照ください。
+https://www.dropbox.com/scl/fi/8lv1hvrdkyi7i9brutxmk/WAVE_WEBSITE_11.pdf?rlkey=inl8l6i1fnp2yh3yeyxtof6ib&st=lf5s1qqu&dl=0
+
+→アー写の原本を送って対応。"
+Apple Music / Spotify / Instagramのリンクの場所違う。プロフィール分が左寄せ、右側にリンク,Browser,hayato対応中,リンクは修正しましたが、左寄せと右側にリンクの件がよくわからない。,"デザインをご参照ください。
+https://www.dropbox.com/scl/fi/8lv1hvrdkyi7i9brutxmk/WAVE_WEBSITE_11.pdf?rlkey=inl8l6i1fnp2yh3yeyxtof6ib&st=lf5s1qqu&dl=0"
+バナーのアー写の左上に「sound/」の文字がかぶっている。,Browser,完了,,
+HAL caページのFEATUREDに表示されるWORKS / RELEASEもセレクト、表示順序変えれるようにできますでしょうか。,Browser,hayato対応中,,
+FEATUREDのテキストにカーソルを合わせた時にも、文字が黄緑になるようにしたいです。,Browser,hayato対応中,,
+RELEASES,,,,
+no data. Releaseはタイトルの上に移動,Browser,完了,○,
+このページの「sound/」はスクロールして白背景に対して黒文字に変化しないので、修正できますでしょうか。,Browser,hayato対応中,,
+WP内でアルバムの説明で改行 / 空行をつけても反映されず、詰まって表示されるのですが、こちら改行 / 空行も反映されるようにできますか？,WP,hayato対応中,,
+タイトル下の「20xx.xx.xx Release」は、タグなどを選択して、「Album」や「EP」、「Single」などに変更できますでしょうか？（Relese data:は説明下に配置されているため、内容が重複することに気づきました）,WP,hayato対応中,,
+Works,,,,
+写真のサイズ揃えたい。横並びが２件なら、もう少し写真サイズが大きい方がよいかも。,Browser,hayato対応中,,
+英語表記「Sound Design」などの部分、日本語が表記されてしまっている箇所がある(入力ミス？),Browser,完了,ワードプレスの入力確認してください。カンマ区切りにして,
+"プルダウンの順番修正：
+#HAL ca
+#Installation
+#Movie
+#Experience Design
+#Event Produce",,,○,
+FEATUREDのテキストにカーソルを合わせた時にも、文字が黄緑になるようにしたいです。,Browser,hayato対応中,,
+ギャラリーの画像の配置は変えられないでしょうか？（デザイン通りのFloatingな表現は難しかったでしょうか？）難しい場合はゆうすけさんと別の方法相談します。,Browser,hayato対応中,,
+表示順について：こちらはWORKS内での表示順序という認識であってますか？これを毎回入力、調整するのはいささか大変なので、公開日orリリース日が新しい順に表示されるなどにしていただけますでしょうか。もしくは一覧で順序を変えると反映されるなど。,WP,hayato対応中,,
+Roleの部分を入力すると、サムネ下と個別WORKSページ内に反映されますが、サムネ下の表記は良いのですが、個別ページ内の表記は日本語表記にしたいので、別で入力欄を作っていただけますでしょうか。可能であれば「Works Details」の欄の「Role」は、個別ページ内に反映される日本語入力用の欄にして、サムネ下に表記される分はWP入力欄右の「Works Categories」に集約、もしくは下に入力欄を作るなどしていただけると助かります。,WP,hayato対応中,,
+Contact,,,,

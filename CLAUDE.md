@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-WA/VE Website - A creative studio/artist collective website using a headless CMS architecture.
+WA/VE Website - A creative studio/artist collective website built as a static Next.js site. Currently uses hardcoded data; WordPress headless CMS integration is planned but not yet implemented.
 
 ## Commands
 
@@ -15,39 +15,74 @@ npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
 
+No test framework is configured.
+
 ## Technology Stack
 
-- **Frontend:** Next.js 15 (App Router) + TypeScript
-- **Styling:** Tailwind CSS
-- **CMS:** WordPress (Headless configuration via REST API) - 未実装
+- **Framework:** Next.js 15 (App Router) + TypeScript + React 19
+- **Styling:** Tailwind CSS 3 with custom utilities in `globals.css`
+- **Layout:** Masonry gallery via `masonry-layout` + `imagesloaded` packages
+- **CMS:** WordPress headless (planned, not yet implemented)
 
-## Project Structure
+## Architecture
 
+### Layout & Context Providers
+
+The root layout (`src/app/layout.tsx`) wraps all pages with:
+- `MenuProvider` — tracks side menu open/close state
+- `SoundProvider` — manages site-wide audio state
+- `Header` — navigation + side menu (233px wide on desktop when open)
+- `PageWrapper` — applies page-level transitions/transforms when menu opens
+- `Footer`
+
+The side menu is a key architectural element: when open on desktop, the main content area shrinks by 233px. CSS in `globals.css` handles this via `body.menu-open` selectors and width transitions.
+
+### Fonts
+
+Three Google Fonts loaded via `next/font`:
+- `--font-dm-sans` — primary Latin text
+- `--font-dm-mono` — hashtags, code, monospace
+- `--font-noto-sans-jp` — Japanese text
+
+Use Tailwind classes: `font-sans`, `font-mono`, `font-jp`, `font-en`.
+
+### Custom 6-Column Grid
+
+The site uses `.grid-6` with `.col-1` through `.col-6` utilities (defined in `@layer utilities` in `globals.css`). Responsive variants work via Tailwind (e.g., `md:col-3 col-6` = full width mobile, half desktop). The `md` breakpoint is `800px` (not the default 768px).
+
+## Layout & Styling Rules
+
+### SVG Borders
+
+Use native `<img>` tags (NOT Next.js `<Image>`) for horizontal SVG separators. Enforce exact 10px height with inline styles:
+```tsx
+<img
+  src="/svg/line.svg"
+  alt=""
+  style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
+/>
 ```
-src/
-├── app/                    # Next.js App Router pages
-│   ├── page.tsx           # トップページ
-│   ├── about/             # ABOUTページ
-│   ├── hal-ca/            # HAL caアーティストページ
-│   ├── releases/          # リリース一覧
-│   ├── works/             # WORKS一覧
-│   │   └── [slug]/        # WORKS詳細（動的ルート）
-│   └── contact/           # お問い合わせ
-├── components/            # 共通コンポーネント
-│   ├── Header.tsx         # ヘッダー＋ナビゲーション
-│   ├── Footer.tsx         # フッター
-│   ├── WorkCard.tsx       # WORKS カード
-│   ├── ReleaseCard.tsx    # Release カード
-│   └── ContactForm.tsx    # お問い合わせフォーム
-└── lib/                   # ユーティリティ（WordPress API連携予定）
-```
+
+### Global Horizontal Padding
+
+Always responsive: `px-[15px] md:px-[45px]`. Never use `px-[45px]` without the `md:` breakpoint.
+
+## Design Colors
+
+Tailwind config values (use `wave-*` prefix):
+- Blue: `#536CDB` (`wave-blue`)
+- Purple: `#8B7BE8` (`wave-purple`)
+- Lime: `#C2DE6D` (`wave-lime`)
+- Lavender: `#B8C4FF` (`wave-lavender`)
+
+Note: CSS custom properties in `globals.css` use slightly different values for `--wave-lime` (`#C8FF00`). The Tailwind config is authoritative for component styling.
 
 ## Reference Materials
 
-- `DESIGN.md` - Project specifications (Japanese)
-- `SVG_REQUIREMENTS.md` - 必要なSVG/画像アセット一覧
-- `WAVE_WEBSITE_10.pdf` - Desktop design reference
-- `WAVE_WEBSITE_10_MOBILE.pdf` - Mobile design reference
+- `DESIGN.md` — Project specifications (Japanese)
+- `SVG_REQUIREMENTS.md` — Required SVG/image assets
+- `WAVE_WEBSITE_10.pdf` — Desktop design reference
+- `WAVE_WEBSITE_10_MOBILE.pdf` — Mobile design reference
 
 ## Content Schema
 
@@ -57,17 +92,8 @@ Portfolio items with: thumbnail, client/company, title, hashtags, production dat
 ### Releases
 HAL ca artist releases with: release date, track list, streaming links, images, title, album/single type, caption.
 
-## Design Colors
-
-- Blue: `#0066FF`
-- Purple: `#8B7BE8`
-- Lime: `#C8FF00`
-- Lavender: `#B8C4FF`
-
 ## Remaining Tasks
 
-1. WordPress headless CMS セットアップ
-2. WordPress REST API 連携実装
-3. 画像アセットの配置
-4. SVGアセットの配置（`SVG_REQUIREMENTS.md`参照）
-5. フォーム送信機能の実装
+1. WordPress headless CMS setup and REST API integration
+2. Image and SVG asset placement (see `SVG_REQUIREMENTS.md`)
+3. Contact form submission backend
