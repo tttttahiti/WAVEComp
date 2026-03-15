@@ -47,6 +47,11 @@ export default async function HalCaPage() {
     // Releases を変換
     const releases: FeaturedItem[] = wpReleases.map((release) => {
       const transformed = transformRelease(release);
+      const roleArray = ["Release"];
+      if (transformed.releaseDate) {
+        roleArray.push("Date:");
+        roleArray.push(transformed.releaseDate);
+      }
       return {
         type: "release" as const,
         id: transformed.id,
@@ -55,6 +60,7 @@ export default async function HalCaPage() {
         client: "",
         title: transformed.title,
         tags: transformed.tags,
+        role: roleArray.join(", "),
         displayOrder: transformed.displayOrder ?? 99,
         date: transformed.releaseDate,
       };

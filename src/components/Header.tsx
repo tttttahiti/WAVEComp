@@ -74,7 +74,7 @@ export function Header() {
           </nav>
 
           {/* Separator */}
-          <div className="my-6 md:my-8 border-t border-black" />
+          <div className="my-6 md:mt-[72px] md:mb-[56px] border-t border-black" />
 
           {/* Social Links - Same font size as nav, left-aligned */}
           <div className="space-y-3 md:space-y-4">
@@ -113,7 +113,7 @@ export function Header() {
           </div>
 
           {/* Separator */}
-          <div className="my-6 md:my-8 border-t border-black" />
+          <div className="my-6 md:mt-[54px] md:mb-[59px] border-t border-black" />
 
           <div className="space-y-3 md:space-y-4">
             <button
