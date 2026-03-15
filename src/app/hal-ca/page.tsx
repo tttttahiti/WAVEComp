@@ -57,7 +57,7 @@ export default async function HalCaPage() {
         id: transformed.id,
         slug: transformed.slug,
         thumbnail: transformed.coverImage,
-        client: "",
+        client: "RELEASE",
         title: transformed.title,
         tags: transformed.tags,
         role: roleArray.join(", "),
