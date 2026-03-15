@@ -114,7 +114,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
                     href={work.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-wave-blue hover:underline break-all"
+                    className="text-wave-blue hover:text-[#c2de6d] transition-colors break-all"
                   >
                     {work.url}
                   </a>

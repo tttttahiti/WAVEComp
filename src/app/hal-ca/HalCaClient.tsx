@@ -76,7 +76,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://music.apple.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:underline"
+                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 APPLE MUSIC
               </a>
@@ -84,7 +84,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://spotify.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:underline"
+                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 SPOTIFY
               </a>
@@ -92,7 +92,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:underline"
+                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 INSTAGRAM (HAL ca)
               </a>
