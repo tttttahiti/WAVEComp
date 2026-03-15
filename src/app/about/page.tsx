@@ -117,7 +117,7 @@ export default async function AboutPage() {
           {/* 縦書きテキスト */}
           <div className="flex justify-center md:justify-end overflow-visible col-6 md:col-start-5 md:col-2">
             <div
-              className="writing-vertical-rl font-jp font-medium leading-[2.5] max-[400px]:text-[3pt] text-[10pt]"
+              className="writing-vertical-rl font-jp font-medium leading-[2.5] max-[400px]:text-[3pt] text-[10pt] md:text-[18pt]"
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
@@ -143,13 +143,13 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section - 見出しとコンテンツを同一行で高さ揃え（CONCEPT同様） */}
-      <section className="pt-[30px] pb-[20px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
-        <div className="grid-6">
-          <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-1 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
+      <section className="pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
+        <div className="grid-6 items-start">
+          <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
           <ul
-            className="max-[400px]:text-[5.25pt] text-[18pt] col-6 md:col-start-4 md:col-4"
+            className="max-[400px]:text-[5.25pt] text-[18pt] font-bold col-6 md:col-start-4 md:col-3"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
@@ -166,7 +166,7 @@ export default async function AboutPage() {
 
       {/* Member Section */}
       <section className="px-[20px] md:px-[45px]">
-        <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-0">
+        <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-[40px]">
           <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
