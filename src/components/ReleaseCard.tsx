@@ -32,10 +32,10 @@ export function ReleaseCard({
     <article className="grid-6 pt-[124px] pb-[150px]">
       {/* モバイル: カバー画像を先に表示 */}
       <div className="col-span-6 md:col-span-1 h-[91px] mb-[41px]">
-        <h3 className="max-[400px]:text-[8pt] text-[30pt] font-bold mb-3 md:mb-4">
+        <h3 className="text-[30pt] font-bold mb-3 md:mb-4">
           {title || "no data"}
         </h3>
-        <p className="max-[400px]:text-[4.5pt] text-[12pt] font-bold mb-[0px]">
+        <p className="text-[12pt] font-bold mb-[0px]">
           {year || "no data"}. {releaseType || "Release"}
         </p>
       </div>
@@ -53,37 +53,37 @@ export function ReleaseCard({
       <div className="col-6 md:col-span-2 md:pt-[66px]">
         {description ? (
           <div
-            className="max-[400px]:text-[4.5pt] text-[12pt] leading-relaxed mb-4 md:mb-6 [&>p]:mb-4 [&>p:last-child]:mb-0"
+            className="text-[12pt] leading-relaxed mb-4 md:mb-6 [&>p]:mb-4 [&>p:last-child]:mb-0"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         ) : (
-          <p className="max-[400px]:text-[4.5pt] text-[12pt] leading-relaxed mb-4 md:mb-6">no data</p>
+          <p className="text-[12pt] leading-relaxed mb-4 md:mb-6">no data</p>
         )}
 
         <div className="border-t border-black pt-3 md:pt-4 mb-4 md:mb-6">
-          <p className="max-[400px]:text-[4.5pt] text-[12pt]">
+          <p className="text-[12pt]">
             Release Date: {releaseDate || "no data"}
           </p>
         </div>
 
         <div className="mb-4 md:mb-6 border-t border-black pt-3 md:pt-4">
-          <p className="max-[400px]:text-[4.5pt] text-[12pt] font-medium">曲：</p>
+          <p className="text-[12pt] font-medium">曲：</p>
           {tracks && tracks.length > 0 ? (
             <ul className="space-y-1">
               {tracks.map((track, index) => (
-                <li key={index} className="max-[400px]:text-[4.5pt] text-[12pt]">
+                <li key={index} className="text-[12pt]">
                   {track || "no data"}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="max-[400px]:text-[4.5pt] text-[12pt]">no data</p>
+            <p className="text-[12pt]">no data</p>
           )}
         </div>
-        <div className="font-bold text-center max-[400px]:text-[4.5pt] text-[12pt]">
+        <div className="font-bold text-center text-[12pt]">
           <Link
             href={listenUrl || ""}
-            className="btn-primary inline-block w-full font-bold max-[400px]:text-[4.5pt] text-[12pt]"
+            className="btn-primary inline-block w-full font-bold text-[12pt]"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -47,14 +47,14 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section className="py-[94px] md:py-32 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
-            <p className="max-[400px]:text-[4.5pt] text-[12pt] font-medium letter-height-[14pt] mb-4 md:mb-8">
+            <p className="text-[12pt] font-medium letter-height-[14pt] mb-4 md:mb-8">
               HAL caは、アンビエント・実験音楽を軸とするコンポーザー /
               サウンドアーティスト。
             </p>
 
-            <div className="max-[400px]:text-[4.5pt] text-[12pt] font-medium letter-height-[14pt] space-y-4 md:space-y-6">
+            <div className="text-[12pt] font-medium letter-height-[14pt] space-y-4 md:space-y-6">
               <p>
                 東京生まれ。国立音楽大学を経て渡仏し、パリ・エコールノルマル音楽院映画音楽作曲科を首席で修了、またパリ地方音楽院エレクトロアコースティック作曲科にて電子音響を学ぶ。
                 <br />
@@ -76,7 +76,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://music.apple.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 APPLE MUSIC
               </a>
@@ -84,7 +84,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://spotify.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 SPOTIFY
               </a>
@@ -92,7 +92,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-[400px]:text-[4.5pt] text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 INSTAGRAM (HAL ca)
               </a>
@@ -105,8 +105,8 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">
@@ -244,7 +244,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             <div className="grid-6">
               <Link
                 href="/works"
-                className="inline-block max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE WORKS
               </Link>
@@ -252,7 +252,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             <div className="mt-2 grid-6">
               <Link
                 href="/releases"
-                className="inline-block max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE RELEASE
               </Link>

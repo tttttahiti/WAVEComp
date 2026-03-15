@@ -77,8 +77,8 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
       <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-3">FEATURED</h2>
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-3 text-right">WORKS</h2>
+            <h2 className="text-[30pt] font-bold col-3">FEATURED</h2>
+            <h2 className="text-[30pt] font-bold col-3 text-right">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">
@@ -240,7 +240,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
             <div className="grid-6">
               <Link
                 href="/works"
-                className="inline-block max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE WORKS
               </Link>
@@ -248,7 +248,7 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
             <div className="mt-2 grid-6">
               <Link
                 href="/releases"
-                className="inline-block max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+                className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
               >
                 MORE RELEASE
               </Link>

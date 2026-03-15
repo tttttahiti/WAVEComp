@@ -46,7 +46,12 @@ a {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
   font-weight: 700;
@@ -63,7 +68,9 @@ p {
 }
 
 /* Monospace text (for code, technical content) */
-code, pre, .font-mono {
+code,
+pre,
+.font-mono {
   font-family: var(--font-dm-mono), var(--font-noto-sans-jp), monospace;
 }
 
@@ -96,15 +103,13 @@ code, pre, .font-mono {
       rgba(139, 123, 232, 0.7) 30%,
       rgba(184, 196, 255, 0.8) 50%,
       rgba(200, 255, 0, 0.6) 70%,
-      rgba(200, 255, 0, 0.8) 100%
-    ),
+      rgba(200, 255, 0, 0.8) 100%),
     linear-gradient(90deg,
       #536cdb 0%,
       #8B7BE8 25%,
       #B8C4FF 50%,
       #C8FF00 75%,
-      #536cdb 100%
-    );
+      #536cdb 100%);
   background-size: 100% 100%, 200% 100%;
 }
 
@@ -143,7 +148,7 @@ code, pre, .font-mono {
   body.menu-open .hal-ca-hero-image {
     width: calc(100vw - 233px);
   }
-  
+
   .hal-ca-hero-image {
     width: 100%;
   }
@@ -192,7 +197,9 @@ code, pre, .font-mono {
 }
 
 /* Form Elements - Force light mode colors */
-input, textarea, select {
+input,
+textarea,
+select {
   @apply text-sm;
   letter-spacing: 0.02em;
   background-color: #ffffff !important;
@@ -200,13 +207,16 @@ input, textarea, select {
   -webkit-text-fill-color: #000000 !important;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: #9ca3af !important;
   -webkit-text-fill-color: #9ca3af !important;
   opacity: 1;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -254,11 +264,14 @@ textarea:-webkit-autofill:focus {
 }
 
 @media (max-width: 400px) {
-  h2 {
-    font-size: 8pt;
+  h1, h2, h3, .text-\[30pt\] {
+    font-size: 20pt !important;
   }
-  .heading-section {
-    font-size: 8pt;
+  .w-\[140px\].h-auto {
+    width: 90px !important;
+  }
+  .service-list {
+    font-size: 12pt !important;
   }
 }
 
@@ -281,20 +294,54 @@ main {
 }
 
 @layer utilities {
+
   /* Grid column spans - fixed width, content can overflow */
-  .col-1 { grid-column: span 1; }
-  .col-2 { grid-column: span 2; }
-  .col-3 { grid-column: span 3; }
-  .col-4 { grid-column: span 4; }
-  .col-5 { grid-column: span 5; }
-  .col-6 { grid-column: span 6; }
+  .col-1 {
+    grid-column: span 1;
+  }
+
+  .col-2 {
+    grid-column: span 2;
+  }
+
+  .col-3 {
+    grid-column: span 3;
+  }
+
+  .col-4 {
+    grid-column: span 4;
+  }
+
+  .col-5 {
+    grid-column: span 5;
+  }
+
+  .col-6 {
+    grid-column: span 6;
+  }
 
   /* Grid column start positions */
-  .col-start-1 { grid-column-start: 1; }
-  .col-start-2 { grid-column-start: 2; }
-  .col-start-3 { grid-column-start: 3; }
-  .col-start-4 { grid-column-start: 4; }
-  .col-start-5 { grid-column-start: 5; }
-  .col-start-6 { grid-column-start: 6; }
-}
+  .col-start-1 {
+    grid-column-start: 1;
+  }
 
+  .col-start-2 {
+    grid-column-start: 2;
+  }
+
+  .col-start-3 {
+    grid-column-start: 3;
+  }
+
+  .col-start-4 {
+    grid-column-start: 4;
+  }
+
+  .col-start-5 {
+    grid-column-start: 5;
+  }
+
+  .col-start-6 {
+    grid-column-start: 6;
+  }
+}

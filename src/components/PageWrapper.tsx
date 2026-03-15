@@ -50,7 +50,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
         <div className={`flex justify-between items-start ${isMenuOpen ? "hidden md:flex" : ""}`}>
           <button
             onClick={toggleSound}
-            className={`font-en font-bold transition-colors duration-300 text-left max-[400px]:text-[3.75pt] text-[10pt] ${isScrolled ? "text-black" : "text-white"}`}
+            className={`font-en font-bold transition-colors duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"}`}
             aria-label={isSoundOn ? "音声をオフ" : "音声をオン"}
           >
             SOUND {isSoundOn ? "/" : "\\"}

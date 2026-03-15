@@ -50,7 +50,7 @@ export function MemberCard({
       {/* モバイル: 全幅、デスクトップ: col-4からcol-6 */}
       <div className="col-6 md:col-span-2 mt-4 md:mt-0">
         <p
-          className="max-[400px]:text-[6.75pt] text-[18pt] font-bold letter-height-[40pt]"
+          className="text-[18pt] font-bold letter-height-[40pt]"
           style={{ lineHeight: "1.4" }}
         >
           <span>{name}</span>
@@ -59,14 +59,14 @@ export function MemberCard({
           <br />
           <br />
         </p>
-        <div className="max-[400px]:text-[4.5pt] text-[12pt] letter-height-[14pt]">
+        <div className="text-[12pt] letter-height-[14pt]">
           {biography.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
         <div className="mt-[14px]">
-          <p className="max-[400px]:text-[4.5pt] text-[12pt] font-medium">実績：</p>
-          <ul className="max-[400px]:text-[4.5pt] text-[12pt] letter-height-[14pt]">
+          <p className="text-[12pt] font-medium">実績：</p>
+          <ul className="text-[12pt] letter-height-[14pt]">
             {achievements.map((achievement, index) => (
               <li key={index}>{achievement}</li>
             ))}

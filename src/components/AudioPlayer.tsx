@@ -249,7 +249,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         </div>
 
         {/* Time Display */}
-        <span className="max-[400px]:text-[3.75pt] text-[10pt] md:text-[12pt] text-wave-blue hashtag flex-shrink-0 min-w-[80px] md:min-w-[100px] text-right">
+        <span className="text-[10pt] md:text-[12pt] text-wave-blue hashtag flex-shrink-0 min-w-[80px] md:min-w-[100px] text-right">
           {formatTime(currentTime)}/{formatTime(duration)}
         </span>
       </div>

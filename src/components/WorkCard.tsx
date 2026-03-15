@@ -86,10 +86,10 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
     return (
       <div className="pt-[17px] pb-[60px]">
         <Link href={href} className="block card-hover">
-          <p className="max-[400px]:text-[3pt] text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
-          <h3 className="font-bold max-[400px]:text-[4.5pt] text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
+          <p className="text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
+          <h3 className="font-bold text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
         </Link>
-        <div className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black mt-3 md:mt-[16px] space-y-[2px]">
+        <div className="text-[6pt] md:text-[7pt] text-black mt-3 md:mt-[16px] space-y-[2px]">
           <div className="flex flex-wrap justify-between gap-x-10 md:gap-x-20">
             {tags.map((tag, index) => (
               <Link
@@ -132,11 +132,11 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
           />
         </div>
         <div className="">
-          <p className="max-[400px]:text-[3pt] text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
-          <h3 className="font-bold max-[400px]:text-[4.5pt] text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
+          <p className="text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
+          <h3 className="font-bold text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
         </div>
       </Link>
-      <div className="max-[400px]:text-[2.25pt] text-[6pt] md:text-[7pt] text-black mt-3 md:mt-[16px] space-y-[2px]">
+      <div className="text-[6pt] md:text-[7pt] text-black mt-3 md:mt-[16px] space-y-[2px]">
         <div className="flex flex-wrap justify-between gap-x-10 md:gap-x-20">
           {tags.map((tag, index) => (
             <Link

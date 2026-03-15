@@ -93,7 +93,7 @@ export default async function AboutPage() {
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
           <div className="grid-6 px-[20px] md:px-[45px]">
-            <h2 className="text-white max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold col-3">ABOUT</h2>
+            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">ABOUT</h2>
             <div className="col-3 flex justify-end items-end mt-0">
               <Link href="/">
                 <Image
@@ -112,12 +112,12 @@ export default async function AboutPage() {
       {/* Concept Section */}
       <section className="pt-[120px] pb-[109px] px-[20px] md:px-[45px]">
         <div className="grid-6 overflow-visible">
-          <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-[41px] md:mb-0">CONCEPT</h2>
+          <h2 className="text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-[41px] md:mb-0">CONCEPT</h2>
 
           {/* 縦書きテキスト */}
           <div className="flex justify-center md:justify-end overflow-visible col-6 md:col-start-5 md:col-2">
             <div
-              className="writing-vertical-rl font-jp font-medium leading-[2.5] max-[400px]:text-[3pt] text-[10pt] md:text-[18pt]"
+              className="writing-vertical-rl font-jp font-medium leading-[2.5] text-[10pt] md:text-[18pt]"
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
@@ -145,11 +145,11 @@ export default async function AboutPage() {
       {/* Our Service Section - 見出しとコンテンツを同一行で高さ揃え（CONCEPT同様） */}
       <section className="pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
           <ul
-            className="max-[400px]:text-[5.25pt] text-[18pt] font-bold col-6 md:col-start-4 md:col-3"
+            className="text-[18pt] font-bold col-6 md:col-start-4 md:col-3 service-list"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
@@ -167,7 +167,7 @@ export default async function AboutPage() {
       {/* Member Section */}
       <section className="px-[20px] md:px-[45px]">
         <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-[40px]">
-          <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
+          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>
@@ -191,10 +191,10 @@ export default async function AboutPage() {
       <section className="pt-0 md:pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] md:text-[30pt] font-bold">INFO</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
           <div className="col-start-2 col-span-4 md:col-start-4 md:col-span-2">
-            <div className="max-[400px]:text-[4.5pt] text-[12pt] font-medium">
+            <div className="text-[12pt] font-medium">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
               <br/>
@@ -220,7 +220,7 @@ export default async function AboutPage() {
       <section className="py-12 md:py-32 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] pb-[98px]">
         <div className="grid-6">
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="max-[400px]:text-[8pt] text-[30pt] font-bold">CONTACT</h2>
+            <h2 className="text-[30pt] font-bold">CONTACT</h2>
           </div>
         </div>
         <ContactForm />

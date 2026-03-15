@@ -39,35 +39,35 @@ export function Header() {
             <Link
               href="/about"
               onClick={closeMenu}
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               ABOUT
             </Link>
             <Link
               href="/hal-ca"
               onClick={closeMenu}
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               HAL ca
             </Link>
             <Link
               href="/releases"
               onClick={closeMenu}
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               RELEASES
             </Link>
             <Link
               href="/works"
               onClick={closeMenu}
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               WORKS
             </Link>
             <Link
               href="/contact"
               onClick={closeMenu}
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               CONTACT
             </Link>
@@ -82,7 +82,7 @@ export function Header() {
               href="https://www.instagram.com/wa_ve.jp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -90,7 +90,7 @@ export function Header() {
               href="https://www.facebook.com/wave.halca"
               target="_blank"
               rel="noopener noreferrer"
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -98,7 +98,7 @@ export function Header() {
               href="https://music.apple.com/jp/artist/hal-ca/1702034837"
               target="_blank"
               rel="noopener noreferrer"
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -106,7 +106,7 @@ export function Header() {
               href="https://open.spotify.com/intl-ja/artist/4PtZB4ONshF7mdbYQgVWtm"
               target="_blank"
               rel="noopener noreferrer"
-              className="block max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
@@ -118,7 +118,7 @@ export function Header() {
           <div className="space-y-3 md:space-y-4">
             <button
               onClick={toggleSound}
-              className="max-[400px]:text-[4.5pt] text-[12pt] md:text-[12pt] font-en font-bold transition-colors duration-300 text-left text-black"
+              className="text-[12pt] md:text-[12pt] font-en font-bold transition-colors duration-300 text-left text-black"
               aria-label={isSoundOn ? '音声をオフ' : '音声をオン'}
             >
               SOUND {isSoundOn ? '/' : '\\'}
