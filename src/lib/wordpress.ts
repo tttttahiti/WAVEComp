@@ -47,6 +47,10 @@ export interface WPWork {
     gallery_gutter: number | null;
     layout_order: string[];
     display_order: number;
+    featured: boolean;
+    featured_order: number;
+    featured_halca: boolean;
+    featured_halca_order: number;
   };
   work_tag: number[];
   work_category: number[];
@@ -67,6 +71,10 @@ export interface WPRelease {
     apple_music_url: string;
     spotify_url: string;
     display_order: number;
+    featured: boolean;
+    featured_order: number;
+    featured_halca: boolean;
+    featured_halca_order: number;
   };
   release_type: number[];
   release_tag: number[];
@@ -350,6 +358,10 @@ export function transformWork(work: WPWork) {
     layoutOrder: work.work_meta.layout_order || ['video', 'content', 'gallery', 'audio'],
     credits: parseCredits(work.work_meta.credits || ''),
     displayOrder: work.work_meta.display_order ?? 99,
+    featured: !!work.work_meta.featured,
+    featuredOrder: work.work_meta.featured_order ?? 99,
+    featuredHalca: !!work.work_meta.featured_halca,
+    featuredHalcaOrder: work.work_meta.featured_halca_order ?? 99,
     tags,
   };
 }
@@ -380,6 +392,10 @@ export function transformRelease(release: WPRelease) {
     appleMusicUrl: release.release_meta.apple_music_url || '',
     spotifyUrl: release.release_meta.spotify_url || '',
     displayOrder: release.release_meta.display_order ?? 99,
+    featured: !!release.release_meta.featured,
+    featuredOrder: release.release_meta.featured_order ?? 99,
+    featuredHalca: !!release.release_meta.featured_halca,
+    featuredHalcaOrder: release.release_meta.featured_halca_order ?? 99,
     tags,
   };
 }

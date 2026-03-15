@@ -27,55 +27,56 @@ export default async function HalCaPage() {
       getReleases({ per_page: 100 }),
     ]);
 
-    // Works を変換
-    const works: FeaturedItem[] = wpWorks.map((work) => {
-      const transformed = transformWork(work);
-      return {
-        type: "work" as const,
-        id: transformed.id,
-        slug: transformed.slug,
-        thumbnail: transformed.thumbnail,
-        client: transformed.client,
-        title: transformed.title,
-        tags: transformed.tags,
-        role: transformed.role,
-        displayOrder: transformed.displayOrder ?? 99,
-        date: transformed.date,
-      };
-    });
+    // Works を変換（featured_halcaフラグ付きのみ）
+    const works: FeaturedItem[] = wpWorks
+      .filter((work) => !!work.work_meta.featured_halca)
+      .map((work) => {
+        const transformed = transformWork(work);
+        return {
+          type: "work" as const,
+          id: transformed.id,
+          slug: transformed.slug,
+          thumbnail: transformed.thumbnail,
+          client: transformed.client,
+          title: transformed.title,
+          tags: transformed.tags,
+          role: transformed.role,
+          displayOrder: transformed.displayOrder ?? 99,
+          featuredOrder: transformed.featuredHalcaOrder ?? 99,
+          date: transformed.date,
+        };
+      });
 
-    // Releases を変換
-    const releases: FeaturedItem[] = wpReleases.map((release) => {
-      const transformed = transformRelease(release);
-      const roleArray = ["Release"];
-      if (transformed.releaseDate) {
-        roleArray.push("Date:");
-        roleArray.push(transformed.releaseDate);
-      }
-      return {
-        type: "release" as const,
-        id: transformed.id,
-        slug: transformed.slug,
-        thumbnail: transformed.coverImage,
-        client: "RELEASE",
-        title: transformed.title,
-        tags: transformed.tags,
-        role: roleArray.join(", "),
-        displayOrder: transformed.displayOrder ?? 99,
-        date: transformed.releaseDate,
-      };
-    });
+    // Releases を変換（featured_halcaフラグ付きのみ）
+    const releases: FeaturedItem[] = wpReleases
+      .filter((release) => !!release.release_meta.featured_halca)
+      .map((release) => {
+        const transformed = transformRelease(release);
+        const roleArray = ["Release"];
+        if (transformed.releaseDate) {
+          roleArray.push("Date:");
+          roleArray.push(transformed.releaseDate);
+        }
+        return {
+          type: "release" as const,
+          id: transformed.id,
+          slug: transformed.slug,
+          thumbnail: transformed.coverImage,
+          client: "RELEASE",
+          title: transformed.title,
+          tags: transformed.tags,
+          role: roleArray.join(", "),
+          displayOrder: transformed.displayOrder ?? 99,
+          featuredOrder: transformed.featuredHalcaOrder ?? 99,
+          date: transformed.releaseDate,
+        };
+      });
 
-    // #HAL ca タグが含まれているアイテムだけを抽出
-    const halCaItems = [...works, ...releases].filter((item) =>
-      item.tags.some((tag) => tag === "#HAL ca" || tag === "#HALca" || tag.toLowerCase().includes("hal ca"))
-    );
-
-    // 統合してソート
-    featuredItems = halCaItems.sort((a, b) => {
-      // 1. 表示順でソート（小さい数字が先）
-      if (a.displayOrder !== b.displayOrder) {
-        return a.displayOrder - b.displayOrder;
+    // featured_halca_orderでソート
+    featuredItems = [...works, ...releases].sort((a, b) => {
+      // 1. featured_orderでソート（小さい数字が先）
+      if (a.featuredOrder !== b.featuredOrder) {
+        return a.featuredOrder - b.featuredOrder;
       }
 
       // 2. 日付でソート（新しい順）

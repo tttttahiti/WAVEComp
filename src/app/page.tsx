@@ -27,49 +27,55 @@ export default async function HomePage() {
     ]);
 
     // Works を変換
-    const works: FeaturedItem[] = wpWorks.map((work) => {
-      const transformed = transformWork(work);
-      return {
-        type: "work" as const,
-        id: transformed.id,
-        slug: transformed.slug,
-        thumbnail: transformed.thumbnail,
-        client: transformed.client,
-        title: transformed.title,
-        tags: transformed.tags,
-        role: transformed.role,
-        displayOrder: transformed.displayOrder ?? 99,
-        date: transformed.date,
-      };
-    });
+    const works: FeaturedItem[] = wpWorks
+      .filter((work) => !!work.work_meta.featured)
+      .map((work) => {
+        const transformed = transformWork(work);
+        return {
+          type: "work" as const,
+          id: transformed.id,
+          slug: transformed.slug,
+          thumbnail: transformed.thumbnail,
+          client: transformed.client,
+          title: transformed.title,
+          tags: transformed.tags,
+          role: transformed.role,
+          displayOrder: transformed.displayOrder ?? 99,
+          featuredOrder: transformed.featuredOrder ?? 99,
+          date: transformed.date,
+        };
+      });
 
     // Releases を変換
-    const releases: FeaturedItem[] = wpReleases.map((release) => {
-      const transformed = transformRelease(release);
-      const roleArray = ["Release"];
-      if (transformed.releaseDate) {
-        roleArray.push("Date:");
-        roleArray.push(transformed.releaseDate);
-      }
-      return {
-        type: "release" as const,
-        id: transformed.id,
-        slug: transformed.slug,
-        thumbnail: transformed.coverImage,
-        client: "RELEASE",
-        title: transformed.title,
-        tags: transformed.tags,
-        role: roleArray.join(", "),
-        displayOrder: transformed.displayOrder ?? 99,
-        date: transformed.releaseDate,
-      };
-    });
+    const releases: FeaturedItem[] = wpReleases
+      .filter((release) => !!release.release_meta.featured)
+      .map((release) => {
+        const transformed = transformRelease(release);
+        const roleArray = ["Release"];
+        if (transformed.releaseDate) {
+          roleArray.push("Date:");
+          roleArray.push(transformed.releaseDate);
+        }
+        return {
+          type: "release" as const,
+          id: transformed.id,
+          slug: transformed.slug,
+          thumbnail: transformed.coverImage,
+          client: "RELEASE",
+          title: transformed.title,
+          tags: transformed.tags,
+          role: roleArray.join(", "),
+          displayOrder: transformed.displayOrder ?? 99,
+          featuredOrder: transformed.featuredOrder ?? 99,
+          date: transformed.releaseDate,
+        };
+      });
 
-    // 統合してソート
+    // 統合してfeatured_orderでソート
     featuredItems = [...works, ...releases].sort((a, b) => {
-      // 1. 表示順でソート（小さい数字が先）
-      if (a.displayOrder !== b.displayOrder) {
-        return a.displayOrder - b.displayOrder;
+      // 1. featured_orderでソート（小さい数字が先）
+      if (a.featuredOrder !== b.featuredOrder) {
+        return a.featuredOrder - b.featuredOrder;
       }
 
       // 2. 日付でソート（新しい順）

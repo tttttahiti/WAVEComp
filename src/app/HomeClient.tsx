@@ -16,6 +16,7 @@ export interface FeaturedItem {
   tags: string[];
   role?: string;
   displayOrder: number;
+  featuredOrder: number;
   date: string;
 }
 

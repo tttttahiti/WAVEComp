@@ -220,6 +220,12 @@ class WAVE_Custom_Post_Types {
                 $gallery_columns_mobile = get_post_meta($post['id'], '_work_gallery_columns_mobile', true);
                 $gallery_gutter = get_post_meta($post['id'], '_work_gallery_gutter', true);
 
+                // Featured flags
+                $featured = get_post_meta($post['id'], '_work_featured', true);
+                $featured_order = get_post_meta($post['id'], '_work_featured_order', true);
+                $featured_halca = get_post_meta($post['id'], '_work_featured_halca', true);
+                $featured_halca_order = get_post_meta($post['id'], '_work_featured_halca_order', true);
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
@@ -234,6 +240,10 @@ class WAVE_Custom_Post_Types {
                     'gallery_gutter' => $gallery_gutter !== '' ? intval($gallery_gutter) : null,
                     'layout_order' => $layout_order,
                     'display_order' => $display_order ? intval($display_order) : 99,
+                    'featured' => !empty($featured),
+                    'featured_order' => $featured_order ? intval($featured_order) : 99,
+                    'featured_halca' => !empty($featured_halca),
+                    'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
                 );
             },
             'schema' => array(
@@ -245,6 +255,10 @@ class WAVE_Custom_Post_Types {
         register_rest_field('release', 'release_meta', array(
             'get_callback' => function($post) {
                 $display_order = get_post_meta($post['id'], '_release_display_order', true);
+                $featured = get_post_meta($post['id'], '_release_featured', true);
+                $featured_order = get_post_meta($post['id'], '_release_featured_order', true);
+                $featured_halca = get_post_meta($post['id'], '_release_featured_halca', true);
+                $featured_halca_order = get_post_meta($post['id'], '_release_featured_halca_order', true);
                 return array(
                     'release_date' => get_post_meta($post['id'], '_release_date', true),
                     'tracks' => get_post_meta($post['id'], '_release_tracks', true),
@@ -252,6 +266,10 @@ class WAVE_Custom_Post_Types {
                     'apple_music_url' => get_post_meta($post['id'], '_release_apple_music_url', true),
                     'spotify_url' => get_post_meta($post['id'], '_release_spotify_url', true),
                     'display_order' => $display_order ? intval($display_order) : 99,
+                    'featured' => !empty($featured),
+                    'featured_order' => $featured_order ? intval($featured_order) : 99,
+                    'featured_halca' => !empty($featured_halca),
+                    'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
                 );
             },
             'schema' => array(
@@ -382,6 +400,10 @@ class WAVE_Custom_Post_Types {
         wp_nonce_field('wave_work_meta', 'wave_work_meta_nonce');
 
         $display_order = get_post_meta($post->ID, '_work_display_order', true);
+        $featured = get_post_meta($post->ID, '_work_featured', true);
+        $featured_order = get_post_meta($post->ID, '_work_featured_order', true);
+        $featured_halca = get_post_meta($post->ID, '_work_featured_halca', true);
+        $featured_halca_order = get_post_meta($post->ID, '_work_featured_halca_order', true);
         $client = get_post_meta($post->ID, '_work_client', true);
         $date = get_post_meta($post->ID, '_work_date', true);
         $role = get_post_meta($post->ID, '_work_role', true);
@@ -417,6 +439,26 @@ class WAVE_Custom_Post_Types {
                 <td>
                     <input type="number" id="work_display_order" name="work_display_order" value="<?php echo esc_attr($display_order); ?>" class="small-text" min="0" step="1">
                     <p class="description">小さい数字が先に表示されます（例: 1, 2, 3...）</p>
+                </td>
+            </tr>
+            <tr>
+                <th>FEATURED（TOP）</th>
+                <td>
+                    <label><input type="checkbox" name="work_featured" value="1" <?php checked($featured, '1'); ?>> TOPページのFEATUREDに表示する</label>
+                    <br><br>
+                    <label for="work_featured_order">FEATURED表示順:</label>
+                    <input type="number" id="work_featured_order" name="work_featured_order" value="<?php echo esc_attr($featured_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">FEATURED内での表示順（小さい数字が先）</p>
+                </td>
+            </tr>
+            <tr>
+                <th>FEATURED（HAL ca）</th>
+                <td>
+                    <label><input type="checkbox" name="work_featured_halca" value="1" <?php checked($featured_halca, '1'); ?>> HAL caページのFEATUREDに表示する</label>
+                    <br><br>
+                    <label for="work_featured_halca_order">FEATURED表示順:</label>
+                    <input type="number" id="work_featured_halca_order" name="work_featured_halca_order" value="<?php echo esc_attr($featured_halca_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">HAL ca FEATURED内での表示順（小さい数字が先）</p>
                 </td>
             </tr>
             <tr>
@@ -621,6 +663,10 @@ class WAVE_Custom_Post_Types {
         wp_nonce_field('wave_release_meta', 'wave_release_meta_nonce');
 
         $display_order = get_post_meta($post->ID, '_release_display_order', true);
+        $featured = get_post_meta($post->ID, '_release_featured', true);
+        $featured_order = get_post_meta($post->ID, '_release_featured_order', true);
+        $featured_halca = get_post_meta($post->ID, '_release_featured_halca', true);
+        $featured_halca_order = get_post_meta($post->ID, '_release_featured_halca_order', true);
         $release_date = get_post_meta($post->ID, '_release_date', true);
         $tracks = get_post_meta($post->ID, '_release_tracks', true);
         $listen_url = get_post_meta($post->ID, '_release_listen_url', true);
@@ -633,6 +679,26 @@ class WAVE_Custom_Post_Types {
                 <td>
                     <input type="number" id="release_display_order" name="release_display_order" value="<?php echo esc_attr($display_order); ?>" class="small-text" min="0" step="1">
                     <p class="description">小さい数字が先に表示されます（例: 1, 2, 3...）</p>
+                </td>
+            </tr>
+            <tr>
+                <th>FEATURED（TOP）</th>
+                <td>
+                    <label><input type="checkbox" name="release_featured" value="1" <?php checked($featured, '1'); ?>> TOPページのFEATUREDに表示する</label>
+                    <br><br>
+                    <label for="release_featured_order">FEATURED表示順:</label>
+                    <input type="number" id="release_featured_order" name="release_featured_order" value="<?php echo esc_attr($featured_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">FEATURED内での表示順（小さい数字が先）</p>
+                </td>
+            </tr>
+            <tr>
+                <th>FEATURED（HAL ca）</th>
+                <td>
+                    <label><input type="checkbox" name="release_featured_halca" value="1" <?php checked($featured_halca, '1'); ?>> HAL caページのFEATUREDに表示する</label>
+                    <br><br>
+                    <label for="release_featured_halca_order">FEATURED表示順:</label>
+                    <input type="number" id="release_featured_halca_order" name="release_featured_halca_order" value="<?php echo esc_attr($featured_halca_order); ?>" class="small-text" min="0" step="1">
+                    <p class="description">HAL ca FEATURED内での表示順（小さい数字が先）</p>
                 </td>
             </tr>
             <tr>
@@ -750,6 +816,16 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_display_order'])) {
                 update_post_meta($post_id, '_work_display_order', intval($_POST['work_display_order']));
             }
+            // Featured (TOP)
+            update_post_meta($post_id, '_work_featured', isset($_POST['work_featured']) ? '1' : '');
+            if (isset($_POST['work_featured_order'])) {
+                update_post_meta($post_id, '_work_featured_order', intval($_POST['work_featured_order']));
+            }
+            // Featured (HAL ca)
+            update_post_meta($post_id, '_work_featured_halca', isset($_POST['work_featured_halca']) ? '1' : '');
+            if (isset($_POST['work_featured_halca_order'])) {
+                update_post_meta($post_id, '_work_featured_halca_order', intval($_POST['work_featured_halca_order']));
+            }
             // Text fields
             $text_fields = array('work_client', 'work_date', 'work_role', 'work_url');
             foreach ($text_fields as $field) {
@@ -796,6 +872,16 @@ class WAVE_Custom_Post_Types {
             // Display order
             if (isset($_POST['release_display_order'])) {
                 update_post_meta($post_id, '_release_display_order', intval($_POST['release_display_order']));
+            }
+            // Featured (TOP)
+            update_post_meta($post_id, '_release_featured', isset($_POST['release_featured']) ? '1' : '');
+            if (isset($_POST['release_featured_order'])) {
+                update_post_meta($post_id, '_release_featured_order', intval($_POST['release_featured_order']));
+            }
+            // Featured (HAL ca)
+            update_post_meta($post_id, '_release_featured_halca', isset($_POST['release_featured_halca']) ? '1' : '');
+            if (isset($_POST['release_featured_halca_order'])) {
+                update_post_meta($post_id, '_release_featured_halca_order', intval($_POST['release_featured_halca_order']));
             }
             $fields = array('release_date', 'release_tracks', 'release_listen_url', 'release_apple_music_url', 'release_spotify_url');
             foreach ($fields as $field) {
