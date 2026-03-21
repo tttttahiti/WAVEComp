@@ -110,68 +110,48 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
           </div>
 
           <div className="grid-6 justify-end">
-            {/* モバイル用 (md未満): 2カード表示 */}
+            {/* モバイル用 (md未満): 1カード表示 */}
             <div className="col-6 md:hidden">
               <div className="grid-6">
-                {Array.from(
-                  { length: Math.ceil(featuredItems.length / 2) },
-                  (_, groupIndex) => {
-                    const startIndex = groupIndex * 2;
-                    const groupItems = featuredItems.slice(startIndex, startIndex + 2);
-
-                    return [
-                      // 上部ボーダー
-                      <div key={`border-top-${groupIndex}`} className="col-6">
-                        <img
-                          src="/svg/line.svg"
-                          alt=""
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
-                      </div>,
-                      // 画像2つ
-                      ...groupItems.map((item) => (
-                        <div key={`image-${item.type}-${item.id}`} className="col-3">
-                          <WorkCard
-                            id={item.id}
-                            slug={item.slug}
-                            thumbnail={item.thumbnail}
-                            client={item.client}
-                            title={item.title}
-                            tags={item.tags}
-                            role={item.role}
-                            linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
-                            onImageLoad={(height) => handleImageLoad(item.id, height)}
-                            imageOnly
-                          />
-                        </div>
-                      )),
-                      // 中間ボーダー
-                      <div key={`border-middle-${groupIndex}`} className="col-6">
-                        <img
-                          src="/svg/line.svg"
-                          alt=""
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
-                      </div>,
-                      // テキスト2つ
-                      ...groupItems.map((item) => (
-                        <div key={`text-${item.type}-${item.id}`} className={`col-3 ${groupIndex === Math.ceil(featuredItems.length / 2) - 1 ? 'mb-10' : ''}`}>
-                          <WorkCard
-                            id={item.id}
-                            slug={item.slug}
-                            thumbnail={item.thumbnail}
-                            client={item.client}
-                            title={item.title}
-                            tags={item.tags}
-                            role={item.role}
-                            linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
-                            textOnly
-                          />
-                        </div>
-                      )),
-                    ];
-                  }
-                ).flat()}
+                {featuredItems.map((item) => [
+                  // 画像
+                  <div key={`image-${item.type}-${item.id}`} className="col-6">
+                    <WorkCard
+                      id={item.id}
+                      slug={item.slug}
+                      thumbnail={item.thumbnail}
+                      client={item.client}
+                      title={item.title}
+                      tags={item.tags}
+                      role={item.role}
+                      linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
+                      onImageLoad={(height) => handleImageLoad(item.id, height)}
+                      imageOnly
+                    />
+                  </div>,
+                  // 中間ボーダー
+                  <div key={`border-middle-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                  // テキスト
+                  <div key={`text-${item.type}-${item.id}`} className="col-6">
+                    <WorkCard
+                      id={item.id}
+                      slug={item.slug}
+                      thumbnail={item.thumbnail}
+                      client={item.client}
+                      title={item.title}
+                      tags={item.tags}
+                      role={item.role}
+                      linkHref={item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`}
+                      textOnly
+                    />
+                  </div>,
+                  // 下部ボーダー
+                  <div key={`border-bottom-${item.type}-${item.id}`} className="col-6">
+                    <div className="w-full h-px bg-black" />
+                  </div>,
+                ]).flat()}
               </div>
             </div>
 
