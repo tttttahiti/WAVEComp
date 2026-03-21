@@ -264,7 +264,7 @@ textarea:-webkit-autofill:focus {
 }
 
 @media (max-width: 400px) {
-  h1, h2, h3, .text-\[30pt\] {
+  h1, h2, .text-\[30pt\] {
     font-size: 20pt !important;
   }
   .w-\[140px\].h-auto {
@@ -272,6 +272,9 @@ textarea:-webkit-autofill:focus {
   }
   .service-list {
     font-size: 12pt !important;
+  }
+  .featured-heading {
+    font-size: 16pt !important;
   }
 }
 

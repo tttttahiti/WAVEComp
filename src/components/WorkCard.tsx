@@ -85,8 +85,8 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
   if (textOnly) {
     return (
       <div className="pt-[17px] pb-[60px]">
-        <Link href={href} className="block card-hover">
-          <p className="text-[8pt] md:text-[10pt] text-black font-bold">{client}</p>
+        <Link href={href} className="block hover:text-[#c2de6d] transition-colors">
+          <p className="text-[8pt] md:text-[10pt] font-bold">{client}</p>
           <h3 className="font-bold text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
         </Link>
         <div className="text-[6pt] md:text-[7pt] text-black mt-3 md:mt-[16px] space-y-[2px]">

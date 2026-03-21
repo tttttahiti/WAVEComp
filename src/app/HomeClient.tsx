@@ -77,8 +77,8 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
       <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="text-[30pt] font-bold col-3">FEATURED</h2>
-            <h2 className="text-[30pt] font-bold col-3 text-right">WORKS</h2>
+            <h2 className="text-[30pt] font-bold col-3 featured-heading">FEATURED</h2>
+            <h2 className="text-[30pt] font-bold col-3 text-right featured-heading">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">

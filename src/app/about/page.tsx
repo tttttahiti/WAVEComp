@@ -149,7 +149,7 @@ export default async function AboutPage() {
             OUR SERVICE
           </h2>
           <ul
-            className="text-[18pt] font-bold col-6 md:col-start-4 md:col-3 service-list"
+            className="text-[18pt] font-medium col-6 md:col-start-4 md:col-3 service-list"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">

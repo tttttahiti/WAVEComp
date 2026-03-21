@@ -29,14 +29,14 @@ export function ReleaseCard({
   tags = [],
 }: ReleaseCardProps) {
   return (
-    <article className="grid-6 pt-[124px] pb-[150px]">
+    <article className="grid-6 pb-[150px]">
       {/* モバイル: カバー画像を先に表示 */}
       <div className="col-span-6 md:col-span-1 h-[91px] mb-[41px]">
         <h3 className="text-[30pt] font-bold mb-3 md:mb-4">
           {title || "no data"}
         </h3>
         <p className="text-[12pt] font-bold mb-[0px]">
-          {year || "no data"}. {releaseType || "Release"}
+        {releaseType || "Release"}
         </p>
       </div>
 

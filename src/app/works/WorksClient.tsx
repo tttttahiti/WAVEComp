@@ -129,7 +129,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                   onChange={(e) => setFilterTag(e.target.value)}
                   className="w-48 md:w-64 bg-white text-black border border-black/20 px-4 py-2 text-sm focus:outline-none focus:border-wave-blue transition-colors appearance-none cursor-pointer"
                 >
-                  <option value="">#</option>
+                  <option value=""># ALL</option>
                   {allTags.map((tag) => (
                     <option key={tag} value={tag}>
                       {tag}

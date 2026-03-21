@@ -34,7 +34,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section data-hero className="relative min-h-[498px] bg-gray-100 overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
           <Image
-            src="/images/hal-ca-hero.jpg"
+            src="/images/hal-ca-hero2.jpg"
             alt="HAL ca"
             fill
             className="object-cover object-top"
@@ -105,8 +105,8 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3">FEATURED</h2>
-            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 text-right">WORKS</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 featured-heading">FEATURED</h2>
+            <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 text-right featured-heading">WORKS</h2>
           </div>
 
           <div className="grid-6 justify-end">
