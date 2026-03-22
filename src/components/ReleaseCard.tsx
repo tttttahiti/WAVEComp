@@ -32,7 +32,7 @@ export function ReleaseCard({
     <article className="grid-6 pb-[150px]">
       {/* モバイル: カバー画像を先に表示 */}
       <div className="col-span-6 md:col-span-1 h-[91px] mb-[41px]">
-        <h3 className="text-[30pt] font-bold mb-3 md:mb-4">
+        <h3 className="text-[30pt] font-bold mb-3 md:mb-4 whitespace-nowrap">
           {title || "no data"}
         </h3>
         <p className="text-[12pt] font-bold mb-[0px]">

@@ -48,7 +48,7 @@ export default async function ReleasesPage() {
       </section>
 
       {/* Releases List */}
-      <section className="py-8 md:py-24 pt-[124px] px-[20px] md:px-[45px]">
+      <section className="py-8 pt-[52px] px-[20px] md:px-[45px]">
         <div className="">
           {releases.length === 0 ? (
             <div className="text-center py-8 md:py-16">
