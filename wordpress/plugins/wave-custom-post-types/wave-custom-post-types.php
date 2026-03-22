@@ -374,6 +374,16 @@ class WAVE_Custom_Post_Types {
             'high'
         );
 
+        // Work sidebar meta box for Role (EN)
+        add_meta_box(
+            'work_role_en_box',
+            'Role（EN）- サムネ下表示用',
+            array($this, 'render_work_role_en_meta_box'),
+            'work',
+            'side',
+            'default'
+        );
+
         // Release meta box
         add_meta_box(
             'release_details',
@@ -476,13 +486,6 @@ class WAVE_Custom_Post_Types {
                 <td>
                     <input type="text" id="work_role" name="work_role" value="<?php echo esc_attr($role); ?>" class="regular-text">
                     <p class="description">個別WORKSページ内に表示されます</p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="work_role_en">Role（EN）</label></th>
-                <td>
-                    <input type="text" id="work_role_en" name="work_role_en" value="<?php echo esc_attr(get_post_meta($post->ID, '_work_role_en', true)); ?>" class="regular-text">
-                    <p class="description">サムネ下に表示されます（例: Sound Design, Event Produce）</p>
                 </td>
             </tr>
             <tr>
@@ -742,6 +745,20 @@ class WAVE_Custom_Post_Types {
                 <td><input type="url" id="release_spotify_url" name="release_spotify_url" value="<?php echo esc_attr($spotify_url); ?>" class="regular-text"></td>
             </tr>
         </table>
+        <?php
+    }
+
+    /**
+     * Render Work Role EN sidebar Meta Box
+     */
+    public function render_work_role_en_meta_box($post) {
+        $role_en = get_post_meta($post->ID, '_work_role_en', true);
+        ?>
+        <p>
+            <label for="work_role_en">サムネ下に表示される英語表記</label>
+        </p>
+        <input type="text" id="work_role_en" name="work_role_en" value="<?php echo esc_attr($role_en); ?>" style="width:100%;">
+        <p class="description">例: Sound Design, Event Produce</p>
         <?php
     }
 
