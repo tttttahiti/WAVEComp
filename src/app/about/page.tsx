@@ -152,14 +152,14 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Service Section */}
-      <section className="pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
+      <section className="pt-[30px] pb-[60px] px-[20px] md:px-[45px]">
         <div className="grid-6 items-start">
           <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
             OUR SERVICE
           </h2>
 
           {/* モバイル: SVG画像 */}
-          <div className="col-span-4 col-start-2 md:hidden">
+          <div className="pt-[70px] pb-[80px] col-span-4 col-start-2 md:hidden">
             <img
               src="/svg/our_service_msg.svg"
               alt="HAL ca アーティストマネージメント、サウンドプロデュース、コンテンツ制作、音楽制作、企画 / 体験デザイン、イベント企画 / プロデュース"
@@ -186,7 +186,7 @@ export default async function AboutPage() {
 
       {/* Member Section */}
       <section className="px-[20px] md:px-[45px]">
-        <div className="grid-6 h-[96px] md:h-[50px] mb-[52px] md:mb-[40px]">
+        <div className="grid-6 h-[96px] md:h-[50px] mb-[0px] md:mb-[40px]">
           <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
@@ -202,7 +202,7 @@ export default async function AboutPage() {
             title={member.title}
             biography={member.biography}
             achievements={member.achievements}
-            marginTop={index === 0 ? "mt-2 md:mt-[15px]" : "mt-12 md:mt-[90px]"}
+            marginTop={index === 0 ? "mt-0 md:mt-[15px]" : "mt-12 md:mt-[90px]"}
           />
         ))}
       </section>
