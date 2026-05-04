@@ -14,7 +14,7 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
 
   // YouTube URLのパターン
   const youtubePatterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/,
     /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
   ];
 
