@@ -40,7 +40,7 @@ export function ReleaseCard({
         </p>
       </div>
 
-      <div className="col-span-4 col-start-2 md:hidden aspect-square w-full min-w-0 relative bg-gray-100 mb-[80px]">
+      <div className="col-span-6 col-start-1 md:hidden aspect-square w-full min-w-0 relative bg-gray-100 mb-[80px]">
         <Image
           src={coverImage}
           alt={title}
