@@ -86,7 +86,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
             <p className="text-[10pt] md:text-[12pt] mb-4 md:mb-6">{work.role}</p>
 
             <div className="border-t border-black/10 pt-3 md:pt-4 space-y-2 md:space-y-3">
-              <div className="flex flex-wrap gap-2 md:gap-4 text-[10pt] md:text-[12pt]">
+              <div className="flex flex-wrap justify-between gap-y-2 text-[10pt] md:text-[12pt]">
                 {work.tags.map((tag, index) => (
                   <Link
                     key={index}
