@@ -39,3 +39,12 @@ public/videos/*.mp4
 public/videos/*.mov
 public/videos/*.avi
 public/videos/*.mkv
+
+# Claude Code working memory (plans, settings, etc.)
+.claude/
+
+# WordPress local Docker runtime plugins (not part of site code)
+wordpress/plugins/akismet/
+wordpress/plugins/hello.php
+wordpress/plugins/index.php
+wordpress/plugins/wordpress-importer/
