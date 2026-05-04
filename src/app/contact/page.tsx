@@ -40,13 +40,16 @@ export default function ContactPage() {
           <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
             <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
-          <div className="col-span-4 col-start-2 md:col-start-4 md:col-span-2">
-            <div className="text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
+          <div className="col-start-2 col-span-4 md:col-start-4 md:col-span-2">
+            <div className="text-[12pt] font-medium">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
-              <p className="mt-2 md:mt-4">設立日：2026年4月1日</p>
+              <br/>
+              <p>設立日：2026年4月1日</p>
               <p>代表取締役（共同代表）：</p>
               <p>菊地晴夏 / 島田舞</p>
+              <br/>
+
               <p>
                 <a
                   href="mailto:info@wa-ve.jp"
