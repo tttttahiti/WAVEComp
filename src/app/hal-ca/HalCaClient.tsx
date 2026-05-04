@@ -31,13 +31,20 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
   return (
     <>
       {/* Hero Section */}
-      <section data-hero className="relative min-h-[498px] bg-gray-100 overflow-hidden">
+      <section data-hero className="relative aspect-video md:aspect-auto md:h-[40vh] md:max-h-[512px] bg-gray-100 overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
+          <Image
+            src="/images/hal-ca-hero2.jpg"
+            alt=""
+            fill
+            aria-hidden
+            className="object-cover blur-2xl scale-110"
+          />
           <Image
             src="/images/hal-ca-hero2.jpg"
             alt="HAL ca"
             fill
-            className="object-cover object-top"
+            className="object-cover object-bottom 2xl:object-contain"
             priority
           />
         </div>
