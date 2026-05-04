@@ -158,18 +158,8 @@ export default async function AboutPage() {
             OUR SERVICE
           </h2>
 
-          {/* モバイル: SVG画像 */}
-          <div className="pt-[70px] pb-[80px] col-span-4 col-start-2 md:hidden">
-            <img
-              src="/svg/our_service_msg.svg"
-              alt="HAL ca アーティストマネージメント、サウンドプロデュース、コンテンツ制作、音楽制作、企画 / 体験デザイン、イベント企画 / プロデュース"
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* デスクトップ: テキストリスト */}
           <ul
-            className="text-[18pt] font-medium hidden md:block md:col-start-4 md:col-3 service-list"
+            className="text-[12pt] md:text-[18pt] font-medium pt-[70px] pb-[80px] md:pt-0 md:pb-0 col-span-4 col-start-2 md:col-start-4 md:col-3 service-list"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
