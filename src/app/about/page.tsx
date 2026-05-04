@@ -110,46 +110,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <section className="pt-[120px] pb-[109px] px-[20px] md:px-[45px]">
-        <div className="grid-6 overflow-visible">
-          <h2 className="text-[30pt] font-bold col-6 md:col-1 md:col-start-2 mb-[41px] md:mb-0">CONCEPT</h2>
-
-          {/* モバイル: SVG画像 */}
-          <div className="col-6 md:hidden">
-            <img
-              src="/svg/concept_msg.svg"
-              alt="音のある時間を豊かに、緻密に、そして大胆に。私たちは、「目的地」だけを語りません。迷い、寄り道し、波に揺られながら進むプロセスを創造の本質だと考え、心に響く音や体験をつくりだします。"
-              className="w-full h-auto"
-            />
-          </div>
-
-          {/* デスクトップ: 縦書きテキスト */}
-          <div className="hidden md:flex justify-end overflow-visible col-6 md:col-start-5 md:col-2">
-            <div
-              className="writing-vertical-rl font-jp font-medium leading-[2.5] text-[18pt]"
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-              }}
-            >
-              <p>音のある時間を豊かに、</p>
-              <p>緻密に、</p>
-              <p>そして大胆に。</p>
-              <p className="w-8"></p>
-              <p className="w-8"></p>
-              <p>私たちは、</p>
-              <p>「目的地」だけを語りません。</p>
-              <p className="w-8"></p>
-              <p className="w-8"></p>
-              <p>迷い、寄り道し、</p>
-              <p>波に揺られながら進むプロセスを</p>
-              <p>創造の本質だと考え、</p>
-              <p>心に響く音や体験を</p>
-              <p>つくりだします。</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Concept titleColStart={2} titleMobileMb="mb-[41px]" />
 
       {/* Our Service Section */}
       <section className="pt-[30px] pb-[60px] px-[20px] md:px-[45px]">
