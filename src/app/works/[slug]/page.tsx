@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { MasonryGallery } from "@/components/MasonryGallery";
+import { HeroImage } from "@/components/HeroImage";
 
 // 常にサーバーサイドで動的レンダリングを行う
 export const dynamic = 'force-dynamic';
@@ -63,16 +63,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   return (
     <>
       {/* Hero Section */}
-      <section data-hero className="relative h-[40vh] md:h-[60vh] min-h-[180px] md:min-h-[233px]">
-        <Image
-          src={work.heroImage}
-          alt={work.title}
-          fill
-          className="object-cover"
-          priority
-        />
-
-      </section>
+      <HeroImage src={work.heroImage} alt={work.title} />
 
       {/* Work Info Section */}
       <section className="py-8 md:py-24 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
