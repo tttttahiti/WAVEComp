@@ -37,6 +37,13 @@ export function Header() {
           {/* Main Navigation */}
           <nav className="space-y-3 md:space-y-4">
             <Link
+              href="/"
+              onClick={closeMenu}
+              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+            >
+              HOME
+            </Link>
+            <Link
               href="/about"
               onClick={closeMenu}
               className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
