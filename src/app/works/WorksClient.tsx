@@ -6,6 +6,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { WorkCard } from "@/components/WorkCard";
 
+// プルダウン表示順（この順で表示、未定義タグは末尾）
+const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
+
 export interface Work {
   id: string;
   slug: string;
@@ -35,8 +38,6 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
     }
   }, [searchParams]);
 
-  // プルダウン表示順（この順で表示、未定義タグは末尾）
-  const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
 
   // 全ての記事から重複なしのタグ一覧を取得（指定順でソート）
   const allTags = useMemo(() => {
@@ -100,7 +101,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
+          <div className="grid-6 px-[20px] md:px-[45px]">
             <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3 md:col-3">WORKS</h2>
             <div className="col-3 md:col-3 flex justify-end items-end mt-0">
               <Link href="/">
@@ -118,7 +119,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       </section>
 
       {/* Filter & Works Grid */}
-      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] mb-[55px]">
+      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] mb-[55px]">
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
