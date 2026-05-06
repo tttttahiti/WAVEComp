@@ -110,7 +110,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Concept Section */}
-      <Concept titleColStart={2} titleMobileMb="mb-[41px]" />
+      <Concept titleColStart={2} />
 
       {/* Our Service Section */}
       <section className="pt-[30px] pb-[60px] px-[20px] md:px-[45px]">
