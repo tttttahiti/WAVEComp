@@ -23,7 +23,7 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
     if (match && match[1]) {
       const videoId = match[1];
       // YouTube パラメータ
-      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&rel=0&modestbranding=1&color=white&iv_load_policy=3&playsinline=1`;
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&color=white&iv_load_policy=3&playsinline=1`;
       return { type: "youtube", embedUrl };
     }
   }
@@ -39,7 +39,7 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
     if (match && match[1]) {
       const videoId = match[1];
       // Vimeo パラメータ
-      const embedUrl = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=0&title=0&byline=0&portrait=0`;
+      const embedUrl = `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0`;
       return { type: "vimeo", embedUrl };
     }
   }
