@@ -53,13 +53,13 @@ export function Concept({
       <div className="grid-6 overflow-visible md:items-start">
         <div className={`col-span-6 flex flex-wrap justify-between gap-y-10 ${titleColStart === 2 ? 'md:col-start-2 md:col-span-4' : 'col-span-6 md:col-span-5'}`}>
             <h2
-              className="shrink-0 text-[30pt] font-bold"
+              className="shrink-0 text-[30pt] font-bold w-full lg:w-auto"
             >
               CONCEPT
             </h2>
 
           <div
-            className={`flex-1 max-w-full font-jp font-medium leading-[1.2] text-[11pt] md:text-[14pt] lg:text-[18pt]`}
+            className={`flex-1 max-w-full font-jp font-medium leading-[1.2] text-[11pt] sm:text-[14pt] lg:text-[18pt]`}
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
