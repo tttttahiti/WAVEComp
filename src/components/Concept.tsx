@@ -19,7 +19,7 @@ const paragraphs: string[][] = [
   ],
 ];
 
-const FADE_BASE = "transition-opacity duration-1000 ease-out";
+const FADE_BASE = "transition-opacity duration-[4500ms] ease-out";
 
 export function Concept({
   className = "",
@@ -59,7 +59,7 @@ export function Concept({
             </h2>
 
           <div
-            className={`flex-1 max-w-full font-jp font-medium leading-[1.2] text-[11pt] md:text-[18px]`}
+            className={`flex-1 max-w-full font-jp font-medium leading-[1.2] text-[11pt] md:text-[14pt] lg:text-[18pt]`}
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
@@ -74,7 +74,7 @@ export function Concept({
                     : ""
                 }`}
                 style={{
-                  transitionDelay: isVisible ? `${pIndex * 500}ms` : "0ms",
+                  transitionDelay: isVisible ? `${pIndex * 1000}ms` : "0ms",
                   opacity: isVisible ? 1 : 0,
                 }}
               >
