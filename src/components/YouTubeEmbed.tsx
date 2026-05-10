@@ -54,6 +54,7 @@ interface YTPlayerEvent {
 
 interface YTPlayer {
   destroy?: () => void;
+  pauseVideo?: () => void;
 }
 
 interface YTNamespace {
@@ -61,7 +62,7 @@ interface YTNamespace {
     element: HTMLIFrameElement,
     options: { events: { onStateChange: (event: YTPlayerEvent) => void } }
   ) => YTPlayer;
-  PlayerState: { PLAYING: number };
+  PlayerState: { PLAYING: number; PAUSED: number; ENDED: number };
 }
 
 declare global {
@@ -72,6 +73,7 @@ declare global {
 }
 
 let ytApiPromise: Promise<void> | null = null;
+const registeredPlayers = new Set<YTPlayer>();
 
 function loadYouTubeAPI(): Promise<void> {
   if (typeof window === "undefined") return Promise.resolve();
@@ -96,11 +98,11 @@ function loadYouTubeAPI(): Promise<void> {
 export function YouTubeEmbed({ url }: VideoEmbedProps) {
   const { type, embedUrl } = getVideoEmbedInfo(url);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const { isSoundOn, toggleSound } = useSound();
-  const isSoundOnRef = useRef(isSoundOn);
-  const toggleSoundRef = useRef(toggleSound);
-  isSoundOnRef.current = isSoundOn;
-  toggleSoundRef.current = toggleSound;
+  const { pauseForVideo, resumeFromVideo } = useSound();
+  const pauseForVideoRef = useRef(pauseForVideo);
+  const resumeFromVideoRef = useRef(resumeFromVideo);
+  pauseForVideoRef.current = pauseForVideo;
+  resumeFromVideoRef.current = resumeFromVideo;
 
   useEffect(() => {
     if (type !== "youtube" || !iframeRef.current) return;
@@ -112,24 +114,38 @@ export function YouTubeEmbed({ url }: VideoEmbedProps) {
       player = new window.YT.Player(iframeRef.current, {
         events: {
           onStateChange: (event) => {
-            if (
-              event.data === window.YT!.PlayerState.PLAYING &&
-              isSoundOnRef.current
-            ) {
-              toggleSoundRef.current();
+            const state = event.data;
+            const PlayerState = window.YT!.PlayerState;
+            if (state === PlayerState.PLAYING) {
+              registeredPlayers.forEach((other) => {
+                if (other !== player && typeof other.pauseVideo === "function") {
+                  try {
+                    other.pauseVideo();
+                  } catch {
+                    // ignore
+                  }
+                }
+              });
+              pauseForVideoRef.current();
+            } else if (state === PlayerState.PAUSED || state === PlayerState.ENDED) {
+              resumeFromVideoRef.current();
             }
           },
         },
       });
+      registeredPlayers.add(player);
     });
 
     return () => {
       cancelled = true;
-      if (player && typeof player.destroy === "function") {
-        try {
-          player.destroy();
-        } catch {
-          // ignore
+      if (player) {
+        registeredPlayers.delete(player);
+        if (typeof player.destroy === "function") {
+          try {
+            player.destroy();
+          } catch {
+            // ignore
+          }
         }
       }
     };

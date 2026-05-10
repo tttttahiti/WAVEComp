@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useMenu } from "./MenuContext";
 import { useSound } from "./SoundContext";
@@ -13,6 +13,8 @@ export function PageWrapper({ children }: PageWrapperProps) {
   const { isMenuOpen, toggleMenu } = useMenu();
   const { isSoundOn, toggleSound } = useSound();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSoundHidden, setIsSoundHidden] = useState(false);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     const getThreshold = () => {
@@ -26,7 +28,18 @@ export function PageWrapper({ children }: PageWrapperProps) {
 
     const handleScroll = () => {
       const threshold = getThreshold();
-      setIsScrolled(window.scrollY >= threshold);
+      const currentY = window.scrollY;
+      setIsScrolled(currentY >= threshold);
+
+      const lastY = lastScrollYRef.current;
+      if (currentY <= 4) {
+        setIsSoundHidden(false);
+      } else if (currentY > lastY + 2) {
+        setIsSoundHidden(true);
+      } else if (currentY < lastY - 2) {
+        setIsSoundHidden(false);
+      }
+      lastScrollYRef.current = currentY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -50,7 +63,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
         <div className={`flex justify-between items-start ${isMenuOpen ? "hidden md:flex" : ""}`}>
           <button
             onClick={toggleSound}
-            className={`font-en font-bold transition-colors duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"}`}
+            className={`font-en font-bold transition-[color,opacity] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${isSoundHidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
             aria-label={isSoundOn ? "音声をオフ" : "音声をオン"}
           >
             SOUND {isSoundOn ? "/" : "\\"}
