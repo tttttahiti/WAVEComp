@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { WorkCard } from "@/components/WorkCard";
 import { Concept } from "@/components/Concept";
+import { News } from "@/components/News";
+import type { WPNews } from "@/lib/wordpress";
 
 export interface FeaturedItem {
   type: "work" | "release";
@@ -22,9 +24,10 @@ export interface FeaturedItem {
 
 interface HomeClientProps {
   featuredItems: FeaturedItem[];
+  newsList: WPNews[];
 }
 
-export function HomeClient({ featuredItems }: HomeClientProps) {
+export function HomeClient({ featuredItems, newsList }: HomeClientProps) {
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
 
   const handleImageLoad = useCallback((id: string, height: number) => {
@@ -55,6 +58,8 @@ export function HomeClient({ featuredItems }: HomeClientProps) {
             allowFullScreen
           />
         </div>
+        {/* News (左上、Heroにオーバーレイ) */}
+        <News newsList={newsList} />
         {/* Logo */}
         <div className="relative h-full px-[20px] md:px-[45px] grid-6 items-center">
           <div className="col-6 flex justify-end z-10">

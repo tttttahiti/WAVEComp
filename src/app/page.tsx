@@ -1,5 +1,13 @@
 import { HomeClient, type FeaturedItem } from "./HomeClient";
-import { getWorks, getReleases, transformWork, transformRelease } from "@/lib/wordpress";
+import {
+  getWorks,
+  getReleases,
+  getNewsList,
+  filterVisibleNews,
+  transformWork,
+  transformRelease,
+  type WPNews,
+} from "@/lib/wordpress";
 
 /**
  * 日付文字列をDateオブジェクトに変換
@@ -19,12 +27,16 @@ function parseDate(dateStr: string): Date | null {
 
 export default async function HomePage() {
   let featuredItems: FeaturedItem[] = [];
+  let newsList: WPNews[] = [];
 
   try {
-    const [wpWorks, wpReleases] = await Promise.all([
+    const [wpWorks, wpReleases, wpNews] = await Promise.all([
       getWorks({ per_page: 100 }),
       getReleases({ per_page: 100 }),
+      getNewsList({ per_page: 20 }).catch(() => []),
     ]);
+
+    newsList = filterVisibleNews(wpNews);
 
     // Works を変換
     const works: FeaturedItem[] = wpWorks
@@ -94,5 +106,5 @@ export default async function HomePage() {
     console.error("Failed to fetch data from WordPress:", error);
   }
 
-  return <HomeClient featuredItems={featuredItems} />;
+  return <HomeClient featuredItems={featuredItems} newsList={newsList} />;
 }

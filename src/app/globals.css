@@ -296,6 +296,38 @@ main {
   }
 }
 
+/* NEWS bar: 入場（左 → 右へスライドイン） */
+@keyframes news-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.news-bar-anim {
+  animation: news-slide-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.news-bar-anim-delayed {
+  animation: news-slide-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+
+/* NEWS bar: 退場（右 → 左へスライドアウト、入場より短く控えめに） */
+@keyframes news-slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.news-bar-exit {
+  animation: news-slide-out 350ms cubic-bezier(0.6, 0, 0.84, 0) forwards;
+}
+
 @layer utilities {
 
   /* Grid column spans - fixed width, content can overflow */

@@ -38,7 +38,7 @@ class WAVE_Custom_Post_Types {
      * カスタム投稿タイプでGutenbergを無効化
      */
     public function disable_gutenberg_for_custom_types($use_block_editor, $post_type) {
-        if (in_array($post_type, array('work', 'release', 'member'))) {
+        if (in_array($post_type, array('work', 'release', 'member', 'news'))) {
             return false;
         }
         return $use_block_editor;
@@ -110,6 +110,27 @@ class WAVE_Custom_Post_Types {
             'rest_base' => 'members',
             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
             'menu_icon' => 'dashicons-groups',
+            'show_in_menu' => true,
+        ));
+
+        // News
+        register_post_type('news', array(
+            'labels' => array(
+                'name' => 'News',
+                'singular_name' => 'News',
+                'add_new' => '新規追加',
+                'add_new_item' => '新規News追加',
+                'edit_item' => 'News編集',
+                'view_item' => 'News表示',
+                'all_items' => 'すべてのNews',
+                'search_items' => 'News検索',
+            ),
+            'public' => false,
+            'show_ui' => true,
+            'show_in_rest' => true,
+            'rest_base' => 'news',
+            'supports' => array('title', 'editor'),
+            'menu_icon' => 'dashicons-megaphone',
             'show_in_menu' => true,
         ));
     }
@@ -302,6 +323,24 @@ class WAVE_Custom_Post_Types {
             ),
         ));
 
+        // News fields
+        register_rest_field('news', 'news_meta', array(
+            'get_callback' => function($post) {
+                $is_visible = get_post_meta($post['id'], '_news_is_visible', true);
+                // デフォルトは表示。新規投稿時に _news_is_visible が未設定でも表示扱い。
+                $is_visible_bool = ($is_visible === '' || $is_visible === '1');
+                return array(
+                    'body_color' => get_post_meta($post['id'], '_news_body_color', true) ?: 'blue',
+                    'url' => get_post_meta($post['id'], '_news_url', true),
+                    'url_color' => get_post_meta($post['id'], '_news_url_color', true) ?: 'green',
+                    'is_visible' => $is_visible_bool,
+                );
+            },
+            'schema' => array(
+                'type' => 'object',
+            ),
+        ));
+
         // Featured image URL for all custom post types
         foreach (array('work', 'release', 'member') as $post_type) {
             register_rest_field($post_type, 'featured_image_url', array(
@@ -400,6 +439,16 @@ class WAVE_Custom_Post_Types {
             'Member Details',
             array($this, 'render_member_meta_box'),
             'member',
+            'normal',
+            'high'
+        );
+
+        // News meta box
+        add_meta_box(
+            'news_details',
+            'News Details',
+            array($this, 'render_news_meta_box'),
+            'news',
             'normal',
             'high'
         );
@@ -844,6 +893,66 @@ class WAVE_Custom_Post_Types {
     }
 
     /**
+     * Render News Meta Box
+     */
+    public function render_news_meta_box($post) {
+        wp_nonce_field('wave_news_meta', 'wave_news_meta_nonce');
+
+        $body_color = get_post_meta($post->ID, '_news_body_color', true) ?: 'blue';
+        $url = get_post_meta($post->ID, '_news_url', true);
+        $url_color = get_post_meta($post->ID, '_news_url_color', true) ?: 'green';
+        // 新規投稿時のデフォルトは「表示する」
+        $is_visible_raw = get_post_meta($post->ID, '_news_is_visible', true);
+        $is_visible = ($is_visible_raw === '' || $is_visible_raw === '1');
+
+        $color_options = array(
+            'red' => '赤（コーラル）',
+            'green' => '緑（マットグリーン）',
+            'blue' => '青（ディープブルー）',
+        );
+        ?>
+        <table class="form-table">
+            <tr>
+                <th><label for="news_is_visible">表示</label></th>
+                <td>
+                    <label><input type="checkbox" id="news_is_visible" name="news_is_visible" value="1" <?php checked($is_visible, true); ?>> このNEWSを表示する</label>
+                    <p class="description">チェックを外すと、このNEWSはサイト上で非表示になります。<br>
+                    <strong>注意:</strong> 最新（投稿日が最も新しい）のNEWSが「表示しない」になっていると、NEWSセクション全体が非表示になります。</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="news_body_color">本文バーの色</label></th>
+                <td>
+                    <select id="news_body_color" name="news_body_color">
+                        <?php foreach ($color_options as $value => $label): ?>
+                            <option value="<?php echo esc_attr($value); ?>" <?php selected($body_color, $value); ?>><?php echo esc_html($label); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="news_url">URL（任意）</label></th>
+                <td>
+                    <input type="url" id="news_url" name="news_url" value="<?php echo esc_attr($url); ?>" class="regular-text" placeholder="https://...">
+                    <p class="description">空欄にするとURLバーは表示されません。</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="news_url_color">URLバーの色</label></th>
+                <td>
+                    <select id="news_url_color" name="news_url_color">
+                        <?php foreach ($color_options as $value => $label): ?>
+                            <option value="<?php echo esc_attr($value); ?>" <?php selected($url_color, $value); ?>><?php echo esc_html($label); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <p class="description">URLが空欄の場合は使われません。</p>
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+
+    /**
      * Save Meta Boxes
      */
     public function save_meta_boxes($post_id) {
@@ -930,6 +1039,30 @@ class WAVE_Custom_Post_Types {
                     update_post_meta($post_id, '_' . $field, $value);
                 }
             }
+        }
+
+        // News meta
+        if (isset($_POST['wave_news_meta_nonce']) && wp_verify_nonce($_POST['wave_news_meta_nonce'], 'wave_news_meta')) {
+            $valid_colors = array('red', 'green', 'blue');
+
+            $body_color = isset($_POST['news_body_color']) ? sanitize_text_field($_POST['news_body_color']) : 'blue';
+            if (!in_array($body_color, $valid_colors, true)) {
+                $body_color = 'blue';
+            }
+            update_post_meta($post_id, '_news_body_color', $body_color);
+
+            $url_color = isset($_POST['news_url_color']) ? sanitize_text_field($_POST['news_url_color']) : 'green';
+            if (!in_array($url_color, $valid_colors, true)) {
+                $url_color = 'green';
+            }
+            update_post_meta($post_id, '_news_url_color', $url_color);
+
+            if (isset($_POST['news_url'])) {
+                update_post_meta($post_id, '_news_url', esc_url_raw($_POST['news_url']));
+            }
+
+            // checkbox は POST に存在しないとき OFF
+            update_post_meta($post_id, '_news_is_visible', isset($_POST['news_is_visible']) ? '1' : '0');
         }
 
         // Member meta

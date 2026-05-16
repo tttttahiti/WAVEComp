@@ -54,23 +54,26 @@ export function PageWrapper({ children }: PageWrapperProps) {
 
   return (
     <>
-      {/* Fixed Header - stays at full width */}
+      {/* Fixed Header - stays at full width.
+          pointer-events-none で透明な領域へのクリックを背後（NEWS の URL リンク等）に透過させ、
+          実際の操作要素（SOUND / メニューボタン）だけ pointer-events-auto で復活させる。 */}
       <header
-        className={`fixed top-0 left-0 z-50 pt-[45px] px-[20px] md:px-[45px] transition-[width] duration-500 ease-out ${
+        className={`fixed top-0 left-0 z-50 pt-[45px] px-[20px] md:px-[45px] transition-[width] duration-500 ease-out pointer-events-none ${
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >
         <div className={`flex justify-between items-start ${isMenuOpen ? "hidden md:flex" : ""}`}>
           <button
             onClick={toggleSound}
-            className={`font-en font-bold transition-[color,opacity] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${isSoundHidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+            style={{ marginTop: "var(--news-bar-height, 0px)" }}
+            className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${isSoundHidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
             aria-label={isSoundOn ? "音声をオフ" : "音声をオン"}
           >
             SOUND {isSoundOn ? "/" : "\\"}
           </button>
           <button
             onClick={toggleMenu}
-            className="p-2 -m-2"
+            className="pointer-events-auto p-2 -m-2"
             aria-label="メニューを開く"
           >
             {isScrolled ? (

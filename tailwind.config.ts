@@ -25,6 +25,12 @@ const config: Config = {
         bg: {
           waveBlue: "#536CDB",
         },
+        // NEWS バー用の色（PDF 目視測色値、要クライアント確認）
+        news: {
+          red: "#E85B3F",
+          green: "#5BA67D",
+          blue: "#2D3FB8",
+        },
       },
       fontFamily: {
         sans: [
