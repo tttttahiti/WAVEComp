@@ -39,7 +39,7 @@ export function Concept({
           observer.disconnect();
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.7 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -74,7 +74,7 @@ export function Concept({
                     : ""
                 }`}
                 style={{
-                  transitionDelay: isVisible ? `${pIndex * 1000}ms` : "0ms",
+                  transitionDelay: isVisible ? `${pIndex * 1500}ms` : "0ms",
                   opacity: isVisible ? 1 : 0,
                 }}
               >
