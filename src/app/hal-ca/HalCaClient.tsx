@@ -117,7 +117,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Selected Works Section */}
-      <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] bg-white">
+      <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] bg-white">
         <div className="">
           <div className="grid-6 mb-8 md:mb-12">
             <h2 className="text-[30pt] md:text-[30pt] font-bold col-3 featured-heading">FEATURED</h2>

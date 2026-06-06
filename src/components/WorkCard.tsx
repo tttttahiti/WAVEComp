@@ -63,18 +63,17 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
   if (imageOnly) {
     return (
       <Link href={href} className="block card-hover">
+        {/* サムネールは 16:9 フレームに画像を上下100%でフィル（#12）。object-cover で
+            フレームを埋め、はみ出しは中央クロップ。 */}
         <div
           ref={containerRef}
-          className="relative bg-white overflow-hidden py-[22px] flex items-center justify-center"
-          style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
+          className="relative bg-white overflow-hidden aspect-video"
         >
           <Image
             src={thumbnail}
             alt={title}
-            width={800}
-            height={600}
+            fill
             className="object-contain"
-            style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
@@ -118,16 +117,13 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
       <Link href={href} className="block card-hover">
         <div
           ref={containerRef}
-          className="relative bg-white mb-3 md:mb-4 overflow-hidden flex items-center justify-center"
-          style={imageHeight ? { height: `${imageHeight}px` } : { aspectRatio: "4/3" }}
+          className="relative bg-white mb-3 md:mb-4 overflow-hidden aspect-video"
         >
           <Image
             src={thumbnail}
             alt={title}
-            width={800}
-            height={600}
-            className="object-contain"
-            style={{ width: "auto", height: "600px", maxWidth: "100%", maxHeight: "100%" }}
+            fill
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
