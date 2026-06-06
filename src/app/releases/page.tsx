@@ -30,19 +30,8 @@ export default async function ReleasesPage() {
           />
         </div>
         <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[20px] md:px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">RELEASES</h2>
-            <div className="col-3 flex justify-end items-end mt-0">
-              <Link href="/">
-                <Image
-                  src="/svg/logo-wave.svg"
-                  alt="WA/VE"
-                  width={140}
-                  height={40}
-                  className="w-[140px] h-auto"
-                />
-              </Link>
-            </div>
+          <div className="px-[20px] md:px-[45px]">
+            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold flex justify-between"><span>RELEASES</span><span>ALL</span></h2>
           </div>
         </div>
       </section>
