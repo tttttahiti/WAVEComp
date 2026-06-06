@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useMenu } from "./MenuContext";
 import { useSound } from "./SoundContext";
 
@@ -12,9 +13,50 @@ interface PageWrapperProps {
 export function PageWrapper({ children }: PageWrapperProps) {
   const { isMenuOpen, toggleMenu } = useMenu();
   const { isSoundOn, toggleSound } = useSound();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSoundHidden, setIsSoundHidden] = useState(false);
+  // ヒーロー＋ニュースのエリアがまだ画面に見えているか（IntersectionObserver で判定）。
+  //  - 見えている間: SOUND は --news-bar-height でニュース直下に追従（従来通り）
+  //  - 通り過ぎたら: 固定オフセット(0)で通常位置に戻す（揺れない）
+  const [inHeroZone, setInHeroZone] = useState(true);
+  // TOP では SOUND をリビール順（動画再生開始 → ロゴ → ニュース → サウンド）の最後に出す。
+  //  - "hidden": 再生開始の合図待ち（非表示）
+  //  - "animating": フェードイン中（ニュースの後ろにディレイ）
+  //  - "done": 以降はスクロール連動の opacity 制御に明け渡す
+  const [soundReveal, setSoundReveal] = useState<"hidden" | "animating" | "done">(
+    pathname === "/" ? "hidden" : "done",
+  );
   const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setSoundReveal("done");
+      return;
+    }
+    setSoundReveal("hidden");
+
+    let triggered = false;
+    let settleTimer = 0;
+    const reveal = () => {
+      if (triggered) return;
+      triggered = true;
+      window.clearTimeout(fallback);
+      setSoundReveal("animating");
+      // hero-intro(1350ms) + ディレイ(1575ms) の完了後に通常制御へ
+      settleTimer = window.setTimeout(() => setSoundReveal("done"), 3150);
+    };
+
+    window.addEventListener("wave:hero-video-started", reveal, { once: true });
+    // 合図が来ないケースの保険（HomeClient 側にも3秒フォールバックあり）
+    const fallback = window.setTimeout(reveal, 5000);
+
+    return () => {
+      window.removeEventListener("wave:hero-video-started", reveal);
+      window.clearTimeout(fallback);
+      window.clearTimeout(settleTimer);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const getThreshold = () => {
@@ -52,6 +94,24 @@ export function PageWrapper({ children }: PageWrapperProps) {
     };
   }, []);
 
+  // ヒーロー（[data-hero]）が画面に見えているかを IntersectionObserver で監視。
+  // 見えている間だけ SOUND をニュース高さに追従させ、通り過ぎたら固定オフセットへ。
+  useEffect(() => {
+    const heroEl = document.querySelector("[data-hero]");
+    if (!heroEl) {
+      // ヒーローが無いページは常に固定位置(0)扱い。
+      setInHeroZone(false);
+      return;
+    }
+    setInHeroZone(true);
+    const io = new IntersectionObserver(
+      ([entry]) => setInHeroZone(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    io.observe(heroEl);
+    return () => io.disconnect();
+  }, [pathname]);
+
   return (
     <>
       {/* Fixed Header - stays at full width.
@@ -65,8 +125,21 @@ export function PageWrapper({ children }: PageWrapperProps) {
         <div className={`flex justify-between items-start ${isMenuOpen ? "hidden md:flex" : ""}`}>
           <button
             onClick={toggleSound}
-            style={{ marginTop: "var(--news-bar-height, 0px)" }}
-            className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${isSoundHidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+            style={{
+              // ヒーロー＋ニュースが見えている間はニュース直下に追従（--news-bar-height）、
+              // エリアを通り過ぎたら固定オフセット(0)で通常位置へ。
+              marginTop: inHeroZone ? "var(--news-bar-height, 0px)" : "0px",
+              ...(soundReveal === "animating" ? { animationDelay: "1575ms" } : {}),
+            }}
+            className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${
+              soundReveal === "hidden"
+                ? "opacity-0 pointer-events-none"
+                : soundReveal === "animating"
+                  ? "hero-intro"
+                  : isSoundHidden
+                    ? "opacity-0 pointer-events-none"
+                    : "opacity-100"
+            }`}
             aria-label={isSoundOn ? "音声をオフ" : "音声をオン"}
           >
             SOUND {isSoundOn ? "/" : "\\"}

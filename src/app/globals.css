@@ -6,9 +6,9 @@
   --foreground: #000000;
   --background: #ffffff;
   --wave-blue: #536cdb;
-  --wave-purple: #8B7BE8;
-  --wave-lime: #C8FF00;
-  --wave-lavender: #B8C4FF;
+  --wave-purple: #8b7be8;
+  --wave-lime: #c8ff00;
+  --wave-lavender: #b8c4ff;
   --bg-wave-blue: #536cdb;
 }
 
@@ -98,19 +98,25 @@ pre,
 /* Gradient Background - matching PDF design */
 .gradient-bg {
   background:
-    linear-gradient(180deg,
+    linear-gradient(
+      180deg,
       rgba(83, 108, 219, 0.9) 0%,
       rgba(139, 123, 232, 0.7) 30%,
       rgba(184, 196, 255, 0.8) 50%,
       rgba(200, 255, 0, 0.6) 70%,
-      rgba(200, 255, 0, 0.8) 100%),
-    linear-gradient(90deg,
+      rgba(200, 255, 0, 0.8) 100%
+    ),
+    linear-gradient(
+      90deg,
       #536cdb 0%,
-      #8B7BE8 25%,
-      #B8C4FF 50%,
-      #C8FF00 75%,
-      #536cdb 100%);
-  background-size: 100% 100%, 200% 100%;
+      #8b7be8 25%,
+      #b8c4ff 50%,
+      #c8ff00 75%,
+      #536cdb 100%
+    );
+  background-size:
+    100% 100%,
+    200% 100%;
 }
 
 /* Vertical Japanese Text */
@@ -264,7 +270,9 @@ textarea:-webkit-autofill:focus {
 }
 
 @media (max-width: 400px) {
-  h1, h2, .text-\[30pt\] {
+  h1,
+  h2,
+  .text-\[30pt\] {
     font-size: 20pt !important;
   }
   .w-\[140px\].h-auto {
@@ -307,11 +315,11 @@ main {
 }
 
 .news-bar-anim {
-  animation: news-slide-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: news-slide-in 1575ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .news-bar-anim-delayed {
-  animation: news-slide-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+  animation: news-slide-in 1575ms cubic-bezier(0.16, 1, 0.3, 1) 495ms both;
 }
 
 /* NEWS bar: 退場（右 → 左へスライドアウト、入場より短く控えめに） */
@@ -328,8 +336,44 @@ main {
   animation: news-slide-out 350ms cubic-bezier(0.6, 0, 0.84, 0) forwards;
 }
 
-@layer utilities {
+/* NEWS URL: マウスオーバーでフェードせず、一瞬で透明度50%へ切替（現行） */
+.news-url-flicker:hover {
+  opacity: 0.5;
+}
 
+/* --- デザイナー確認待ち: フリッカー版（2回素早くピッピ）。採用時は上の :hover を
+   削除して下の2ブロックのコメントを外す ---
+@keyframes news-flicker {
+  0% { opacity: 1; }
+  15% { opacity: 0.5; }
+  30% { opacity: 1; }
+  45% { opacity: 0.5; }
+  60% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.news-url-flicker:hover {
+  animation: news-flicker 400ms steps(1, end) 1;
+}
+--- */
+
+/* TOP 初回ロードのリビール（背景動画 → ロゴ → ニュース → サウンド）用フェードアップ */
+@keyframes intro-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-intro {
+  animation: intro-fade-up 1350ms ease-out both;
+}
+
+@layer utilities {
   /* Grid column spans - fixed width, content can overflow */
   .col-1 {
     grid-column: span 1;

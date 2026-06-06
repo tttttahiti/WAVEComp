@@ -128,7 +128,7 @@ export function Header() {
               className="text-[12pt] md:text-[12pt] font-en font-bold transition-colors duration-300 text-left text-black"
               aria-label={isSoundOn ? '音声をオフ' : '音声をオン'}
             >
-              SOUND {isSoundOn ? '/' : '\\'}
+              SOUND {isSoundOn ? '/' : '\\'} {isSoundOn ? 'ON' : 'OFF'}
             </button>
           </div>
         </div>
