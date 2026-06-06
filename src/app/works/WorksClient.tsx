@@ -194,9 +194,11 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="h-[10px] col-6">
-                        <img
+                        <Image
                           src="/svg/line.svg"
                           alt=""
+                          width={10}
+                          height={10}
                           style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
@@ -213,9 +215,11 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="h-[10px] col-6">
-                        <img
+                        <Image
                           src="/svg/line.svg"
                           alt=""
+                          width={10}
+                          height={10}
                           style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
                         />
                       </div>,
