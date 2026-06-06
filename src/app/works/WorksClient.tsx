@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { WorkCard } from "@/components/WorkCard";
+import { WorkListCard } from "@/components/WorkListCard";
 
 // プルダウン表示順（この順で表示、未定義タグは末尾）
 const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
@@ -28,7 +28,6 @@ interface WorksClientProps {
 export function WorksClient({ initialWorks }: WorksClientProps) {
   const searchParams = useSearchParams();
   const [filterTag, setFilterTag] = useState("");
-  const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
 
   // URLのクエリパラメータからタグを取得
   useEffect(() => {
@@ -67,25 +66,6 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       work.tags.some((tag) => tag === filterTag)
     );
   }, [filterTag, initialWorks]);
-
-  const handleImageLoad = useCallback((id: string, height: number) => {
-    setImageHeights((prev) => {
-      if (prev[id] === height) return prev;
-      return { ...prev, [id]: height };
-    });
-  }, []);
-
-  const minHeight = useMemo(() => {
-    const filteredIds = filteredWorks.map((w) => w.id);
-    const filteredHeights = Object.entries(imageHeights)
-      .filter(([id]) => filteredIds.includes(id))
-      .map(([, height]) => height);
-
-    if (filteredHeights.length === filteredWorks.length && filteredHeights.length > 0) {
-      return Math.min(...filteredHeights);
-    }
-    return undefined;
-  }, [imageHeights, filteredWorks]);
 
   return (
     <>
@@ -158,9 +138,8 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
                     // 画像
                     <div key={`image-${work.id}`} className="col-6">
-                      <WorkCard
+                      <WorkListCard
                         {...work}
-                        onImageLoad={(height) => handleImageLoad(work.id, height)}
                         imageOnly
                       />
                     </div>,
@@ -170,7 +149,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                     </div>,
                     // テキスト
                     <div key={`text-${work.id}`} className={`col-6 ${index === filteredWorks.length - 1 ? '' : ''}`}>
-                      <WorkCard
+                      <WorkListCard
                         {...work}
                         textOnly
                       />
@@ -204,11 +183,9 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       </div>,
                       // 画像2つ
                       ...groupWorks.map((work) => (
-                        <div key={`image-${work.id}`} className="col-3">
-                          <WorkCard
+                        <div key={`image-${work.id}`} className="col-3 py-9 px-10">
+                          <WorkListCard
                             {...work}
-                            onImageLoad={(height) => handleImageLoad(work.id, height)}
-                            imageHeight={minHeight}
                             imageOnly
                           />
                         </div>
@@ -225,8 +202,8 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       </div>,
                       // テキスト2つ
                       ...groupWorks.map((work) => (
-                        <div key={`text-${work.id}`} className={`col-3 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
-                          <WorkCard
+                        <div key={`text-${work.id}`} className={`col-3 pt-9 pb-16 px-10 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
+                          <WorkListCard
                             {...work}
                             textOnly
                           />
