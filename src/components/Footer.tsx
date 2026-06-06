@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-[#E5E5E5] py-[45px] px-[20px] md:px-[45px] h-[322px]">
       <div className="">
-        <div className="grid-6">
+        <div className="grid-6 text-[12pt] leading-[1.7]">
           {/* Logo */}
           <div className="col-span-3 md:col-span-1">
             <Link href="/">
@@ -20,31 +20,31 @@ export function Footer() {
           </div>
 
           {/* Navigation - hidden on mobile */}
-          <div className="hidden md:block col-1 space-y-3">
-            <Link href="/about" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
+          <div className="hidden md:block col-1">
+            <Link href="/about" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               ABOUT
             </Link>
-            <Link href="/hal-ca" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
+            <Link href="/hal-ca" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               HAL ca
             </Link>
-            <Link href="/releases" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
+            <Link href="/releases" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               RELEASE
             </Link>
-            <Link href="/works" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
+            <Link href="/works" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               WORKS
             </Link>
-            <Link href="/contact" className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
+            <Link href="/contact" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               CONTACT
             </Link>
           </div>
 
           {/* Social Links - hidden on mobile */}
-          <div className="hidden md:block col-1 space-y-3">
+          <div className="hidden md:block col-1">
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -52,7 +52,7 @@ export function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -60,7 +60,7 @@ export function Footer() {
               href="https://music.apple.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -68,7 +68,7 @@ export function Footer() {
               href="https://spotify.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
@@ -76,10 +76,10 @@ export function Footer() {
 
           {/* Contact - hidden on mobile */}
           <div className="hidden md:block col-1">
-            <p className="text-[12pt] text-black font-en font-bold mb-2">CONTACT:</p>
+            <p className="text-black font-en font-bold">CONTACT:</p>
             <a
               href="mailto:info@wa-ve.jp"
-              className="text-[12pt] text-wave-blue font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="text-wave-blue font-en font-bold hover:text-[#c2de6d] transition-colors"
             >
               info@wa-ve.jp
             </a>
@@ -93,7 +93,7 @@ export function Footer() {
             <div className="flex flex-row justify-between gap-2 md:gap-0 w-full">
               <p className="text-[6pt] md:text-[7pt] text-black font-en">©</p>
               <p className="text-[6pt] md:text-[7pt] text-black font-en">WA/VE</p>
-              <p className="text-[6pt] md:text-[7pt] text-black font-en">2025.</p>
+              <p className="text-[6pt] md:text-[7pt] text-black font-en">{(new Date()).getFullYear().toString()}.</p>
             </div>
             <div className="flex flex-row justify-between gap-2 md:gap-0 w-full md:w-full">
               <p className="text-[6pt] md:text-[7pt] text-black font-en">ALL</p>
