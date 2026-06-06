@@ -17,79 +17,80 @@ export function Header() {
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Close Button */}
-        <button
-          onClick={toggleMenu}
-          className="absolute top-[45px] right-[45px] z-50 p-2 -m-2"
-          aria-label="メニューを閉じる"
-        >
-          <Image
-            src="/svg/icon-close.svg"
-            alt="閉じる"
-            width={21}
-            height={23}
-            className="h-[18px] md:h-[23px] w-auto"
-          />
-        </button>
 
         {/* Menu Content - APPLE MUSIC centered vertically */}
-        <div className="h-full flex flex-col justify-center w-[110px] md:w-auto mx-auto md:mx-0 md:px-[20px] md:px-[45px] whitespace-nowrap">
+        <div className="h-full flex flex-col justify-center w-max md:w-auto mx-auto md:mx-0 md:px-[45px] whitespace-nowrap">
+          {/* Close Button */}
+          <button
+            onClick={toggleMenu}
+            className="absolute md:static md:mb-[72px] top-8 right-8 z-50 w-10 h-10"
+            aria-label="メニューを閉じる"
+          >
+            <Image
+              src="/svg/icon-close.svg"
+              alt="閉じる"
+              width={40}
+              height={40}
+              className="w-full h-full"
+            />
+          </button>
+
           {/* Main Navigation */}
-          <nav className="space-y-3 md:space-y-4">
+          <nav className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             <Link
               href="/"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               HOME
             </Link>
             <Link
               href="/about"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               ABOUT
             </Link>
             <Link
               href="/hal-ca"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               HAL ca
             </Link>
             <Link
               href="/releases"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               RELEASES
             </Link>
             <Link
               href="/works"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               WORKS
             </Link>
             <Link
               href="/contact"
               onClick={closeMenu}
-              className="block text-[12pt] md:text-[12pt] font-en font-bold hover:text-[#c2de6d] transition-colors"
+              className="block hover:text-[#c2de6d] transition-colors"
             >
               CONTACT
             </Link>
           </nav>
 
           {/* Separator */}
-          <div className="my-6 md:mt-[72px] md:mb-[56px] border-t border-black" />
+          <div className="my-8 md:mt-[72px] md:mb-[56px] border-t border-black" />
 
           {/* Social Links - Same font size as nav, left-aligned */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             <a
               href="https://www.instagram.com/wa_ve.jp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               INSTAGRAM
             </a>
@@ -97,7 +98,7 @@ export function Header() {
               href="https://www.facebook.com/wave.halca"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               FACEBOOK
             </a>
@@ -105,7 +106,7 @@ export function Header() {
               href="https://music.apple.com/jp/artist/hal-ca/1702034837"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               APPLE MUSIC
             </a>
@@ -113,19 +114,19 @@ export function Header() {
               href="https://open.spotify.com/intl-ja/artist/4PtZB4ONshF7mdbYQgVWtm"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-[12pt] md:text-[12pt] font-en font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+              className="block text-wave-blue hover:text-[#c2de6d] transition-colors"
             >
               SPOTIFY
             </a>
           </div>
 
           {/* Separator */}
-          <div className="my-6 md:mt-[54px] md:mb-[59px] border-t border-black" />
+          <div className="my-8 md:mt-[54px] md:mb-[59px] border-t border-black" />
 
-          <div className="space-y-3 md:space-y-4">
+          <div className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             <button
               onClick={toggleSound}
-              className="text-[12pt] md:text-[12pt] font-en font-bold transition-colors duration-300 text-left text-black"
+              className="transition-colors duration-300 text-left text-black"
               aria-label={isSoundOn ? '音声をオフ' : '音声をオン'}
             >
               SOUND {isSoundOn ? '/' : '\\'} {isSoundOn ? 'ON' : 'OFF'}
