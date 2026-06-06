@@ -52,23 +52,17 @@ export function Concept({
     >
       <div className="grid-6 overflow-visible md:items-start">
         <div className={`col-span-6 flex flex-wrap justify-between gap-y-10 ${titleColStart === 2 ? 'md:col-start-2 md:col-span-4' : 'col-span-6 md:col-span-5'}`}>
-            <h2
-              className="shrink-0 text-[30pt] font-bold w-full lg:w-auto"
-            >
-              CONCEPT
-            </h2>
+          <h2
+            className="shrink-0 text-[30pt] font-bold w-full lg:w-auto"
+          >
+            CONCEPT
+          </h2>
 
-          {/* フォントサイズ: デザイン(InDesign)の mobile フレームは 800px に対し 24pt。
-              実機 mobile 390px へは比率換算で 24pt × (390/800) ≈ 11.7pt ≈ 15.6px。
-              → mobile は px 指定(15px)、画面が広がる sm/lg で pt にスイッチして拡大。
-              縦書きでは line-height が「列の横幅」を決めるため、mobile は列間を詰めて
-              横はみ出しを防ぎ、md 以上は #6 指示どおり広め(1.6)を維持する。 */}
           <div
-            className={`flex-1 max-w-full font-jp font-medium leading-[1.35] md:leading-[1.6] text-[15px] sm:text-[15pt] lg:text-[20pt]`}
+            className={`flex-1 font-jp font-medium leading-[1.75] tracking-[0.2em] text-[11pt] sm:text-[14pt] lg:text-[18pt]`}
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
-                letterSpacing: "0.08em",
               }}
           >
             {paragraphs.map((phrases, pIndex) => (

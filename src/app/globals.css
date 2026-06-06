@@ -31,7 +31,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   line-height: 1.6;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   /*
    * Font stack: DM Sans for Latin, Noto Sans JP for Japanese
    * The browser will automatically select the appropriate font

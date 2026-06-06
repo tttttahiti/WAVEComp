@@ -165,15 +165,13 @@ export default async function AboutPage() {
             <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
           <div className="col-start-2 col-span-4 md:col-start-4 md:col-span-2">
-            <div className="text-[12pt] font-medium">
+            <div className="text-[12pt] leading-[1.75] font-medium">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
               <br/>
               <p>設立日：2026年4月1日</p>
-              <p>代表取締役（共同代表）：</p>
-              <p>菊地晴夏 / 島田舞</p>
-              <br/>
-
+              <p>CEO：菊地晴夏</p>
+              <p>Co-Founder：島田舞</p>
               <p>
                 <a
                   href="mailto:info@wa-ve.jp"
