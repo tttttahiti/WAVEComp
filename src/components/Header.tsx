@@ -23,7 +23,7 @@ export function Header() {
           {/* Close Button */}
           <button
             onClick={toggleMenu}
-            className="absolute md:static md:mb-[72px] top-8 right-8 z-50 w-10 h-10"
+            className="absolute md:static md:mb-[56px] top-8 right-8 z-50 w-10 h-10 md:w-6 md:h-6"
             aria-label="メニューを閉じる"
           >
             <Image

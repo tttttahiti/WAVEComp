@@ -72,8 +72,8 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         <div className="grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-6 md:col-span-3">
-            <p className="text-[12pt] font-bold mb-1 md:mb-2">{work.client}</p>
-            <h1 className="text-[30pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
+            <p className="text-[12pt] font-bold">{work.client}</p>
+            <h1 className="text-[20pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
               {work.title}
             </h1>
             <p className="text-[10pt] md:text-[12pt]">Date: {work.date}</p>
@@ -81,7 +81,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
           {/* Right Column - Description & Details */}
           <div className="col-6 md:col-span-3">
-            <div className="text-[10pt] md:text-[12pt] leading-[1.8] md:leading-[2] whitespace-pre-line">
+            <div className="text-[10pt] md:text-[12pt] leading-[1.33] md:leading-[1.7] whitespace-pre-line">
               {work.description}
             </div>
 
@@ -105,7 +105,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
 
             {work.url && (<>
               <Hr />
-              <p className="text-[10pt] md:text-[12pt] flex justify-between">
+              <p className="text-[10pt] md:text-[12pt] md:flex justify-between">
                 <span className="text-[10pt] md:text-[12pt]">URL: </span>
                 <a
                   href={work.url}

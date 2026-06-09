@@ -144,7 +144,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       />
                     </div>,
                     // 中間ボーダー
-                    <div key={`border-middle-${work.id}`} className="col-6">
+                    <div key={`border-middle-${work.id}`} className="col-6 my-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
                     // テキスト
@@ -155,7 +155,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       />
                     </div>,
                     // 上部ボーダー
-                    <div key={`border-top-${work.id}`} className="col-6">
+                    <div key={`border-top-${work.id}`} className="col-6 mt-12 mb-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
 

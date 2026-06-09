@@ -59,7 +59,7 @@ export function Concept({
           </h2>
 
           <div
-            className={`flex-1 font-jp font-medium leading-[1.75] tracking-[0.2em] text-[11pt] sm:text-[14pt] lg:text-[18pt]`}
+            className={`flex-1 flex flex-col justify-center sm:block flex-nowrap font-jp font-medium leading-[1.75] tracking-[0.2em] text-[11pt] sm:text-[14pt] lg:text-[18pt]`}
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
