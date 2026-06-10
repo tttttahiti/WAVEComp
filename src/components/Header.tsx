@@ -2,12 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useMenu } from "./MenuContext";
 import { useSound } from "./SoundContext";
+
+const NAV_ITEMS = [
+  { href: "/", label: "HOME" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/hal-ca", label: "HAL ca" },
+  { href: "/releases", label: "RELEASES" },
+  { href: "/works", label: "WORKS" },
+  { href: "/contact", label: "CONTACT" },
+];
 
 export function Header() {
   const { isMenuOpen, toggleMenu, closeMenu } = useMenu();
   const { isSoundOn, toggleSound } = useSound();
+  const pathname = usePathname();
+
+  // 下層ページ（/works/xxx など）でも親メニューを選択中扱いにする
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <>
@@ -37,48 +52,18 @@ export function Header() {
 
           {/* Main Navigation */}
           <nav className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
-            <Link
-              href="/"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              HOME
-            </Link>
-            <Link
-              href="/about"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              ABOUT
-            </Link>
-            <Link
-              href="/hal-ca"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              HAL ca
-            </Link>
-            <Link
-              href="/releases"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              RELEASES
-            </Link>
-            <Link
-              href="/works"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              WORKS
-            </Link>
-            <Link
-              href="/contact"
-              onClick={closeMenu}
-              className="block hover:text-[#c2de6d] transition-colors"
-            >
-              CONTACT
-            </Link>
+            {NAV_ITEMS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={closeMenu}
+                className={`block hover:text-[#c2de6d] transition-colors ${
+                  isActive(href) ? "text-[#c2de6d]" : ""
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
           </nav>
 
           {/* Separator */}

@@ -146,7 +146,9 @@ export function PageWrapper({ children }: PageWrapperProps) {
           </button>
           <button
             onClick={toggleMenu}
-            className="pointer-events-auto p-2 -m-2"
+            className={`p-2 -m-2 transition-opacity duration-300 ${
+              isMenuOpen ? "opacity-0 pointer-events-none" : "pointer-events-auto"
+            }`}
             aria-label="メニューを開く"
           >
             {isScrolled ? (

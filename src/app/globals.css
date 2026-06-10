@@ -304,36 +304,42 @@ main {
   }
 }
 
-/* NEWS bar: 入場（左 → 右へスライドイン） */
-@keyframes news-slide-in {
+/* NEWS bar: 入場（ディレイ後に 100ms の短いフェードイン。スライドはしない）
+   ディレイ中は backwards フィルで opacity: 0 + visibility: hidden が効き、
+   リビール順（ロゴ → 1行目 → 2行目）の時間差はそのまま維持される */
+@keyframes news-fade-in {
   from {
-    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
   }
   to {
-    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
   }
 }
 
+/* フィルは backwards（ディレイ中のみ）。both にすると終了後も opacity が
+   アニメーション値で固定され、URL バーの :hover { opacity: 0.5 } が効かなくなる */
 .news-bar-anim {
-  animation: news-slide-in 1575ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: news-fade-in 100ms ease-out backwards;
 }
 
 .news-bar-anim-delayed {
-  animation: news-slide-in 1575ms cubic-bezier(0.16, 1, 0.3, 1) 495ms both;
+  animation: news-fade-in 100ms ease-out 495ms backwards;
 }
 
-/* NEWS bar: 退場（右 → 左へスライドアウト、入場より短く控えめに） */
-@keyframes news-slide-out {
+/* NEWS bar: 退場（100ms の短いフェードアウト） */
+@keyframes news-fade-out {
   from {
-    transform: translateX(0);
+    opacity: 1;
   }
   to {
-    transform: translateX(-100%);
+    opacity: 0;
   }
 }
 
 .news-bar-exit {
-  animation: news-slide-out 350ms cubic-bezier(0.6, 0, 0.84, 0) forwards;
+  animation: news-fade-out 100ms ease-out forwards;
 }
 
 /* NEWS URL: マウスオーバーでフェードせず、一瞬で透明度50%へ切替（現行） */

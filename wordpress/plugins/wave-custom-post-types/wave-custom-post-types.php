@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WA/VE Custom Post Types
  * Description: Custom post types for WA/VE website (Works, Releases, Members)
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: WA/VE
  */
 
@@ -247,6 +247,10 @@ class WAVE_Custom_Post_Types {
                 $featured_halca = get_post_meta($post['id'], '_work_featured_halca', true);
                 $featured_halca_order = get_post_meta($post['id'], '_work_featured_halca_order', true);
 
+                // Hero settings (個別ページ最上部の表示)
+                $hero_display = get_post_meta($post['id'], '_work_hero_display', true);
+                $hero_video_url = get_post_meta($post['id'], '_work_hero_video_url', true);
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
@@ -266,6 +270,8 @@ class WAVE_Custom_Post_Types {
                     'featured_order' => $featured_order ? intval($featured_order) : 99,
                     'featured_halca' => !empty($featured_halca),
                     'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
+                    'hero_display' => $hero_display === 'full' ? 'full' : 'blur',
+                    'hero_video_url' => $hero_video_url ?: null,
                 );
             },
             'schema' => array(
@@ -330,9 +336,7 @@ class WAVE_Custom_Post_Types {
                 // デフォルトは表示。新規投稿時に _news_is_visible が未設定でも表示扱い。
                 $is_visible_bool = ($is_visible === '' || $is_visible === '1');
                 return array(
-                    'body_color' => get_post_meta($post['id'], '_news_body_color', true) ?: 'blue',
                     'url' => get_post_meta($post['id'], '_news_url', true),
-                    'url_color' => get_post_meta($post['id'], '_news_url_color', true) ?: 'green',
                     'is_visible' => $is_visible_bool,
                 );
             },
@@ -481,6 +485,11 @@ class WAVE_Custom_Post_Types {
         if (!$credits) {
             $credits = '';
         }
+        $hero_display = get_post_meta($post->ID, '_work_hero_display', true);
+        if ($hero_display !== 'full') {
+            $hero_display = 'blur';
+        }
+        $hero_video_url = get_post_meta($post->ID, '_work_hero_video_url', true);
         ?>
         <style>
             .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
@@ -540,6 +549,25 @@ class WAVE_Custom_Post_Types {
             <tr>
                 <th><label for="work_url">URL</label></th>
                 <td><input type="url" id="work_url" name="work_url" value="<?php echo esc_attr($url); ?>" class="regular-text"></td>
+            </tr>
+            <tr>
+                <th><label for="work_hero_display">ヒーロー表示（個別ページ最上部）</label></th>
+                <td>
+                    <select id="work_hero_display" name="work_hero_display">
+                        <option value="blur" <?php selected($hero_display, 'blur'); ?>>ブラーあり 16:9（見切れない）</option>
+                        <option value="full" <?php selected($hero_display, 'full'); ?>>フル画面（見切れる）</option>
+                    </select>
+                    <p class="description">ページ最上部の画像/映像の表示方法。<br>
+                    「ブラーあり 16:9」: 画像全体が見える（デスクトップは左右に画像をぼかした背景）<br>
+                    「フル画面」: 画面全体（100vh × 100vw）に表示（端が切れる場合あり）</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="work_hero_video_url">ヒーロー映像URL（任意）</label></th>
+                <td>
+                    <input type="url" id="work_hero_video_url" name="work_hero_video_url" value="<?php echo esc_attr($hero_video_url); ?>" class="regular-text" placeholder="https://youtu.be/... または https://vimeo.com/...">
+                    <p class="description">YouTube または Vimeo のURL。指定すると、アイキャッチ画像の代わりにページ最上部で音無しループ再生されます。</p>
+                </td>
             </tr>
             <tr>
                 <th><label for="work_video_urls">Video URLs</label></th>
@@ -898,18 +926,10 @@ class WAVE_Custom_Post_Types {
     public function render_news_meta_box($post) {
         wp_nonce_field('wave_news_meta', 'wave_news_meta_nonce');
 
-        $body_color = get_post_meta($post->ID, '_news_body_color', true) ?: 'blue';
         $url = get_post_meta($post->ID, '_news_url', true);
-        $url_color = get_post_meta($post->ID, '_news_url_color', true) ?: 'green';
         // 新規投稿時のデフォルトは「表示する」
         $is_visible_raw = get_post_meta($post->ID, '_news_is_visible', true);
         $is_visible = ($is_visible_raw === '' || $is_visible_raw === '1');
-
-        $color_options = array(
-            'red' => '赤（コーラル）',
-            'green' => '緑（マットグリーン）',
-            'blue' => '青（ディープブルー）',
-        );
         ?>
         <table class="form-table">
             <tr>
@@ -921,31 +941,10 @@ class WAVE_Custom_Post_Types {
                 </td>
             </tr>
             <tr>
-                <th><label for="news_body_color">本文バーの色</label></th>
-                <td>
-                    <select id="news_body_color" name="news_body_color">
-                        <?php foreach ($color_options as $value => $label): ?>
-                            <option value="<?php echo esc_attr($value); ?>" <?php selected($body_color, $value); ?>><?php echo esc_html($label); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <th><label for="news_url">URL（任意）</label></th>
                 <td>
                     <input type="url" id="news_url" name="news_url" value="<?php echo esc_attr($url); ?>" class="regular-text" placeholder="https://...">
-                    <p class="description">空欄にするとURLバーは表示されません。</p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="news_url_color">URLバーの色</label></th>
-                <td>
-                    <select id="news_url_color" name="news_url_color">
-                        <?php foreach ($color_options as $value => $label): ?>
-                            <option value="<?php echo esc_attr($value); ?>" <?php selected($url_color, $value); ?>><?php echo esc_html($label); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <p class="description">URLが空欄の場合は使われません。</p>
+                    <p class="description">空欄にするとURLバーは表示されません。<br>バーの色は固定です（上段の本文 = 緑、下段のURL = 青）。</p>
                 </td>
             </tr>
         </table>
@@ -1011,6 +1010,14 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_layout_order'])) {
                 update_post_meta($post_id, '_work_layout_order', sanitize_text_field($_POST['work_layout_order']));
             }
+            // Hero settings
+            if (isset($_POST['work_hero_display'])) {
+                $hero_display = sanitize_text_field($_POST['work_hero_display']);
+                update_post_meta($post_id, '_work_hero_display', $hero_display === 'full' ? 'full' : 'blur');
+            }
+            if (isset($_POST['work_hero_video_url'])) {
+                update_post_meta($post_id, '_work_hero_video_url', esc_url_raw($_POST['work_hero_video_url']));
+            }
         }
 
         // Release meta
@@ -1043,20 +1050,6 @@ class WAVE_Custom_Post_Types {
 
         // News meta
         if (isset($_POST['wave_news_meta_nonce']) && wp_verify_nonce($_POST['wave_news_meta_nonce'], 'wave_news_meta')) {
-            $valid_colors = array('red', 'green', 'blue');
-
-            $body_color = isset($_POST['news_body_color']) ? sanitize_text_field($_POST['news_body_color']) : 'blue';
-            if (!in_array($body_color, $valid_colors, true)) {
-                $body_color = 'blue';
-            }
-            update_post_meta($post_id, '_news_body_color', $body_color);
-
-            $url_color = isset($_POST['news_url_color']) ? sanitize_text_field($_POST['news_url_color']) : 'green';
-            if (!in_array($url_color, $valid_colors, true)) {
-                $url_color = 'green';
-            }
-            update_post_meta($post_id, '_news_url_color', $url_color);
-
             if (isset($_POST['news_url'])) {
                 update_post_meta($post_id, '_news_url', esc_url_raw($_POST['news_url']));
             }

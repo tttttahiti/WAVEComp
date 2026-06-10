@@ -1,22 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { NewsColor, WPNews } from "@/lib/wordpress";
+import type { WPNews } from "@/lib/wordpress";
 import { stripHtml } from "@/lib/wordpress";
 
 const ROTATION_INTERVAL_MS = 9000;
-const EXIT_DURATION_MS = 350;
+// 退場フェードアウトの長さ（globals.css の news-fade-out と合わせる）
+const EXIT_DURATION_MS = 100;
 // リビール順（動画再生開始 → ロゴ → ニュース1行目 → 2行目 → サウンド）に合わせ、
 // 再生開始の合図（startReveal）を受けてから、ロゴの後ろにずらして入場させるディレイ。
 const INTRO_DELAY_MS = 675;
 // ニュース2行目（URL）を1行目の後ろにずらすオフセット。
 const URL_INTRO_OFFSET_MS = 495;
-
-const colorBgClass: Record<NewsColor, string> = {
-  red: "bg-news-red",
-  green: "bg-news-green",
-  blue: "bg-news-blue",
-};
 
 interface NewsProps {
   newsList: WPNews[];
@@ -36,13 +31,12 @@ function NewsBars({
 }) {
   const body = stripHtml(item.content.rendered).trim();
   const url = (item.news_meta.url ?? "").trim();
-  const bodyBg = colorBgClass[item.news_meta.body_color] ?? colorBgClass.blue;
-  const urlBg = colorBgClass[item.news_meta.url_color] ?? colorBgClass.green;
 
   return (
     <>
+      {/* 色は固定: 上段（本文）= 緑、下段（URL）= 青 */}
       <div
-        className={`${bodyBg} text-white text-[12pt] md:text-[14pt] leading-[1.5] font-jp px-[20px] md:px-[30px] py-[10px] md:py-[12px] ${animateEntry ? "news-bar-anim" : ""}`}
+        className={`bg-news-green text-white text-[12pt] md:text-[14pt] leading-[1.5] font-jp px-[20px] md:px-[30px] py-[10px] md:py-[12px] ${animateEntry ? "news-bar-anim" : ""}`}
         style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs}ms` } : undefined}
       >
         {body}
@@ -52,7 +46,7 @@ function NewsBars({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${urlBg} text-white text-[11pt] md:text-[12pt] leading-[1.4] font-mono px-[20px] md:px-[30px] py-[8px] md:py-[10px] ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
+          className={`bg-news-blue text-white text-[11pt] md:text-[12pt] leading-[1.4] font-mono px-[20px] md:px-[30px] py-[8px] md:py-[10px] ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
           style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs + URL_INTRO_OFFSET_MS}ms` } : undefined}
         >
           {url}
@@ -78,12 +72,12 @@ export function News({ newsList, startReveal = true }: NewsProps) {
       const idx = indexRef.current;
       // 初回リビールのディレイは1回限り。以降のローテーションは通常速度。
       setIsFirstReveal(false);
-      // 1. 退場フェーズ開始：古いニュースだけを表示して左へスライドアウト
+      // 1. 退場フェーズ：古いニュースを 100ms フェードアウト
       setExitingNews(newsList[idx]);
       if (exitTimeoutRef.current) {
         window.clearTimeout(exitTimeoutRef.current);
       }
-      // 2. 退場完了後に index を進めて新しいニュースを入場させる
+      // 2. 退場完了後に index を進めて新しいニュースをフェードイン
       exitTimeoutRef.current = window.setTimeout(() => {
         const nextIdx = (idx + 1) % newsList.length;
         indexRef.current = nextIdx;
@@ -130,7 +124,7 @@ export function News({ newsList, startReveal = true }: NewsProps) {
         // 再生開始の合図待ち：まだニュースを出さない（背景動画 → ロゴ より後）。
         null
       ) : exitingNews ? (
-        // 退場フェーズ：古いニュースを通常フローでレンダリングして左へスライドアウト。
+        // 退場フェーズ：古いニュースを 100ms フェードアウト。
         // この間は新しいニュースをまだ DOM に出さない（被らないように）。
         <div
           key={`exit-${exitingNews.id}`}
@@ -139,7 +133,7 @@ export function News({ newsList, startReveal = true }: NewsProps) {
           <NewsBars item={exitingNews} animateEntry={false} />
         </div>
       ) : (
-        // 通常フェーズ：現在のニュース。入場アニメ。
+        // 通常フェーズ：現在のニュース。100ms フェードイン（2行目は 495ms 遅れ）。
         <div key={current.id} className="flex flex-col items-start">
           <NewsBars
             item={current}

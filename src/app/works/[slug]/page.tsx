@@ -41,6 +41,9 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         url: wpWork.work_meta.url || '',
         clientRole: '', // clientRole は work_meta にない場合は空文字
         heroImage: wpWork.featured_image_url || '/images/placeholder.jpg',
+        // 旧バージョンのプラグインでは hero_display / hero_video_url が無いので blur にフォールバック
+        heroDisplay: (wpWork.work_meta.hero_display === 'full' ? 'full' : 'blur') as 'blur' | 'full',
+        heroVideoUrl: wpWork.work_meta.hero_video_url || null,
         galleryImages: wpWork.work_meta.gallery_images?.map((img: { url: string }) => img.url) || [],
         galleryColumnsDesktop: wpWork.work_meta.gallery_columns_desktop ?? 2,
         galleryColumnsMobile: wpWork.work_meta.gallery_columns_mobile ?? 2,
@@ -65,7 +68,12 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   return (
     <>
       {/* Hero Section */}
-      <HeroImage src={work.heroImage} alt={work.title} />
+      <HeroImage
+        src={work.heroImage}
+        alt={work.title}
+        mode={work.heroDisplay}
+        videoSrc={work.heroVideoUrl}
+      />
 
       {/* Work Info Section */}
       <section className="py-8 md:py-24 px-[20px] md:px-[45px]">

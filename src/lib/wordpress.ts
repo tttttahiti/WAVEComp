@@ -52,6 +52,8 @@ export interface WPWork {
     featured_order: number;
     featured_halca: boolean;
     featured_halca_order: number;
+    hero_display: 'blur' | 'full';
+    hero_video_url: string | null;
   };
   work_tag: number[];
   work_category: number[];
@@ -98,8 +100,6 @@ export interface WPMember {
   };
 }
 
-export type NewsColor = "red" | "green" | "blue";
-
 export interface WPNews {
   id: number;
   date: string;
@@ -107,9 +107,7 @@ export interface WPNews {
   title: { rendered: string };
   content: { rendered: string };
   news_meta: {
-    body_color: NewsColor;
     url: string;
-    url_color: NewsColor;
     is_visible: boolean;
   };
 }

@@ -22,15 +22,23 @@ export function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Implement form submission
-    console.log("Form submitted:", formData);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setIsSubmitting(false);
-    alert("お問い合わせを送信しました。");
-    setFormData({ name: "", company: "", email: "", content: "" });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        throw new Error(`status ${res.status}`);
+      }
+      alert("お問い合わせを送信しました。");
+      setFormData({ name: "", company: "", email: "", content: "" });
+    } catch (error) {
+      console.error("Failed to submit contact form:", error);
+      alert("送信に失敗しました。時間をおいて再度お試しください。");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
