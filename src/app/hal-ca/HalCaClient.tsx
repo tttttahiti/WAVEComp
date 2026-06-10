@@ -44,7 +44,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
           <div className="col-6 md:col-3">
             <h2 className="text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
-            <p className="text-[12pt] font-medium leading-[1.33] space-y-4 md:space-y-6">
+            <p className="text-[12pt] font-medium leading-[1.33] md:leading-[1.75] space-y-4 md:space-y-6">
               HAL caは、アンビエント・実験音楽を軸とするコンポーザー /
               サウンドアーティスト。
               <br />
@@ -55,20 +55,49 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
               ノイズや声、フィールドレコーディングなど多様な音響オブジェクトをオーケストレーションし、円環的な時間感覚をもった音のデザインを追求。抽象的でありながらも身体感覚に訴えかける響きを生み出し、聴く者を「今ここ」に立ち戻らせる音楽を作り続けている。
               <br />
               <br />
-              作品はデジタルリリースにとどまらず、広告音楽、オーディオヴィジュアルや空間インスタレーションへも展開。マルチチャンネルによる多層的な音響デザインや、音の体験デザインを得意とし、近年は
+              作品はデジタルリリースにとどまらず、オーディオヴィジュアル作品や空間インスタレーションなどのメディアアート作品へも展開。マルチチャンネルによる多層的な音響デザインや、音の体験デザインを得意とし、近年は
               BMW THE SEVEN ART MUSEUM
               や大阪関西万博に空間音響演出で参加するなど、活動を幅を広げている。
+            </p>
+
+            <p className="mt-8 md:mt-12 text-[12pt] font-medium leading-[1.33] md:leading-[1.5] font-en">
+              HAL ca is an ambient and experimental music project by composer
+              and sound artist Haruka Kikuchi.
+              <br />
+              <br />
+              Born in Tokyo, she studied at Kunitachi College of Music before
+              moving to France, where she graduated top of her class in Film
+              Music Composition from the École Normale de Musique de Paris,
+              receiving unanimous distinction from the jury, while
+              simultaneously studying electroacoustic composition at the
+              Conservatoire à Rayonnement Régional de Paris.
+              <br />
+              <br />
+              Drawing on noise, voice, field recordings, and other sonic
+              materials, HAL ca composes sonic environments that blur the
+              boundaries between music and space. Through layered orchestration
+              and a circular sense of time, her work creates abstract yet
+              deeply physical resonances, inviting listeners back to the
+              present moment.
+              <br />
+              <br />
+              Beyond digital releases, her work extends into media art,
+              including audiovisual works and spatial installations. Working
+              across multi-channel sound design and sound experience design,
+              she creates layered sonic experiences that engage both space and
+              perception. Recent projects include spatial audio works for BMW
+              THE SEVEN ART MUSEUM and Expo 2025 Osaka, Kansai.
             </p>
           </div>
           <div className="hidden md:block md:col-1"></div>
           <div className="col-6 md:col-2 mt-[30px] md:mt-[107px]">
             {/* External Links */}
-            <div className="flex flex-col gap-4 md:gap-0">
+            <div className="flex flex-col">
               <a
                 href="https://music.apple.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 APPLE MUSIC
               </a>
@@ -76,7 +105,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://spotify.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 SPOTIFY
               </a>
@@ -84,7 +113,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12pt] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
+                className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
               >
                 INSTAGRAM (HAL ca)
               </a>

@@ -172,7 +172,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
         {/* 上の余白はデザイン(IDML)の設計値に合わせて 82px。
             デスクトップのデザインフレームは 1200px・左右マージン45px で Web と一致するため、
             デザインの px をそのまま適用できる（キャプション下端→MORE枠上端 = 約81.8px）。 */}
-        <div className="h-[143px] mt-[52px] lg:mt-[82px] mb-[52px]">
+        <div className="h-[143px] mt-[52px] mb-[52px]">
           <div className="grid-6">
             <Link
               href="/works"
