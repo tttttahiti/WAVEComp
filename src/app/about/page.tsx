@@ -115,12 +115,12 @@ export default async function AboutPage() {
       {/* Our Service Section */}
       <section className="pt-[30px] pb-[60px] px-[20px] md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-4 md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-8 md:mb-0">
             OUR SERVICE
           </h2>
 
           <ul
-            className="text-[12pt] md:text-[18pt] font-medium pt-[70px] pb-[80px] md:pt-0 md:pb-0 col-span-4 col-start-2 md:col-start-4 md:col-3 service-list"
+            className="text-[12pt] md:text-[18pt] font-medium md:pt-0 md:pb-0 col-span-6 md:col-start-4 md:col-3 service-list"
             style={{ lineHeight: "1.75" }}
           >
             <li className="whitespace-nowrap">
@@ -161,10 +161,10 @@ export default async function AboutPage() {
       {/* Info Section */}
       <section className="pt-0 md:pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
         <div className="grid-6">
-          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
+          <div className="col-6 md:col-1 md:col-start-2 mb-8 md:mb-0">
             <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
           </div>
-          <div className="col-start-2 col-span-4 md:col-start-4 md:col-span-2">
+          <div className="col-span-6 md:col-start-4 md:col-span-2">
             <div className="text-[12pt] leading-[1.75] font-medium">
               <p>WA/VE</p>
               <p>株式会社ウェーブ</p>
