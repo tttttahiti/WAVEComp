@@ -15,24 +15,46 @@ export function HeroImage({ src, alt, mode = "blur", videoSrc = null }: HeroImag
   const embedUrl = videoSrc ? getHeroVideoEmbedUrl(videoSrc) : null;
 
   if (mode === "full") {
-    /* full: ヒーロー領域そのものをビューポート全面（100vh × 100vw）にして cover（見切れる） */
+    /* full: md以上のみビューポート全面（100vh × 100vw）で cover（見切れる）。
+       モバイルは左右が見切れるため aspect-video 表示にフォールバック */
     return (
-      <section
-        data-hero
-        className="relative h-screen w-full overflow-hidden"
-      >
-        {embedUrl ? (
-          <HeroVideo embedUrl={embedUrl} variant="cover" />
-        ) : (
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            priority
-            className="object-cover"
-          />
-        )}
-      </section>
+      <>
+        {/* Mobile: aspect-video の前景メディアのみ（見切れない） */}
+        <section
+          data-hero
+          className="md:hidden relative w-full aspect-video min-h-[180px]"
+        >
+          {embedUrl ? (
+            <HeroVideo embedUrl={embedUrl} variant="fit" />
+          ) : (
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              priority
+              className="object-cover"
+            />
+          )}
+        </section>
+
+        {/* Desktop: フル画面 cover */}
+        <section
+          data-hero
+          className="hidden md:block relative h-screen w-full overflow-hidden"
+        >
+          {embedUrl ? (
+            <HeroVideo embedUrl={embedUrl} variant="cover" />
+          ) : (
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              priority
+              className="object-cover"
+            />
+          )}
+        </section>
+      </>
     );
   }
 
