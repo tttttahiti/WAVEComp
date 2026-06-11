@@ -51,7 +51,7 @@ export function Header() {
           </button>
 
           {/* Main Navigation */}
-          <nav className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
+          <nav className="font-en font-bold text-[20pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             {NAV_ITEMS.map(({ href, label }) => (
               <Link
                 key={href}
@@ -70,7 +70,7 @@ export function Header() {
           <div className="my-8 md:mt-[72px] md:mb-[56px] border-t border-black" />
 
           {/* Social Links - Same font size as nav, left-aligned */}
-          <div className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
+          <div className="font-en font-bold text-[20pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             <a
               href="https://www.instagram.com/wa_ve.jp/"
               target="_blank"
@@ -108,7 +108,7 @@ export function Header() {
           {/* Separator */}
           <div className="my-8 md:mt-[54px] md:mb-[59px] border-t border-black" />
 
-          <div className="font-en font-bold text-[24pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
+          <div className="font-en font-bold text-[20pt] md:text-[12pt] leading-tight md:leading-[2.2] tracking-wider">
             <button
               onClick={toggleSound}
               className="transition-colors duration-300 text-left text-black"
