@@ -134,7 +134,7 @@ export function HomeClient({ featuredItems, newsList }: HomeClientProps) {
       </section>
 
       {/* Concept Section */}
-      <Concept />
+      <Concept className="py-[120px] md:py-[154px]" />
 
       {/* Selected Works Section（TOP / hal-ca 共通） */}
       <FeaturedWorks featuredItems={featuredItems} />

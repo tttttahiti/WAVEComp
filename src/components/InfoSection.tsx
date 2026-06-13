@@ -1,8 +1,8 @@
 export function InfoSection() {
   return (
     <div className="grid-6">
-      <div className="col-6 md:col-1 md:col-start-2 mb-8 md:mb-0">
-        <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
+      <div className="col-span-6 md:col-span-1 md:col-start-2 mb-12 md:mb-0">
+        <h2 className="text-[30pt] font-bold">INFO</h2>
       </div>
       <div className="col-span-6 md:col-start-4 md:col-span-2">
         <div className="text-[12pt] leading-[1.75] font-medium">

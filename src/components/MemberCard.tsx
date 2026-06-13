@@ -8,7 +8,6 @@ interface MemberCardProps {
   title: string;
   biography: string[];
   achievements: string[];
-  marginTop?: string;
 }
 
 export function MemberCard({
@@ -19,10 +18,9 @@ export function MemberCard({
   title,
   biography,
   achievements,
-  marginTop = "mt-0 md:mt-[15px]",
 }: MemberCardProps) {
   return (
-    <div className={`grid-6 ${marginTop} mb-[70px] md:mb-[200px]`}>
+    <div className={`grid-6 mb-16 md:mb-24`}>
       {/* モバイル: 4列・中央・正方形、デスクトップ: col-2から開始して1.5列分・3:4 */}
       <div
         className="relative aspect-square md:aspect-[3/4] bg-gray-100 col-span-6 col-start-1 md:col-span-2 md:col-start-2 w-full md:w-[75%] mb-[70px] md:mb-[132px] "

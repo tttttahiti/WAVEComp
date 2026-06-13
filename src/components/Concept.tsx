@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 interface ConceptProps {
+  /** セクションの余白（上下 padding 等）。縦リズムはページ側から渡す */
   className?: string;
   titleColStart?: 1 | 2;
 }
@@ -48,7 +49,7 @@ export function Concept({
   return (
     <section
       ref={sectionRef}
-      className={`py-[120px] md:py-[154px] px-[20px] md:px-[45px]${className}`}
+      className={`px-[20px] md:px-[45px] ${className}`}
     >
       <div className="grid-6 overflow-visible md:items-start">
         <div className={`col-span-6 flex flex-wrap justify-between gap-y-10 ${titleColStart === 2 ? 'md:col-start-2 md:col-span-4' : 'col-span-6 md:col-span-5'}`}>

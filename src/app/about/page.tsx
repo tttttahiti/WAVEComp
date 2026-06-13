@@ -1,4 +1,4 @@
-import { ContactForm } from "@/components/ContactForm";
+import { ContactSection } from "@/components/ContactSection";
 import { Concept } from "@/components/Concept";
 import { MemberCard } from "@/components/MemberCard";
 import { InfoSection } from "@/components/InfoSection";
@@ -84,12 +84,12 @@ export default async function AboutPage() {
       <HeroSection title="ABOUT" right="WA/VE" />
 
       {/* Concept Section */}
-      <Concept titleColStart={2} />
+      <Concept titleColStart={2} className="py-16 md:py-[184px]" />
 
       {/* Our Service Section */}
-      <section className="pt-[30px] pb-[60px] px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-8 md:mb-0">
+          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
             OUR SERVICE
           </h2>
 
@@ -110,7 +110,7 @@ export default async function AboutPage() {
 
       {/* Member Section */}
       <section className="px-[20px] md:px-[45px]">
-        <div className="grid-6 h-[96px] md:h-[50px] mb-[0px] md:mb-[40px]">
+        <div className="grid-6 h-auto md:h-[50px] mb-12 md:mb-[40px]">
           <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
@@ -126,24 +126,18 @@ export default async function AboutPage() {
             title={member.title}
             biography={member.biography}
             achievements={member.achievements}
-            marginTop={index === 0 ? "mt-0 md:mt-[15px]" : "mt-12 md:mt-[90px]"}
           />
         ))}
       </section>
 
       {/* Info Section */}
-      <section className="pt-0 md:pt-[30px] pb-[20px] px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
         <InfoSection />
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 md:py-32 px-[20px] md:px-[45px] pb-[98px]">
-        <div className="grid-6 mb-12">
-          <h2 className="col-6 md:col-1 md:col-start-2 text-[30pt] font-bold">
-            CONTACT
-          </h2>
-        </div>
-        <ContactForm />
+      <section className="pt-0 pb-24 px-[20px] md:px-[45px]">
+        <ContactSection />
       </section>
     </>
   );

@@ -1,4 +1,4 @@
-import { ContactForm } from "@/components/ContactForm";
+import { ContactSection } from "@/components/ContactSection";
 import { InfoSection } from "@/components/InfoSection";
 import { HeroSection } from "@/components/HeroSection";
 
@@ -9,18 +9,13 @@ export default function ContactPage() {
       <HeroSection title="CONTACT" />
 
       {/* Info Section */}
-      <section className="py-12 md:py-32 px-[20px] md:px-[45px]">
+      <section className="py-16 md:pb-24 px-[20px] md:px-[45px]">
         <InfoSection />
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 md:pt-0 md:pb-32 px-[20px] md:px-[45px]">
-        <div className="grid-6">
-          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold">CONTACT</h2>
-          </div>
-        </div>
-        <ContactForm />
+      <section className="pt-0 pb-24 px-[20px] md:px-[45px]">
+        <ContactSection />
       </section>
     </>
   );
