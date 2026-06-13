@@ -1,6 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
 import { ReleaseCard } from "@/components/ReleaseCard";
+import { HeroSection } from "@/components/HeroSection";
 import { getReleases, transformRelease } from "@/lib/wordpress";
 
 export default async function ReleasesPage() {
@@ -19,22 +18,10 @@ export default async function ReleasesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section data-hero className="relative h-[270px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
-          <Image
-            src="/svg/bg-gradient.svg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="px-[20px] md:px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold flex justify-between"><span>RELEASES</span><span>ALL</span></h2>
-          </div>
-        </div>
-      </section>
+      <HeroSection
+        title="RELEASES"
+        right="ALL"
+      />
 
       {/* Releases List */}
       <section className="py-8 pt-[52px] px-[20px] md:px-[45px]">

@@ -1,39 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
 import { ContactForm } from "@/components/ContactForm";
 import { InfoSection } from "@/components/InfoSection";
+import { HeroSection } from "@/components/HeroSection";
 
 export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section data-hero className="relative h-[270px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
-          <Image
-            src="/svg/bg-gradient.svg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[20px] md:px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3">CONTACT</h2>
-            <div className="col-3 flex justify-end items-end mt-0">
-              <Link href="/">
-                <Image
-                  src="/svg/logo-wave.svg"
-                  alt="WA/VE"
-                  width={140}
-                  height={40}
-                  className="w-[140px] h-auto"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection title="CONTACT" />
 
       {/* Info Section */}
       <section className="py-12 md:py-32 px-[20px] md:px-[45px]">
