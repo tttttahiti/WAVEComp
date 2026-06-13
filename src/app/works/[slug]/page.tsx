@@ -144,19 +144,6 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         </div>
       </section>
 
-      {/* Gallery Section with Masonry */}
-      {work.galleryImages.length > 0 && (
-        <section className="py-4 md:py-8 px-[20px] md:px-[45px]">
-          <MasonryGallery
-            images={work.galleryImages}
-            title={work.title}
-            columnsDesktop={work.galleryColumnsDesktop}
-            columnsMobile={work.galleryColumnsMobile}
-            gutter={work.galleryGutter}
-          />
-        </section>
-      )}
-
       {/* Video Section */}
       {work.videoUrls.length > 0 && (
         <section className="py-4 md:py-8 px-[20px] md:px-[45px]">
@@ -167,6 +154,19 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Gallery Section with Masonry */}
+      {work.galleryImages.length > 0 && (
+        <section className="py-4 md:py-8 px-[20px] md:px-[45px]">
+          <MasonryGallery
+            images={work.galleryImages}
+            title={work.title}
+            columnsDesktop={work.galleryColumnsDesktop}
+            columnsMobile={work.galleryColumnsMobile}
+            gutter={work.galleryGutter}
+          />
         </section>
       )}
 
