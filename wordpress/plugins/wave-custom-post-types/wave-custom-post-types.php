@@ -249,7 +249,6 @@ class WAVE_Custom_Post_Types {
 
                 // Hero settings (個別ページ最上部の表示)
                 $hero_display = get_post_meta($post['id'], '_work_hero_display', true);
-                $hero_video_url = get_post_meta($post['id'], '_work_hero_video_url', true);
 
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
@@ -271,7 +270,6 @@ class WAVE_Custom_Post_Types {
                     'featured_halca' => !empty($featured_halca),
                     'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
                     'hero_display' => $hero_display === 'full' ? 'full' : 'blur',
-                    'hero_video_url' => $hero_video_url ?: null,
                 );
             },
             'schema' => array(
@@ -489,7 +487,6 @@ class WAVE_Custom_Post_Types {
         if ($hero_display !== 'full') {
             $hero_display = 'blur';
         }
-        $hero_video_url = get_post_meta($post->ID, '_work_hero_video_url', true);
         ?>
         <style>
             .gallery-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
@@ -557,16 +554,9 @@ class WAVE_Custom_Post_Types {
                         <option value="blur" <?php selected($hero_display, 'blur'); ?>>ブラーあり 16:9（見切れない）</option>
                         <option value="full" <?php selected($hero_display, 'full'); ?>>フル画面（見切れる）</option>
                     </select>
-                    <p class="description">ページ最上部の画像/映像の表示方法。<br>
+                    <p class="description">ページ最上部の画像の表示方法。<br>
                     「ブラーあり 16:9」: 画像全体が見える（デスクトップは左右に画像をぼかした背景）<br>
-                    「フル画面」: 画面全体（100vh × 100vw）に表示（端が切れる場合あり）</p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="work_hero_video_url">ヒーロー映像URL（任意）</label></th>
-                <td>
-                    <input type="url" id="work_hero_video_url" name="work_hero_video_url" value="<?php echo esc_attr($hero_video_url); ?>" class="regular-text" placeholder="https://youtu.be/... または https://vimeo.com/...">
-                    <p class="description">YouTube または Vimeo のURL。指定すると、アイキャッチ画像の代わりにページ最上部で音無しループ再生されます。</p>
+                    「フル画面」: 横幅いっぱいに表示（画像の高さを保持しつつ、高さ上限を超える分はトリミング）</p>
                 </td>
             </tr>
             <tr>
@@ -1014,9 +1004,6 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_hero_display'])) {
                 $hero_display = sanitize_text_field($_POST['work_hero_display']);
                 update_post_meta($post_id, '_work_hero_display', $hero_display === 'full' ? 'full' : 'blur');
-            }
-            if (isset($_POST['work_hero_video_url'])) {
-                update_post_meta($post_id, '_work_hero_video_url', esc_url_raw($_POST['work_hero_video_url']));
             }
         }
 

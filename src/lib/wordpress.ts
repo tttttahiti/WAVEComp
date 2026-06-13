@@ -53,7 +53,6 @@ export interface WPWork {
     featured_halca: boolean;
     featured_halca_order: number;
     hero_display: 'blur' | 'full';
-    hero_video_url: string | null;
   };
   work_tag: number[];
   work_category: number[];
