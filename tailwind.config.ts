@@ -25,6 +25,11 @@ const config: Config = {
         bg: {
           waveBlue: "#536CDB",
         },
+        // NEWS バー用の色（デザイナー指定値 260601）。上段（本文）= 緑、下段（URL）= 青 で固定
+        news: {
+          green: "#74cb6e",
+          blue: "#3640d6",
+        },
       },
       fontFamily: {
         sans: [

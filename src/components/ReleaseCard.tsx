@@ -80,10 +80,10 @@ export function ReleaseCard({
             <p className="text-[12pt]">no data</p>
           )}
         </div>
-        <div className="font-bold text-center text-[12pt]">
+        <div>
           <Link
             href={listenUrl || ""}
-            className="btn-primary inline-block w-full font-bold text-[12pt]"
+            className="btn-primary flex items-center justify-center md:inline-block md:w-1/2 text-center font-bold text-[12pt] h-12 md:h-auto"
             target="_blank"
             rel="noopener noreferrer"
           >

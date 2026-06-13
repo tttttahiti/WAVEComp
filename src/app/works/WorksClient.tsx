@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { WorkCard } from "@/components/WorkCard";
+import { WorkListCard } from "@/components/WorkListCard";
+import { HeroSection } from "@/components/HeroSection";
+import { Line } from "@/components/Line";
+
+// プルダウン表示順（この順で表示、未定義タグは末尾）
+const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
 
 export interface Work {
   id: string;
@@ -25,7 +28,6 @@ interface WorksClientProps {
 export function WorksClient({ initialWorks }: WorksClientProps) {
   const searchParams = useSearchParams();
   const [filterTag, setFilterTag] = useState("");
-  const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
 
   // URLのクエリパラメータからタグを取得
   useEffect(() => {
@@ -35,8 +37,6 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
     }
   }, [searchParams]);
 
-  // プルダウン表示順（この順で表示、未定義タグは末尾）
-  const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
 
   // 全ての記事から重複なしのタグ一覧を取得（指定順でソート）
   const allTags = useMemo(() => {
@@ -67,58 +67,13 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
     );
   }, [filterTag, initialWorks]);
 
-  const handleImageLoad = useCallback((id: string, height: number) => {
-    setImageHeights((prev) => {
-      if (prev[id] === height) return prev;
-      return { ...prev, [id]: height };
-    });
-  }, []);
-
-  const minHeight = useMemo(() => {
-    const filteredIds = filteredWorks.map((w) => w.id);
-    const filteredHeights = Object.entries(imageHeights)
-      .filter(([id]) => filteredIds.includes(id))
-      .map(([, height]) => height);
-
-    if (filteredHeights.length === filteredWorks.length && filteredHeights.length > 0) {
-      return Math.min(...filteredHeights);
-    }
-    return undefined;
-  }, [imageHeights, filteredWorks]);
-
   return (
     <>
       {/* Hero Section */}
-      <section data-hero className="relative h-[150px] md:h-[215px] min-h-[150px] md:min-h-[215px] flex items-end overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-screen squish-on-menu transition-transform duration-500 origin-left">
-          <Image
-            src="/svg/bg-gradient.svg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="relative z-10 w-full pb-6 md:pb-12">
-          <div className="grid-6 px-[20px] md:px-[45px] md:px-[20px] md:px-[45px]">
-            <h2 className="text-white text-[30pt] md:text-[30pt] font-bold col-3 md:col-3">WORKS</h2>
-            <div className="col-3 md:col-3 flex justify-end items-end mt-0">
-              <Link href="/">
-                <Image
-                  src="/svg/logo-wave.svg"
-                  alt="WA/VE"
-                  width={140}
-                  height={40}
-                  className="w-[140px] h-auto"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection title="WORKS" right="ALL" />
 
       {/* Filter & Works Grid */}
-      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] md:px-[20px] md:px-[45px] mb-[55px]">
+      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] mb-[55px]">
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
@@ -157,25 +112,24 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
                     // 画像
                     <div key={`image-${work.id}`} className="col-6">
-                      <WorkCard
+                      <WorkListCard
                         {...work}
-                        onImageLoad={(height) => handleImageLoad(work.id, height)}
                         imageOnly
                       />
                     </div>,
                     // 中間ボーダー
-                    <div key={`border-middle-${work.id}`} className="col-6">
+                    <div key={`border-middle-${work.id}`} className="col-6 my-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
                     // テキスト
                     <div key={`text-${work.id}`} className={`col-6 ${index === filteredWorks.length - 1 ? '' : ''}`}>
-                      <WorkCard
+                      <WorkListCard
                         {...work}
                         textOnly
                       />
                     </div>,
                     // 上部ボーダー
-                    <div key={`border-top-${work.id}`} className="col-6">
+                    <div key={`border-top-${work.id}`} className="col-6 mt-12 mb-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
 
@@ -193,35 +147,25 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="h-[10px] col-6">
-                        <img
-                          src="/svg/line.svg"
-                          alt=""
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
+                        <Line />
                       </div>,
                       // 画像2つ
                       ...groupWorks.map((work) => (
-                        <div key={`image-${work.id}`} className="col-3">
-                          <WorkCard
+                        <div key={`image-${work.id}`} className="col-3 py-9 px-10">
+                          <WorkListCard
                             {...work}
-                            onImageLoad={(height) => handleImageLoad(work.id, height)}
-                            imageHeight={minHeight}
                             imageOnly
                           />
                         </div>
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="h-[10px] col-6">
-                        <img
-                          src="/svg/line.svg"
-                          alt=""
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
+                        <Line />
                       </div>,
                       // テキスト2つ
                       ...groupWorks.map((work) => (
-                        <div key={`text-${work.id}`} className={`col-3 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
-                          <WorkCard
+                        <div key={`text-${work.id}`} className={`col-3 pt-9 pb-16 px-10 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
+                          <WorkListCard
                             {...work}
                             textOnly
                           />

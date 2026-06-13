@@ -1,20 +1,24 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { useSound } from "@/components/SoundContext";
+
 interface VideoEmbedProps {
   url: string;
 }
 
 type VideoType = "youtube" | "vimeo" | null;
 
-/**
- * 動画URLを解析して埋め込みURLを生成
- */
-function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | null } {
+interface VideoEmbedInfo {
+  type: VideoType;
+  embedUrl: string | null;
+}
+
+function getVideoEmbedInfo(url: string): VideoEmbedInfo {
   if (!url) return { type: null, embedUrl: null };
 
-  // YouTube URLのパターン
   const youtubePatterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/,
     /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
   ];
 
@@ -22,13 +26,11 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
     const match = url.match(pattern);
     if (match && match[1]) {
       const videoId = match[1];
-      // YouTube パラメータ
-      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&rel=0&modestbranding=1&color=white&iv_load_policy=3&playsinline=1`;
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&color=white&iv_load_policy=3&playsinline=1&enablejsapi=1`;
       return { type: "youtube", embedUrl };
     }
   }
 
-  // Vimeo URLのパターン
   const vimeoPatterns = [
     /vimeo\.com\/(\d+)/,
     /player\.vimeo\.com\/video\/(\d+)/,
@@ -38,8 +40,7 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
     const match = url.match(pattern);
     if (match && match[1]) {
       const videoId = match[1];
-      // Vimeo パラメータ
-      const embedUrl = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=0&title=0&byline=0&portrait=0`;
+      const embedUrl = `https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0`;
       return { type: "vimeo", embedUrl };
     }
   }
@@ -47,8 +48,108 @@ function getVideoEmbedInfo(url: string): { type: VideoType; embedUrl: string | n
   return { type: null, embedUrl: null };
 }
 
+interface YTPlayerEvent {
+  data: number;
+}
+
+interface YTPlayer {
+  destroy?: () => void;
+  pauseVideo?: () => void;
+}
+
+interface YTNamespace {
+  Player: new (
+    element: HTMLIFrameElement,
+    options: { events: { onStateChange: (event: YTPlayerEvent) => void } }
+  ) => YTPlayer;
+  PlayerState: { PLAYING: number; PAUSED: number; ENDED: number };
+}
+
+declare global {
+  interface Window {
+    YT?: YTNamespace;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+let ytApiPromise: Promise<void> | null = null;
+const registeredPlayers = new Set<YTPlayer>();
+
+function loadYouTubeAPI(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.YT && window.YT.Player) return Promise.resolve();
+  if (ytApiPromise) return ytApiPromise;
+
+  ytApiPromise = new Promise<void>((resolve) => {
+    const previous = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (previous) previous();
+      resolve();
+    };
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(script);
+    }
+  });
+  return ytApiPromise;
+}
+
 export function YouTubeEmbed({ url }: VideoEmbedProps) {
   const { type, embedUrl } = getVideoEmbedInfo(url);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const { pauseForVideo, resumeFromVideo } = useSound();
+  const pauseForVideoRef = useRef(pauseForVideo);
+  const resumeFromVideoRef = useRef(resumeFromVideo);
+  pauseForVideoRef.current = pauseForVideo;
+  resumeFromVideoRef.current = resumeFromVideo;
+
+  useEffect(() => {
+    if (type !== "youtube" || !iframeRef.current) return;
+    let cancelled = false;
+    let player: YTPlayer | null = null;
+
+    loadYouTubeAPI().then(() => {
+      if (cancelled || !iframeRef.current || !window.YT) return;
+      player = new window.YT.Player(iframeRef.current, {
+        events: {
+          onStateChange: (event) => {
+            const state = event.data;
+            const PlayerState = window.YT!.PlayerState;
+            if (state === PlayerState.PLAYING) {
+              registeredPlayers.forEach((other) => {
+                if (other !== player && typeof other.pauseVideo === "function") {
+                  try {
+                    other.pauseVideo();
+                  } catch {
+                    // ignore
+                  }
+                }
+              });
+              pauseForVideoRef.current();
+            } else if (state === PlayerState.PAUSED || state === PlayerState.ENDED) {
+              resumeFromVideoRef.current();
+            }
+          },
+        },
+      });
+      registeredPlayers.add(player);
+    });
+
+    return () => {
+      cancelled = true;
+      if (player) {
+        registeredPlayers.delete(player);
+        if (typeof player.destroy === "function") {
+          try {
+            player.destroy();
+          } catch {
+            // ignore
+          }
+        }
+      }
+    };
+  }, [type, embedUrl]);
 
   if (!embedUrl) {
     return (
@@ -60,6 +161,7 @@ export function YouTubeEmbed({ url }: VideoEmbedProps) {
 
   return (
     <iframe
+      ref={iframeRef}
       src={embedUrl}
       className="absolute inset-0 w-full h-full"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

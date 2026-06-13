@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WA/VE Custom Post Types
  * Description: Custom post types for WA/VE website (Works, Releases, Members)
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: WA/VE
  */
 
@@ -38,7 +38,7 @@ class WAVE_Custom_Post_Types {
      * カスタム投稿タイプでGutenbergを無効化
      */
     public function disable_gutenberg_for_custom_types($use_block_editor, $post_type) {
-        if (in_array($post_type, array('work', 'release', 'member'))) {
+        if (in_array($post_type, array('work', 'release', 'member', 'news'))) {
             return false;
         }
         return $use_block_editor;
@@ -110,6 +110,27 @@ class WAVE_Custom_Post_Types {
             'rest_base' => 'members',
             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
             'menu_icon' => 'dashicons-groups',
+            'show_in_menu' => true,
+        ));
+
+        // News
+        register_post_type('news', array(
+            'labels' => array(
+                'name' => 'News',
+                'singular_name' => 'News',
+                'add_new' => '新規追加',
+                'add_new_item' => '新規News追加',
+                'edit_item' => 'News編集',
+                'view_item' => 'News表示',
+                'all_items' => 'すべてのNews',
+                'search_items' => 'News検索',
+            ),
+            'public' => false,
+            'show_ui' => true,
+            'show_in_rest' => true,
+            'rest_base' => 'news',
+            'supports' => array('title', 'editor'),
+            'menu_icon' => 'dashicons-megaphone',
             'show_in_menu' => true,
         ));
     }
@@ -226,6 +247,9 @@ class WAVE_Custom_Post_Types {
                 $featured_halca = get_post_meta($post['id'], '_work_featured_halca', true);
                 $featured_halca_order = get_post_meta($post['id'], '_work_featured_halca_order', true);
 
+                // Hero settings (個別ページ最上部の表示)
+                $hero_display = get_post_meta($post['id'], '_work_hero_display', true);
+
                 return array(
                     'client' => get_post_meta($post['id'], '_work_client', true),
                     'date' => get_post_meta($post['id'], '_work_date', true),
@@ -245,6 +269,7 @@ class WAVE_Custom_Post_Types {
                     'featured_order' => $featured_order ? intval($featured_order) : 99,
                     'featured_halca' => !empty($featured_halca),
                     'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
+                    'hero_display' => $hero_display === 'full' ? 'full' : 'blur',
                 );
             },
             'schema' => array(
@@ -295,6 +320,22 @@ class WAVE_Custom_Post_Types {
                     'achievements' => get_post_meta($post['id'], '_member_achievements', true),
                     'mobile_image_url' => $mobile_image_url,
                     'display_order' => $display_order ? intval($display_order) : 99,
+                );
+            },
+            'schema' => array(
+                'type' => 'object',
+            ),
+        ));
+
+        // News fields
+        register_rest_field('news', 'news_meta', array(
+            'get_callback' => function($post) {
+                $is_visible = get_post_meta($post['id'], '_news_is_visible', true);
+                // デフォルトは表示。新規投稿時に _news_is_visible が未設定でも表示扱い。
+                $is_visible_bool = ($is_visible === '' || $is_visible === '1');
+                return array(
+                    'url' => get_post_meta($post['id'], '_news_url', true),
+                    'is_visible' => $is_visible_bool,
                 );
             },
             'schema' => array(
@@ -403,6 +444,16 @@ class WAVE_Custom_Post_Types {
             'normal',
             'high'
         );
+
+        // News meta box
+        add_meta_box(
+            'news_details',
+            'News Details',
+            array($this, 'render_news_meta_box'),
+            'news',
+            'normal',
+            'high'
+        );
     }
 
     /**
@@ -431,6 +482,10 @@ class WAVE_Custom_Post_Types {
         $credits = get_post_meta($post->ID, '_work_credits', true);
         if (!$credits) {
             $credits = '';
+        }
+        $hero_display = get_post_meta($post->ID, '_work_hero_display', true);
+        if ($hero_display !== 'full') {
+            $hero_display = 'blur';
         }
         ?>
         <style>
@@ -491,6 +546,18 @@ class WAVE_Custom_Post_Types {
             <tr>
                 <th><label for="work_url">URL</label></th>
                 <td><input type="url" id="work_url" name="work_url" value="<?php echo esc_attr($url); ?>" class="regular-text"></td>
+            </tr>
+            <tr>
+                <th><label for="work_hero_display">ヒーロー表示（個別ページ最上部）</label></th>
+                <td>
+                    <select id="work_hero_display" name="work_hero_display">
+                        <option value="blur" <?php selected($hero_display, 'blur'); ?>>ブラーあり 16:9（見切れない）</option>
+                        <option value="full" <?php selected($hero_display, 'full'); ?>>フル画面（見切れる）</option>
+                    </select>
+                    <p class="description">ページ最上部の画像の表示方法。<br>
+                    「ブラーあり 16:9」: 画像全体が見える（デスクトップは左右に画像をぼかした背景）<br>
+                    「フル画面」: 横幅いっぱいに表示（画像の高さを保持しつつ、高さ上限を超える分はトリミング）</p>
+                </td>
             </tr>
             <tr>
                 <th><label for="work_video_urls">Video URLs</label></th>
@@ -844,6 +911,37 @@ class WAVE_Custom_Post_Types {
     }
 
     /**
+     * Render News Meta Box
+     */
+    public function render_news_meta_box($post) {
+        wp_nonce_field('wave_news_meta', 'wave_news_meta_nonce');
+
+        $url = get_post_meta($post->ID, '_news_url', true);
+        // 新規投稿時のデフォルトは「表示する」
+        $is_visible_raw = get_post_meta($post->ID, '_news_is_visible', true);
+        $is_visible = ($is_visible_raw === '' || $is_visible_raw === '1');
+        ?>
+        <table class="form-table">
+            <tr>
+                <th><label for="news_is_visible">表示</label></th>
+                <td>
+                    <label><input type="checkbox" id="news_is_visible" name="news_is_visible" value="1" <?php checked($is_visible, true); ?>> このNEWSを表示する</label>
+                    <p class="description">チェックを外すと、このNEWSはサイト上で非表示になります。<br>
+                    <strong>注意:</strong> 最新（投稿日が最も新しい）のNEWSが「表示しない」になっていると、NEWSセクション全体が非表示になります。</p>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="news_url">URL（任意）</label></th>
+                <td>
+                    <input type="url" id="news_url" name="news_url" value="<?php echo esc_attr($url); ?>" class="regular-text" placeholder="https://...">
+                    <p class="description">空欄にするとURLバーは表示されません。<br>バーの色は固定です（上段の本文 = 緑、下段のURL = 青）。</p>
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+
+    /**
      * Save Meta Boxes
      */
     public function save_meta_boxes($post_id) {
@@ -902,6 +1000,11 @@ class WAVE_Custom_Post_Types {
             if (isset($_POST['work_layout_order'])) {
                 update_post_meta($post_id, '_work_layout_order', sanitize_text_field($_POST['work_layout_order']));
             }
+            // Hero settings
+            if (isset($_POST['work_hero_display'])) {
+                $hero_display = sanitize_text_field($_POST['work_hero_display']);
+                update_post_meta($post_id, '_work_hero_display', $hero_display === 'full' ? 'full' : 'blur');
+            }
         }
 
         // Release meta
@@ -930,6 +1033,16 @@ class WAVE_Custom_Post_Types {
                     update_post_meta($post_id, '_' . $field, $value);
                 }
             }
+        }
+
+        // News meta
+        if (isset($_POST['wave_news_meta_nonce']) && wp_verify_nonce($_POST['wave_news_meta_nonce'], 'wave_news_meta')) {
+            if (isset($_POST['news_url'])) {
+                update_post_meta($post_id, '_news_url', esc_url_raw($_POST['news_url']));
+            }
+
+            // checkbox は POST に存在しないとき OFF
+            update_post_meta($post_id, '_news_is_visible', isset($_POST['news_is_visible']) ? '1' : '0');
         }
 
         // Member meta

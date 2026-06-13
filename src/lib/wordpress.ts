@@ -52,6 +52,7 @@ export interface WPWork {
     featured_order: number;
     featured_halca: boolean;
     featured_halca_order: number;
+    hero_display: 'blur' | 'full';
   };
   work_tag: number[];
   work_category: number[];
@@ -95,6 +96,18 @@ export interface WPMember {
     achievements: string;
     mobile_image_url: string | null;
     display_order: number;
+  };
+}
+
+export interface WPNews {
+  id: number;
+  date: string;
+  slug: string;
+  title: { rendered: string };
+  content: { rendered: string };
+  news_meta: {
+    url: string;
+    is_visible: boolean;
   };
 }
 
@@ -198,8 +211,7 @@ export async function getMembers(params?: {
   const url = `${WORDPRESS_API_URL}/members?${searchParams.toString()}`;
 
   const res = await fetch(url, {
-    next: { revalidate: 0 }, // キャッシュ無効化（デバッグ用）
-    cache: 'no-store',
+    next: { revalidate: 60 }, // 60秒でキャッシュを再検証
   });
 
   if (!res.ok) {
@@ -207,6 +219,41 @@ export async function getMembers(params?: {
   }
 
   return res.json();
+}
+
+/**
+ * News を取得（複数件・最新順）
+ */
+export async function getNewsList(params?: {
+  per_page?: number;
+}): Promise<WPNews[]> {
+  const searchParams = new URLSearchParams();
+  searchParams.set("per_page", String(params?.per_page ?? 20));
+  searchParams.set("orderby", "date");
+  searchParams.set("order", "desc");
+
+  const url = `${WORDPRESS_API_URL}/news?${searchParams.toString()}`;
+
+  const res = await fetch(url, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch news: ${res.status}`);
+  }
+
+  return res.json();
+}
+
+/**
+ * News 配列に対して、表示すべき NEWS のみを返す。
+ * - 配列が空、または先頭（最新）が is_visible: false の場合は空配列を返す（全体非表示）
+ * - それ以外は is_visible: true の NEWS のみを抽出
+ */
+export function filterVisibleNews(newsList: WPNews[]): WPNews[] {
+  if (newsList.length === 0) return [];
+  if (!newsList[0].news_meta.is_visible) return [];
+  return newsList.filter((n) => n.news_meta.is_visible);
 }
 
 /**

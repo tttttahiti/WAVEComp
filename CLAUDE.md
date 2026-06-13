@@ -54,14 +54,14 @@ The site uses `.grid-6` with `.col-1` through `.col-6` utilities (defined in `@l
 
 ### SVG Borders
 
-Use native `<img>` tags (NOT Next.js `<Image>`) for horizontal SVG separators. Enforce exact 10px height with inline styles:
-```tsx
-<img
-  src="/svg/line.svg"
-  alt=""
-  style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-/>
-```
+Horizontal SVG separators are **inlined as React components** (`BorderLine`, `Line` in `src/components/`), NOT loaded via `<img>` or Next.js `<Image>`.
+
+Rationale:
+- Next.js `<Image>` cannot serve SVG unless `dangerouslyAllowSVG: true` is set in `next.config` (it isn't, and we don't want to loosen it site-wide).
+- A native `<img src="*.svg">` triggers the `no-img-element` ESLint warning and adds an HTTP fetch.
+- The source SVGs use `preserveAspectRatio="none"` so they stretch to fill the box; inlining keeps full control and zero fetch.
+
+The SVGs are tiny (a few `<path>`s), so inline DOM cost is negligible. Each component renders `block w-full h-[10px]`, stretching to the parent width. Add new separators as inline-SVG components following this pattern (do not reintroduce `<img>`/`<Image>` for SVG borders).
 
 ### Global Horizontal Padding
 
