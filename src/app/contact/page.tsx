@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/ContactForm";
+import { InfoSection } from "@/components/InfoSection";
 
 export default function ContactPage() {
   return (
@@ -36,29 +37,7 @@ export default function ContactPage() {
 
       {/* Info Section */}
       <section className="py-12 md:py-32 px-[20px] md:px-[45px]">
-        <div className="grid-6">
-          <div className="col-6 md:col-1 md:col-start-2 mb-8 md:mb-0">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold">INFO</h2>
-          </div>
-          <div className="col-span-6 md:col-start-4 md:col-span-2">
-            <div className="text-[12pt] font-medium">
-              <p>WA/VE</p>
-              <p>株式会社ウェーブ</p>
-              <br/>
-              <p>設立日：2026年4月1日</p>
-              <p>CEO：菊地晴夏</p>
-              <p>Co-Founder：島田舞</p>
-              <p>
-                <a
-                  href="mailto:info@wa-ve.jp"
-                  className="text-wave-blue hover:text-[#c2de6d] transition-colors"
-                >
-                  info@wa-ve.jp
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
+        <InfoSection />
       </section>
 
       {/* Contact Section */}
