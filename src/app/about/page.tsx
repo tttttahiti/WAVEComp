@@ -84,7 +84,7 @@ export default async function AboutPage() {
       <HeroSection title="ABOUT" right="WA/VE" />
 
       {/* Concept Section */}
-      <Concept titleColStart={2} className="py-16 md:py-[184px]" />
+      <Concept titleColStart={2} className="py-[120px] md:py-[184px]" />
 
       {/* Our Service Section */}
       <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">

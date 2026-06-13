@@ -71,7 +71,7 @@ export function Concept({
                 key={pIndex}
                 className={`${FADE_BASE} ${
                   pIndex > 0
-                    ? "[margin-block-start:2rem] md:[margin-block-start:3rem]"
+                    ? "[margin-block-start:clamp(0.5rem,4vw,2rem)] md:[margin-block-start:3rem]"
                     : ""
                 }`}
                 style={{
