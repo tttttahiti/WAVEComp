@@ -211,8 +211,7 @@ export async function getMembers(params?: {
   const url = `${WORDPRESS_API_URL}/members?${searchParams.toString()}`;
 
   const res = await fetch(url, {
-    next: { revalidate: 0 }, // キャッシュ無効化（デバッグ用）
-    cache: 'no-store',
+    next: { revalidate: 60 }, // 60秒でキャッシュを再検証
   });
 
   if (!res.ok) {
