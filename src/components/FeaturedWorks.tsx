@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { WorkCard } from "@/components/WorkCard";
+import { BorderLine } from "@/components/BorderLine";
 
 // TOP / hal-ca で共通の FEATURED WORKS セクションで扱う項目。
 export interface FeaturedItem {
@@ -114,11 +115,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
                   return [
                     // 上部ボーダー
                     <div key={`border-top-${groupIndex}`} className="col-6">
-                      <img
-                        src="/svg/border.svg"
-                        alt=""
-                        style={{ width: "100%", height: "10px", minHeight: "10px", maxHeight: "10px", objectFit: "fill" }}
-                      />
+                      <BorderLine />
                     </div>,
                     // 画像3つ
                     ...groupItems.map((item) => (
@@ -139,11 +136,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
                     )),
                     // 中間ボーダー
                     <div key={`border-middle-${groupIndex}`} className="col-6">
-                      <img
-                        src="/svg/border.svg"
-                        alt=""
-                        style={{ width: "100%", height: "10px", minHeight: "10px", maxHeight: "10px", objectFit: "fill" }}
-                      />
+                      <BorderLine />
                     </div>,
                     // テキスト3つ
                     ...groupItems.map((item) => (

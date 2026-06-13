@@ -2,9 +2,9 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { WorkListCard } from "@/components/WorkListCard";
 import { HeroSection } from "@/components/HeroSection";
+import { Line } from "@/components/Line";
 
 // プルダウン表示順（この順で表示、未定義タグは末尾）
 const TAG_ORDER = ["#HAL ca", "#Installation", "#Movie", "#Experience Design", "#Event Produce"];
@@ -147,13 +147,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                     return [
                       // 上部ボーダー
                       <div key={`border-top-${groupIndex}`} className="h-[10px] col-6">
-                        <Image
-                          src="/svg/line.svg"
-                          alt=""
-                          width={10}
-                          height={10}
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
+                        <Line />
                       </div>,
                       // 画像2つ
                       ...groupWorks.map((work) => (
@@ -166,13 +160,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                       )),
                       // 中間ボーダー
                       <div key={`border-middle-${groupIndex}`} className="h-[10px] col-6">
-                        <Image
-                          src="/svg/line.svg"
-                          alt=""
-                          width={10}
-                          height={10}
-                          style={{ width: '100%', height: '10px', minHeight: '10px', maxHeight: '10px', objectFit: 'fill' }}
-                        />
+                        <Line />
                       </div>,
                       // テキスト2つ
                       ...groupWorks.map((work) => (
