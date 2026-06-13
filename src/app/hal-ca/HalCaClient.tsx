@@ -94,7 +94,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
             {/* External Links */}
             <div className="flex flex-col">
               <a
-                href="https://music.apple.com"
+                href="https://music.apple.com/us/artist/hal-ca/1702034837"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
@@ -102,7 +102,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 APPLE MUSIC
               </a>
               <a
-                href="https://spotify.com"
+                href="https://open.spotify.com/artist/4PtZB4ONshF7mdbYQgVWtm"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
@@ -110,7 +110,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
                 SPOTIFY
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/haru.kikuchi/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[13pt] md:text-[12pt] leading-[1.33] tracking-[0.05em] font-bold text-wave-blue hover:text-[#c2de6d] transition-colors"
