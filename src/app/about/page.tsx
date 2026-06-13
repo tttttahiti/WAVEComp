@@ -138,10 +138,10 @@ export default async function AboutPage() {
 
       {/* Contact Section */}
       <section className="py-12 md:py-32 px-[20px] md:px-[45px] pb-[98px]">
-        <div className="grid-6">
-          <div className="col-6 md:col-1 md:col-start-2 mb-4 md:mb-0">
-            <h2 className="text-[30pt] font-bold">CONTACT</h2>
-          </div>
+        <div className="grid-6 mb-12">
+          <h2 className="col-6 md:col-1 md:col-start-2 text-[30pt] font-bold">
+            CONTACT
+          </h2>
         </div>
         <ContactForm />
       </section>

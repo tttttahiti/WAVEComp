@@ -42,8 +42,8 @@ export function ContactForm() {
   };
 
   return (
-    <div className="grid-6 mt-4 md:mt-[30px]">
-      <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2] mb-4 md:mb-0">
+    <div className="grid-6">
+      <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
         <p className="hidden md:block">
           お名前
         </p>
