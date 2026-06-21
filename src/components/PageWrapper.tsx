@@ -43,7 +43,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       triggered = true;
       window.clearTimeout(fallback);
       setSoundReveal("animating");
-      // hero-intro(1350ms) + ディレイ(1575ms) の完了後に通常制御へ
+      // hero-intro(1350ms) + ディレイ(1125ms) の完了後に通常制御へ
       settleTimer = window.setTimeout(() => setSoundReveal("done"), 3150);
     };
 
@@ -131,8 +131,10 @@ export function PageWrapper({ children }: PageWrapperProps) {
               // header の pt-[45px] が NEWS 下端のさらに下に乗って空きすぎるため、
               // その 45px を相殺し、NEWS 本文の行間ぶんだけ空けて行リズムに合わせる。
               // 18px ≒ 14pt×leading-1.5 の行間の約2倍。詰め/緩めは末尾の +18px を増減して調整可能。
-              marginTop: inHeroZone ? "calc(var(--news-bar-height, 0px) - 45px + 18px)" : "0px",
-              ...(soundReveal === "animating" ? { animationDelay: "1575ms" } : {}),
+              marginTop: inHeroZone ? "calc(var(--news-bar-height, 0px) - 45px + 12px)" : "0px",
+              // NEWS2段目(=923ms: URLオフセット半減後)→SOUND の間隔を約半分(約200ms)に
+              // 詰めて "ピピッ"とデジタル的に出す（旧: 1575ms / 間隔405ms）。
+              ...(soundReveal === "animating" ? { animationDelay: "1125ms" } : {}),
             }}
             className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${
               soundReveal === "hidden"
