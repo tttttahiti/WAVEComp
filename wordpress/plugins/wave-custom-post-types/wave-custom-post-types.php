@@ -16,6 +16,7 @@ class WAVE_Custom_Post_Types {
         add_action('init', array($this, 'register_post_types'));
         add_action('init', array($this, 'register_taxonomies'));
         add_action('rest_api_init', array($this, 'register_rest_fields'));
+        add_action('rest_api_init', array($this, 'register_preview_route'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post', array($this, 'save_meta_boxes'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -194,83 +195,208 @@ class WAVE_Custom_Post_Types {
     /**
      * Register REST API Fields
      */
+    /**
+     * Work の work_meta 配列を組み立てる（REST フィールドとプレビューAPIで共通利用）
+     */
+    public function build_work_meta($post_id) {
+        // Audio file
+        $audio_id = get_post_meta($post_id, '_work_audio_file', true);
+        $audio_url = null;
+        if ($audio_id) {
+            $audio_url = wp_get_attachment_url($audio_id);
+        }
+
+        // Video URLs (multiple, newline separated)
+        $video_urls_raw = get_post_meta($post_id, '_work_video_urls', true);
+        $video_urls = array_filter(array_map('trim', explode("\n", $video_urls_raw)));
+
+        // Gallery images (multiple IDs, comma separated)
+        $gallery_ids_raw = get_post_meta($post_id, '_work_gallery_images', true);
+        $gallery_images = array();
+        if ($gallery_ids_raw) {
+            $ids = array_filter(array_map('intval', explode(',', $gallery_ids_raw)));
+            foreach ($ids as $id) {
+                $image = wp_get_attachment_image_src($id, 'full');
+                $thumb = wp_get_attachment_image_src($id, 'medium');
+                if ($image) {
+                    $gallery_images[] = array(
+                        'id' => $id,
+                        'url' => $image[0],
+                        'width' => $image[1],
+                        'height' => $image[2],
+                        'thumbnail' => $thumb ? $thumb[0] : $image[0],
+                    );
+                }
+            }
+        }
+
+        // Layout order (default: video, content, gallery, audio)
+        $layout_order_raw = get_post_meta($post_id, '_work_layout_order', true);
+        $layout_order = $layout_order_raw ? array_map('trim', explode(',', $layout_order_raw)) : array('video', 'content', 'gallery', 'audio');
+
+        // Display order
+        $display_order = get_post_meta($post_id, '_work_display_order', true);
+
+        // Gallery settings
+        $gallery_columns_desktop = get_post_meta($post_id, '_work_gallery_columns_desktop', true);
+        $gallery_columns_mobile = get_post_meta($post_id, '_work_gallery_columns_mobile', true);
+        $gallery_gutter = get_post_meta($post_id, '_work_gallery_gutter', true);
+
+        // Featured flags
+        $featured = get_post_meta($post_id, '_work_featured', true);
+        $featured_order = get_post_meta($post_id, '_work_featured_order', true);
+        $featured_halca = get_post_meta($post_id, '_work_featured_halca', true);
+        $featured_halca_order = get_post_meta($post_id, '_work_featured_halca_order', true);
+
+        // Hero settings (個別ページ最上部の表示)
+        $hero_display = get_post_meta($post_id, '_work_hero_display', true);
+
+        return array(
+            'client' => get_post_meta($post_id, '_work_client', true),
+            'date' => get_post_meta($post_id, '_work_date', true),
+            'role' => get_post_meta($post_id, '_work_role', true),
+            'role_en' => get_post_meta($post_id, '_work_role_en', true),
+            'url' => get_post_meta($post_id, '_work_url', true),
+            'video_urls' => $video_urls,
+            'credits' => get_post_meta($post_id, '_work_credits', true),
+            'audio_url' => $audio_url,
+            'gallery_images' => $gallery_images,
+            'gallery_columns_desktop' => $gallery_columns_desktop ? intval($gallery_columns_desktop) : null,
+            'gallery_columns_mobile' => $gallery_columns_mobile ? intval($gallery_columns_mobile) : null,
+            'gallery_gutter' => $gallery_gutter !== '' ? intval($gallery_gutter) : null,
+            'layout_order' => $layout_order,
+            'display_order' => $display_order ? intval($display_order) : 99,
+            'featured' => !empty($featured),
+            'featured_order' => $featured_order ? intval($featured_order) : 99,
+            'featured_halca' => !empty($featured_halca),
+            'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
+            'hero_display' => $hero_display === 'full' ? 'full' : 'blur',
+        );
+    }
+
+    /**
+     * Work のアイキャッチ画像URL
+     */
+    public function get_work_featured_image_url($post_id) {
+        $image_id = get_post_thumbnail_id($post_id);
+        if ($image_id) {
+            $image = wp_get_attachment_image_src($image_id, 'full');
+            return $image ? $image[0] : null;
+        }
+        return null;
+    }
+
+    /**
+     * Work のタグ term 情報
+     */
+    public function get_work_tags_data($post_id) {
+        $terms = wp_get_post_terms($post_id, 'work_tag', array('fields' => 'all'));
+        if (is_wp_error($terms) || empty($terms)) {
+            return array();
+        }
+        return array_map(function($term) {
+            return array(
+                'id' => $term->term_id,
+                'name' => $term->name,
+                'slug' => $term->slug,
+            );
+        }, $terms);
+    }
+
+    // ===== 公開前確認用プレビュー =====
+
+    /**
+     * プレビュートークンの署名鍵。
+     * wp-config.php で WAVE_PREVIEW_SECRET を定義すれば上書き可能。
+     * 未定義時はサイト固有の salt を使う（外部に漏れない）。
+     */
+    private function preview_secret() {
+        if (defined('WAVE_PREVIEW_SECRET') && WAVE_PREVIEW_SECRET) {
+            return WAVE_PREVIEW_SECRET;
+        }
+        return wp_salt('auth');
+    }
+
+    /**
+     * フロントエンド（Next.js）のベースURL。
+     * wp-config.php で WAVE_FRONTEND_URL を定義すれば上書き可能。
+     */
+    private function frontend_url() {
+        if (defined('WAVE_FRONTEND_URL') && WAVE_FRONTEND_URL) {
+            return rtrim(WAVE_FRONTEND_URL, '/');
+        }
+        return 'https://wa-ve.jp';
+    }
+
+    /**
+     * work 毎のプレビュートークン（HMAC-SHA256）。
+     * 投稿IDに紐づくので、1つのURLは1つの work でしか有効にならない。
+     */
+    public function preview_token($post_id) {
+        return hash_hmac('sha256', 'work-preview:' . intval($post_id), $this->preview_secret());
+    }
+
+    /**
+     * フロントのプレビューURLを組み立てる
+     */
+    public function preview_url($post) {
+        $slug = $post->post_name ? $post->post_name : (string) $post->ID;
+        return $this->frontend_url() . '/works/' . $slug . '/preview'
+            . '?id=' . $post->ID
+            . '&token=' . $this->preview_token($post->ID);
+    }
+
+    /**
+     * 標準 /works レスポンスと同形の配列を組み立てる（下書きも対象）
+     */
+    public function build_work_response($post) {
+        $id = $post->ID;
+        return array(
+            'id' => $id,
+            'slug' => $post->post_name,
+            'status' => $post->post_status,
+            'title' => array('rendered' => get_the_title($id)),
+            'content' => array('rendered' => apply_filters('the_content', $post->post_content)),
+            'excerpt' => array('rendered' => $post->post_excerpt),
+            'featured_image_url' => $this->get_work_featured_image_url($id),
+            'work_meta' => $this->build_work_meta($id),
+            'work_tags_data' => $this->get_work_tags_data($id),
+        );
+    }
+
+    /**
+     * プレビュー用 REST ルート。トークン検証は permission_callback で行う。
+     */
+    public function register_preview_route() {
+        register_rest_route('wave/v1', '/work-preview', array(
+            'methods' => 'GET',
+            'permission_callback' => function($request) {
+                $id = intval($request['id']);
+                $token = (string) $request['token'];
+                if (!$id || !$token) {
+                    return false;
+                }
+                return hash_equals($this->preview_token($id), $token);
+            },
+            'args' => array(
+                'id' => array('required' => true),
+                'token' => array('required' => true),
+            ),
+            'callback' => function($request) {
+                $post = get_post(intval($request['id']));
+                if (!$post || $post->post_type !== 'work') {
+                    return new WP_Error('not_found', 'Work not found', array('status' => 404));
+                }
+                return $this->build_work_response($post);
+            },
+        ));
+    }
+
     public function register_rest_fields() {
         // Work fields
         register_rest_field('work', 'work_meta', array(
             'get_callback' => function($post) {
-                // Audio file
-                $audio_id = get_post_meta($post['id'], '_work_audio_file', true);
-                $audio_url = null;
-                if ($audio_id) {
-                    $audio_url = wp_get_attachment_url($audio_id);
-                }
-
-                // Video URLs (multiple, newline separated)
-                $video_urls_raw = get_post_meta($post['id'], '_work_video_urls', true);
-                $video_urls = array_filter(array_map('trim', explode("\n", $video_urls_raw)));
-
-                // Gallery images (multiple IDs, comma separated)
-                $gallery_ids_raw = get_post_meta($post['id'], '_work_gallery_images', true);
-                $gallery_images = array();
-                if ($gallery_ids_raw) {
-                    $ids = array_filter(array_map('intval', explode(',', $gallery_ids_raw)));
-                    foreach ($ids as $id) {
-                        $image = wp_get_attachment_image_src($id, 'full');
-                        $thumb = wp_get_attachment_image_src($id, 'medium');
-                        if ($image) {
-                            $gallery_images[] = array(
-                                'id' => $id,
-                                'url' => $image[0],
-                                'width' => $image[1],
-                                'height' => $image[2],
-                                'thumbnail' => $thumb ? $thumb[0] : $image[0],
-                            );
-                        }
-                    }
-                }
-
-                // Layout order (default: video, content, gallery, audio)
-                $layout_order_raw = get_post_meta($post['id'], '_work_layout_order', true);
-                $layout_order = $layout_order_raw ? array_map('trim', explode(',', $layout_order_raw)) : array('video', 'content', 'gallery', 'audio');
-
-                // Display order
-                $display_order = get_post_meta($post['id'], '_work_display_order', true);
-
-                // Gallery settings
-                $gallery_columns_desktop = get_post_meta($post['id'], '_work_gallery_columns_desktop', true);
-                $gallery_columns_mobile = get_post_meta($post['id'], '_work_gallery_columns_mobile', true);
-                $gallery_gutter = get_post_meta($post['id'], '_work_gallery_gutter', true);
-
-                // Featured flags
-                $featured = get_post_meta($post['id'], '_work_featured', true);
-                $featured_order = get_post_meta($post['id'], '_work_featured_order', true);
-                $featured_halca = get_post_meta($post['id'], '_work_featured_halca', true);
-                $featured_halca_order = get_post_meta($post['id'], '_work_featured_halca_order', true);
-
-                // Hero settings (個別ページ最上部の表示)
-                $hero_display = get_post_meta($post['id'], '_work_hero_display', true);
-
-                return array(
-                    'client' => get_post_meta($post['id'], '_work_client', true),
-                    'date' => get_post_meta($post['id'], '_work_date', true),
-                    'role' => get_post_meta($post['id'], '_work_role', true),
-                    'role_en' => get_post_meta($post['id'], '_work_role_en', true),
-                    'url' => get_post_meta($post['id'], '_work_url', true),
-                    'video_urls' => $video_urls,
-                    'credits' => get_post_meta($post['id'], '_work_credits', true),
-                    'audio_url' => $audio_url,
-                    'gallery_images' => $gallery_images,
-                    'gallery_columns_desktop' => $gallery_columns_desktop ? intval($gallery_columns_desktop) : null,
-                    'gallery_columns_mobile' => $gallery_columns_mobile ? intval($gallery_columns_mobile) : null,
-                    'gallery_gutter' => $gallery_gutter !== '' ? intval($gallery_gutter) : null,
-                    'layout_order' => $layout_order,
-                    'display_order' => $display_order ? intval($display_order) : 99,
-                    'featured' => !empty($featured),
-                    'featured_order' => $featured_order ? intval($featured_order) : 99,
-                    'featured_halca' => !empty($featured_halca),
-                    'featured_halca_order' => $featured_halca_order ? intval($featured_halca_order) : 99,
-                    'hero_display' => $hero_display === 'full' ? 'full' : 'blur',
-                );
+                return $this->build_work_meta($post['id']);
             },
             'schema' => array(
                 'type' => 'object',
@@ -425,6 +551,16 @@ class WAVE_Custom_Post_Types {
             'default'
         );
 
+        // Work sidebar meta box: 公開前確認用プレビューURL
+        add_meta_box(
+            'work_preview_url_box',
+            'プレビューURL（公開前確認用）',
+            array($this, 'render_work_preview_url_meta_box'),
+            'work',
+            'side',
+            'high'
+        );
+
         // Release meta box
         add_meta_box(
             'release_details',
@@ -454,6 +590,31 @@ class WAVE_Custom_Post_Types {
             'normal',
             'high'
         );
+    }
+
+    /**
+     * Render 公開前確認用プレビューURL メタボックス
+     */
+    public function render_work_preview_url_meta_box($post) {
+        $url = $this->preview_url($post);
+        $field_id = 'wave-preview-url';
+        ?>
+        <p style="margin-top:0;color:#555;">
+            このURLを共有すると、<strong>公開前（下書き）でも本番と同じ表示</strong>で確認できます。検索結果には出ず、URLを知る人だけが閲覧できます。
+        </p>
+        <input type="text" id="<?php echo esc_attr($field_id); ?>" value="<?php echo esc_attr($url); ?>" readonly
+            style="width:100%;box-sizing:border-box;font-size:11px;margin-bottom:6px;" onclick="this.select();" />
+        <button type="button" class="button button-small" onclick="
+            var f=document.getElementById('<?php echo esc_js($field_id); ?>');
+            f.select();
+            navigator.clipboard.writeText(f.value).then(function(){
+                var b=event.target; var t=b.textContent; b.textContent='コピーしました'; setTimeout(function(){b.textContent=t;},1500);
+            });
+        ">URLをコピー</button>
+        <p style="color:#999;font-size:11px;margin-bottom:0;">
+            ※ 新規作成時は一度「下書き保存」してから発行されたURLをご利用ください。
+        </p>
+        <?php
     }
 
     /**

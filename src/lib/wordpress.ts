@@ -6,6 +6,9 @@
 
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'http://localhost:8080/wp-json/wp/v2';
 
+// 独自プラグインの REST 名前空間（wave/v1）。WORDPRESS_API_URL の末尾 /wp/v2 を差し替える。
+const WAVE_API_URL = WORDPRESS_API_URL.replace(/\/wp\/v2\/?$/, '/wave/v1');
+
 // Types
 export interface WPGalleryImage {
   id: number;
@@ -29,6 +32,7 @@ export interface WPTagData {
 export interface WPWork {
   id: number;
   slug: string;
+  status?: string;
   title: { rendered: string };
   content: { rendered: string };
   excerpt: { rendered: string };
@@ -157,6 +161,24 @@ export async function getWorks(params?: {
 export async function getWorkBySlug(slug: string): Promise<WPWork | null> {
   const works = await getWorks({ slug });
   return works[0] || null;
+}
+
+/**
+ * 公開前確認用：下書きを含む Work を id + トークンで取得する。
+ * 独自プラグインの /wave/v1/work-preview を叩く（プラグイン側で HMAC トークンを検証）。
+ * トークン不一致・存在しない場合は null。
+ */
+export async function getWorkPreview(id: string, token: string): Promise<WPWork | null> {
+  if (!id || !token) return null;
+
+  const params = new URLSearchParams({ id, token });
+  const url = `${WAVE_API_URL}/work-preview?${params.toString()}`;
+
+  const res = await fetch(url, { cache: 'no-store' }); // プレビューは常に最新
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
 }
 
 /**
@@ -415,6 +437,38 @@ export function transformWork(work: WPWork) {
     tags,
   };
 }
+
+/**
+ * WPWork を Work 詳細ページ用の形式に変換（公開ページ・プレビュー共通）
+ */
+export function transformWorkDetail(work: WPWork) {
+  const tags = (work.work_tags_data || []).map((tag) =>
+    tag.name.startsWith('#') ? tag.name : `#${tag.name}`
+  );
+
+  return {
+    client: work.work_meta.client || '',
+    title: stripHtml(work.title.rendered),
+    date: work.work_meta.date || '',
+    description: stripHtml(work.content.rendered),
+    role: work.work_meta.role || '',
+    tags,
+    url: work.work_meta.url || '',
+    clientRole: '', // clientRole は work_meta にない場合は空文字
+    heroImage: work.featured_image_url || '/images/placeholder.jpg',
+    // 旧バージョンのプラグインでは hero_display が無いので blur にフォールバック
+    heroDisplay: (work.work_meta.hero_display === 'full' ? 'full' : 'blur') as 'blur' | 'full',
+    galleryImages: work.work_meta.gallery_images?.map((img) => img.url) || [],
+    galleryColumnsDesktop: work.work_meta.gallery_columns_desktop ?? 2,
+    galleryColumnsMobile: work.work_meta.gallery_columns_mobile ?? 2,
+    galleryGutter: work.work_meta.gallery_gutter ?? 20,
+    videoUrls: work.work_meta.video_urls || [],
+    credits: work.work_meta.credits || '',
+    listenUrl: work.work_meta.audio_url || '',
+  };
+}
+
+export type WorkDetailData = ReturnType<typeof transformWorkDetail>;
 
 /**
  * WPRelease を フロントエンド用の形式に変換
