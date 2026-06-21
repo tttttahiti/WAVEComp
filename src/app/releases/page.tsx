@@ -1,6 +1,12 @@
 import { ReleaseCard } from "@/components/ReleaseCard";
 import { HeroSection } from "@/components/HeroSection";
 import { getReleases, transformRelease } from "@/lib/wordpress";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "Releases",
+  path: "/releases",
+});
 
 export default async function ReleasesPage() {
   let releases: ReturnType<typeof transformRelease>[] = [];

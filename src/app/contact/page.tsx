@@ -1,6 +1,12 @@
 import { ContactSection } from "@/components/ContactSection";
 import { InfoSection } from "@/components/InfoSection";
 import { HeroSection } from "@/components/HeroSection";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "Contact",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

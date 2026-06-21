@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getWorkBySlug, stripHtml } from "@/lib/wordpress";
+import { pageMetadata } from "@/lib/metadata";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { MasonryGallery } from "@/components/MasonryGallery";
@@ -12,6 +14,29 @@ interface WorkDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({ params }: WorkDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  try {
+    const wpWork = await getWorkBySlug(slug);
+    if (wpWork) {
+      const title = stripHtml(wpWork.title.rendered);
+      const rawDescription = stripHtml(wpWork.content.rendered).replace(/\s+/g, " ").trim();
+
+      return pageMetadata({
+        title,
+        description: rawDescription ? rawDescription.slice(0, 120) : undefined,
+        path: `/works/${slug}`,
+        image: wpWork.featured_image_url || undefined,
+      });
+    }
+  } catch (error) {
+    console.error("Failed to fetch work metadata from WordPress:", error);
+  }
+
+  return { title: "Works" };
 }
 
 const Hr = () => (<hr className="border-t border-black h-0 w-full my-4" />)

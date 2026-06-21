@@ -4,6 +4,12 @@ import { MemberCard } from "@/components/MemberCard";
 import { InfoSection } from "@/components/InfoSection";
 import { HeroSection } from "@/components/HeroSection";
 import { getMembers, transformMember } from "@/lib/wordpress";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "About",
+  path: "/about",
+});
 
 // メンバーデータの型
 interface MemberData {
