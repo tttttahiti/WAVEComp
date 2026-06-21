@@ -128,7 +128,10 @@ export function PageWrapper({ children }: PageWrapperProps) {
             style={{
               // ヒーロー＋ニュースが見えている間はニュース直下に追従（--news-bar-height）、
               // エリアを通り過ぎたら固定オフセット(0)で通常位置へ。
-              marginTop: inHeroZone ? "var(--news-bar-height, 0px)" : "0px",
+              // header の pt-[45px] が NEWS 下端のさらに下に乗って空きすぎるため、
+              // その 45px を相殺し、NEWS 本文の行間ぶんだけ空けて行リズムに合わせる。
+              // 18px ≒ 14pt×leading-1.5 の行間の約2倍。詰め/緩めは末尾の +18px を増減して調整可能。
+              marginTop: inHeroZone ? "calc(var(--news-bar-height, 0px) - 45px + 18px)" : "0px",
               ...(soundReveal === "animating" ? { animationDelay: "1575ms" } : {}),
             }}
             className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${
