@@ -30,7 +30,7 @@ const notoSansJP = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   title: "WA/VE",
-  description: "音のある時間を豊かに、緻密に、そして大胆に。心に響く音や体験をつくりだします。",
+  description: "WA/VEは音楽制作・サウンドデザイン・空間演出を手がけるクリエイティブプロダクションです。音を軸としたコンテンツ企画・制作、サウンドブランディング、イベントプロデュースを行っています。",
   icons: {
     icon: [
       { url: "/icon_light.png", media: "(prefers-color-scheme: light)" },
