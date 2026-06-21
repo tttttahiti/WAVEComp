@@ -49,6 +49,15 @@ export function ReleaseCard({
           className="object-cover"
           sizes="100vw"
         />
+        {listenUrl && (
+          <Link
+            href={listenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={`${title} を聴く`}
+          />
+        )}
       </div>
 
       <div className="col-6 md:col-span-2 md:pt-[66px]">
@@ -102,6 +111,15 @@ export function ReleaseCard({
           className="object-cover"
           sizes="50vw"
         />
+        {listenUrl && (
+          <Link
+            href={listenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={`${title} を聴く`}
+          />
+        )}
       </div>
     </article>
   );
