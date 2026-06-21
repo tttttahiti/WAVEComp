@@ -95,7 +95,7 @@ export default async function AboutPage() {
       {/* Our Service Section */}
       <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
             OUR SERVICE
           </h2>
 
@@ -117,7 +117,7 @@ export default async function AboutPage() {
       {/* Member Section */}
       <section className="px-[20px] md:px-[45px]">
         <div className="grid-6 h-auto md:h-[50px] mb-12 md:mb-[40px]">
-          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>

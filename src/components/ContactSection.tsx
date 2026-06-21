@@ -44,7 +44,7 @@ export function ContactSection() {
   return (
     <>
       <div className="grid-6 mb-12">
-        <h2 className="col-6 md:col-1 md:col-start-2 text-[30pt] font-bold">
+        <h2 className="col-6 md:col-1 md:col-start-2 text-[20pt] sm:text-[30pt] font-bold">
           CONTACT
         </h2>
       </div>

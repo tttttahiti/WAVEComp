@@ -270,11 +270,6 @@ textarea:-webkit-autofill:focus {
 }
 
 @media (max-width: 400px) {
-  h1,
-  h2,
-  .text-\[30pt\] {
-    font-size: 20pt !important;
-  }
   .w-\[140px\].h-auto {
     width: 90px !important;
   }

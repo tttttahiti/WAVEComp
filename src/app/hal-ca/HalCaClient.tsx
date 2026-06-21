@@ -42,7 +42,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       <section className="py-[94px] md:py-32 px-[20px] md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
+            <h2 className="text-[20pt] sm:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
             <p className="text-[12pt] font-medium leading-[1.33] md:leading-[1.75] space-y-4 md:space-y-6">
               HAL caは、アンビエント・実験音楽を軸とするコンポーザー /

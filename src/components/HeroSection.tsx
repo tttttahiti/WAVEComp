@@ -24,7 +24,7 @@ export function HeroSection({ title, right }: HeroSectionProps) {
         />
       </div>
       <div className="relative z-10 w-full pb-6 md:pb-12">
-        <h2 className="px-[20px] md:px-[45px] text-white text-[30pt] font-bold flex justify-between items-end">
+        <h2 className="px-[20px] md:px-[45px] text-white text-[20pt] sm:text-[30pt] font-bold flex justify-between items-end">
           <div>
             {title}
           </div>
