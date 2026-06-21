@@ -18,6 +18,7 @@ export interface FeaturedItem {
   displayOrder: number;
   featuredOrder: number;
   date: string;
+  listenUrl?: string;
 }
 
 interface FeaturedWorksProps {
@@ -45,7 +46,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
   }, [imageHeights, featuredItems.length]);
 
   const linkHref = (item: FeaturedItem) =>
-    item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`;
+    item.type === "release" ? item.listenUrl || `/releases#${item.slug}` : `/works/${item.slug}`;
 
   return (
     <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] bg-white">

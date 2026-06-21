@@ -75,6 +75,7 @@ export default async function HalCaPage() {
           displayOrder: transformed.displayOrder ?? 99,
           featuredOrder: transformed.featuredHalcaOrder ?? 99,
           date: transformed.releaseDate,
+          listenUrl: transformed.listenUrl
         };
       });
 

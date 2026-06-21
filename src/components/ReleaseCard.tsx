@@ -18,6 +18,7 @@ interface ReleaseCardProps {
 }
 
 export function ReleaseCard({
+  slug,
   coverImage,
   title,
   year,
@@ -29,7 +30,7 @@ export function ReleaseCard({
   tags = [],
 }: ReleaseCardProps) {
   return (
-    <article className="grid-6 pb-[150px]">
+    <article className="grid-6 pb-[150px]" id={slug}>
       {/* モバイル: カバー画像を先に表示 */}
       <div className="col-span-6 md:col-span-1 h-[91px] mb-[41px]">
         <h3 className="text-[30pt] font-bold mb-3 md:mb-4 whitespace-nowrap">

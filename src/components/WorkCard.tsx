@@ -21,6 +21,11 @@ interface WorkCardProps {
 
 export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLoad, imageHeight, imageOnly = false, textOnly = false, linkHref }: WorkCardProps) {
   const href = linkHref ?? `/works/${slug}`;
+  // 外部リンク（listenUrl など）の場合は別タブで開き、rel で参照元/タブ乗っ取りを防ぐ。
+  const isExternal = /^https?:\/\//i.test(href);
+  const externalLinkProps = isExternal
+    ? { target: "_blank", rel: "noreferrer noopener" }
+    : {};
   // Parse role into array (split by ", " only, keep " / " intact)
   const roleItems = role ? role.split(/\s*,\s*/).filter(r => r.trim()) : [];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +67,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   if (imageOnly) {
     return (
-      <Link href={href} className="block card-hover">
+      <Link href={href} {...externalLinkProps} className="block card-hover">
         {/* サムネールは 16:9 フレームに画像を上下100%でフィル（#12）。object-cover で
             フレームを埋め、はみ出しは中央クロップ。 */}
         <div
@@ -84,7 +89,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
   if (textOnly) {
     return (
       <div>
-        <Link href={href} className="block hover:text-[#c2de6d] transition-colors">
+        <Link href={href} {...externalLinkProps} className="block hover:text-[#c2de6d] transition-colors">
           <p className="text-[8pt] md:text-[10pt] font-bold leading-[1.1] md:leading-[1.8]">{client}</p>
           <h3 className="font-bold text-[12pt] md:text-[14pt] leading-snug">{title}</h3>
         </Link>
@@ -114,7 +119,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   return (
     <div className="">
-      <Link href={href} className="block card-hover">
+      <Link href={href} {...externalLinkProps} className="block card-hover">
         <div
           ref={containerRef}
           className="relative bg-white mb-3 md:mb-4 overflow-hidden aspect-video"
