@@ -37,7 +37,7 @@ function NewsBars({
     <>
       {/* 色は固定: 上段（本文）= 緑、下段（URL）= 青 */}
       <div
-        className={`bg-news-green text-white text-[10pt] md:text-[11pt] leading-[1.5] font-jp px-[20px] md:px-[30px] py-1.5 md:py-2 ${animateEntry ? "news-bar-anim" : ""}`}
+        className={`bg-news-green text-white text-[10pt] md:text-[11pt] leading-[1.5] font-jp px-5 py-1.5 md:py-2 ${animateEntry ? "news-bar-anim" : ""}`}
         style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs}ms`, wordBreak: 'auto-phrase' } : { wordBreak: 'auto-phrase' }}
       >
         {body}
@@ -47,7 +47,7 @@ function NewsBars({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-news-blue text-white text-[10pt] md:text-[11pt] leading-[1.4] font-mono px-[20px] md:px-[30px] py-1.5 md:py-2 break-all ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
+          className={`bg-news-blue text-white text-[10pt] md:text-[11pt] leading-[1.4] font-mono px-5 py-1.5 md:py-2 break-all ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
           style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs + URL_INTRO_OFFSET_MS}ms` } : undefined}
         >
           {url}
