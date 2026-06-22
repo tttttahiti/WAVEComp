@@ -86,11 +86,11 @@ export function HomeClient({ featuredItems, newsList }: HomeClientProps) {
       {/* Hero Section（data-hero: SOUND の追従/固定切替の IntersectionObserver 対象） */}
       <section data-hero className="relative h-screen overflow-hidden">
         {/* Background Video - Vimeo Streaming (Cover方式) */}
-        <div className="hero-video-container absolute inset-0 overflow-hidden">
+        <div className="w-full h-screen transition-[width] duration-500 ease-out absolute inset-0 overflow-hidden">
           <iframe
             ref={videoIframeRef}
             src="https://player.vimeo.com/video/1157420243?autoplay=1&loop=1&muted=1&background=1&controls=0"
-            className="hero-video-iframe absolute top-1/2 left-1/2 border-none pointer-events-none"
+            className="hero-video-iframe absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-none pointer-events-none"
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
           />

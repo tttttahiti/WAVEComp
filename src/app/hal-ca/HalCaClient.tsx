@@ -12,7 +12,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
     <>
       {/* Hero Section */}
       <section data-hero className="relative aspect-video md:aspect-auto md:h-[40vh] md:max-h-[512px] bg-gray-100 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
+        <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out">
           {/* 背景: 横方向の余白を埋める blur レイヤー（コンテナ全体を cover） */}
           <Image
             src="/images/hal-ca-hero2.jpg"

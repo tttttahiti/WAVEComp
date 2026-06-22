@@ -93,7 +93,7 @@ export function ReleaseCard({
         <div>
           <Link
             href={listenUrl || ""}
-            className="btn-primary flex items-center justify-center md:inline-block md:w-1/2 text-center font-bold text-[12pt] h-12 md:h-auto"
+            className="bg-[#536cdb] text-white px-8 py-2 text-sm font-bold transition-all duration-200 hover:bg-[#c2de6d] hover:text-black flex items-center justify-center md:inline-block md:w-1/2 text-center h-12 md:h-auto"
             target="_blank"
             rel="noopener noreferrer"
           >

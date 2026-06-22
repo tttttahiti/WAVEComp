@@ -74,7 +74,7 @@ export default function RootLayout({
 
             {/* Main Content - Shrinks when menu opens */}
             <PageWrapper>
-              <main>{children}</main>
+              <main className="min-h-screen">{children}</main>
               <Footer />
             </PageWrapper>
           </SoundProvider>

@@ -67,7 +67,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   if (imageOnly) {
     return (
-      <Link href={href} {...externalLinkProps} className="block card-hover">
+      <Link href={href} {...externalLinkProps} className="block transition-opacity duration-300 ease-out hover:opacity-70">
         {/* サムネールは 16:9 フレームに画像を上下100%でフィル（#12）。object-cover で
             フレームを埋め、はみ出しは中央クロップ。 */}
         <div
@@ -119,7 +119,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
 
   return (
     <div className="">
-      <Link href={href} {...externalLinkProps} className="block card-hover">
+      <Link href={href} {...externalLinkProps} className="block transition-opacity duration-300 ease-out hover:opacity-70">
         <div
           ref={containerRef}
           className="relative bg-white mb-3 md:mb-4 overflow-hidden aspect-video"
