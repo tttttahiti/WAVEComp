@@ -29,7 +29,7 @@ export default async function WorkPreviewPage({ searchParams }: PreviewPageProps
   return (
     <>
       {/* 非公開プレビューであることを明示するバナー */}
-      <div className="sticky top-0 z-40 bg-wave-blue text-white text-[10pt] md:text-[12pt] font-bold text-center py-2 px-[20px] md:px-[45px]">
+      <div className="sticky top-0 z-40 bg-wave-blue text-white text-[10pt] md:text-[12pt] font-bold text-center py-2 px-5 md:px-[45px]">
         プレビュー表示（{statusLabel}）— このページは検索結果に出ず、URLを知る人のみ閲覧できます
       </div>
       <WorkDetail work={transformWorkDetail(wpWork)} />

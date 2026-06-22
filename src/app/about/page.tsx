@@ -93,7 +93,7 @@ export default async function AboutPage() {
       <Concept titleColStart={2} className="py-[120px] md:py-[184px]" />
 
       {/* Our Service Section */}
-      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-5 md:px-[45px]">
         <div className="grid-6 items-start">
           <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
             OUR SERVICE
@@ -115,7 +115,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="px-[20px] md:px-[45px]">
+      <section className="px-5 md:px-[45px]">
         <div className="grid-6 h-auto md:h-[50px] mb-12 md:mb-[40px]">
           <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
             MEMBER
@@ -137,12 +137,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Info Section */}
-      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-5 md:px-[45px]">
         <InfoSection />
       </section>
 
       {/* Contact Section */}
-      <section className="pt-0 pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-24 px-5 md:px-[45px]">
         <ContactSection />
       </section>
     </>

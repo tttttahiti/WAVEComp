@@ -74,7 +74,7 @@ export function ContactSection() {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 
@@ -86,7 +86,7 @@ export function ContactSection() {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 
@@ -99,7 +99,7 @@ export function ContactSection() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 

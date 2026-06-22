@@ -39,7 +39,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Artist Info Section */}
-      <section className="py-[94px] md:py-32 px-[20px] md:px-[45px]">
+      <section className="py-[94px] md:py-32 px-5 md:px-[45px]">
         <div className="grid-6">
           <div className="col-6 md:col-3">
             <h2 className="text-[20pt] sm:text-[30pt] font-bold mb-[59px]">HAL ca</h2>

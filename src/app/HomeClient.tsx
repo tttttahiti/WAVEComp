@@ -116,7 +116,7 @@ export function HomeClient({ featuredItems, newsList }: HomeClientProps) {
         {/* News (左上、Heroにオーバーレイ)。動画再生開始（isVideoReady）後に入場。 */}
         <News newsList={newsList} startReveal={isVideoReady} />
         {/* Logo */}
-        <div className="relative h-full px-[20px] md:px-[45px] grid-6 items-center">
+        <div className="relative h-full px-5 md:px-[45px] grid-6 items-center">
           <div
             className={`col-6 flex justify-end z-10 ${isVideoReady ? "hero-intro" : "opacity-0"}`}
             style={isVideoReady ? { animationDelay: "340ms" } : undefined}

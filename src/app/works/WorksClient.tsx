@@ -73,7 +73,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
       <HeroSection title="WORKS" right="ALL" />
 
       {/* Filter & Works Grid */}
-      <section className="py-[30px] pb-[20px] px-[20px] md:px-[45px] mb-[55px]">
+      <section className="py-[30px] pb-5 px-5 md:px-[45px] mb-[55px]">
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
@@ -146,7 +146,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
                     return [
                       // 上部ボーダー
-                      <div key={`border-top-${groupIndex}`} className="h-[10px] col-6">
+                      <div key={`border-top-${groupIndex}`} className="h-2.5 col-6">
                         <Line />
                       </div>,
                       // 画像2つ
@@ -159,7 +159,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                         </div>
                       )),
                       // 中間ボーダー
-                      <div key={`border-middle-${groupIndex}`} className="h-[10px] col-6">
+                      <div key={`border-middle-${groupIndex}`} className="h-2.5 col-6">
                         <Line />
                       </div>,
                       // テキスト2つ

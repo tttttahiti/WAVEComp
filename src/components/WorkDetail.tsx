@@ -17,7 +17,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
       <HeroImage src={work.heroImage} alt={work.title} mode={work.heroDisplay} />
 
       {/* Work Info Section */}
-      <section className="py-8 md:py-24 px-[20px] md:px-[45px]">
+      <section className="py-8 md:py-24 px-5 md:px-[45px]">
         <div className="grid-6">
           {/* Left Column - Title & Date */}
           <div className="col-6 md:col-span-3">
@@ -93,7 +93,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
 
       {/* Video Section */}
       {work.videoUrls.length > 0 && (
-        <section className="py-4 md:py-8 px-[20px] md:px-[45px]">
+        <section className="py-4 md:py-8 px-5 md:px-[45px]">
           <div className="grid-6">
             {work.videoUrls.map((videoUrl, index) => (
               <div key={index} className="col-6 aspect-video relative bg-gray-900 mb-4 md:mb-8 last:mb-0">
@@ -106,7 +106,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
 
       {/* Gallery Section with Masonry */}
       {work.galleryImages.length > 0 && (
-        <section className="py-4 md:py-8 px-[20px] md:px-[45px]">
+        <section className="py-4 md:py-8 px-5 md:px-[45px]">
           <MasonryGallery
             images={work.galleryImages}
             title={work.title}
@@ -119,7 +119,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
 
       {/* Credits Section */}
       {work.credits && (
-        <section className="py-8 md:py-16 px-[20px] md:px-[45px]">
+        <section className="py-8 md:py-16 px-5 md:px-[45px]">
           <div className="grid-6">
             <div className="col-6 md:col-start-4 md:col-span-3">
               <Hr />
