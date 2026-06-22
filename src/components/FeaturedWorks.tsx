@@ -52,8 +52,8 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
     <section className="py-12 md:py-[92px] px-5 md:px-[45px] bg-white">
       <div className="">
         <div className="grid-6 md:mb-12">
-          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-3 featured-heading">FEATURED</h2>
-          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-3 text-right featured-heading">WORKS</h2>
+          <h2 className="text-[16pt] xs:text-[20pt] sm:text-[30pt] font-bold col-span-3 featured-heading">FEATURED</h2>
+          <h2 className="text-[16pt] xs:text-[20pt] sm:text-[30pt] font-bold col-span-3 text-right featured-heading">WORKS</h2>
         </div>
 
         <div className="grid-6 justify-end">

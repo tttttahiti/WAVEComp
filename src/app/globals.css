@@ -226,19 +226,6 @@ textarea:-webkit-autofill:focus {
     font-size: 15px;
   }
 }
-
-@media (max-width: 400px) {
-  .w-\[140px\].h-auto {
-    width: 90px !important;
-  }
-  .service-list {
-    font-size: 12pt !important;
-  }
-  .featured-heading {
-    font-size: 16pt !important;
-  }
-}
-
 /* Page transitions */
 main {
   min-height: 100vh;
