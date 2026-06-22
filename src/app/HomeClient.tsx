@@ -118,7 +118,7 @@ export function HomeClient({ featuredItems, newsList }: HomeClientProps) {
         {/* Logo */}
         <div className="relative h-full px-5 md:px-[45px] grid-6 items-center">
           <div
-            className={`col-6 flex justify-end z-10 ${isVideoReady ? "hero-intro" : "opacity-0"}`}
+            className={`col-span-6 flex justify-end z-10 ${isVideoReady ? "hero-intro" : "opacity-0"}`}
             style={isVideoReady ? { animationDelay: "340ms" } : undefined}
           >
             <Image

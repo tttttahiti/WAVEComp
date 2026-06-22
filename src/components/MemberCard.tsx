@@ -21,7 +21,7 @@ export function MemberCard({
 }: MemberCardProps) {
   return (
     <div className={`grid-6 mb-16 md:mb-24`}>
-      {/* モバイル: 4列・中央・正方形、デスクトップ: col-2から開始して1.5列分・3:4 */}
+      {/* モバイル: 4列・中央・正方形、デスクトップ: col-start-2から1.5列分・3:4 */}
       <div
         className="relative aspect-square md:aspect-[3/4] bg-gray-100 col-span-6 col-start-1 md:col-span-2 md:col-start-2 w-full md:w-[75%] mb-14 md:mb-[132px] "
       >
@@ -45,8 +45,8 @@ export function MemberCard({
         )}
       </div>
 
-      {/* モバイル: 全幅、デスクトップ: col-4からcol-6 */}
-      <div className="col-6 md:col-span-2">
+      {/* モバイル: 全幅、デスクトップ: 右半分（col-span-2） */}
+      <div className="col-span-6 md:col-span-2">
         <p
           className="text-[18pt] font-bold letter-height-[40pt] mb-10"
           style={{ lineHeight: "1.4" }}

@@ -60,7 +60,7 @@ export function ReleaseCard({
         )}
       </div>
 
-      <div className="col-6 md:col-span-2 md:pt-[66px]">
+      <div className="col-span-6 md:col-span-2 md:pt-[66px]">
         {description ? (
           <div
             className="text-[12pt] leading-relaxed mb-4 md:mb-6 [&>p]:mb-4 [&>p:last-child]:mb-0"

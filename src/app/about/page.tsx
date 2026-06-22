@@ -95,12 +95,12 @@ export default async function AboutPage() {
       {/* Our Service Section */}
       <section className="pt-0 pb-16 md:pb-24 px-5 md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-6 md:col-span-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
             OUR SERVICE
           </h2>
 
           <ul
-            className="text-[12pt] md:text-[18pt] leading-[1.75] font-bold md:pt-0 md:pb-0 col-span-6 md:col-start-4 md:col-3 service-list"
+            className="text-[12pt] md:text-[18pt] leading-[1.75] font-bold md:pt-0 md:pb-0 col-span-6 md:col-start-4 md:col-span-3 service-list"
           >
             <li className="whitespace-nowrap">
               HAL ca アーティストマネージメント
@@ -117,7 +117,7 @@ export default async function AboutPage() {
       {/* Member Section */}
       <section className="px-5 md:px-[45px]">
         <div className="grid-6 h-auto md:h-[50px] mb-12 md:mb-[40px]">
-          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-6 md:col-span-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>

@@ -41,7 +41,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       {/* Artist Info Section */}
       <section className="py-[94px] md:py-32 px-5 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-6 md:col-3">
+          <div className="col-span-6 md:col-span-3">
             <h2 className="text-[20pt] sm:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
             <p className="text-[12pt] font-medium leading-[1.33] md:leading-[1.75] space-y-4 md:space-y-6">
@@ -89,8 +89,8 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
               THE SEVEN ART MUSEUM and Expo 2025 Osaka, Kansai.
             </p>
           </div>
-          <div className="hidden md:block md:col-1"></div>
-          <div className="col-6 md:col-2 mt-[30px] md:mt-[107px]">
+          <div className="hidden md:block md:col-span-1"></div>
+          <div className="col-span-6 md:col-span-2 mt-[30px] md:mt-[107px]">
             {/* External Links */}
             <div className="flex flex-col">
               <a

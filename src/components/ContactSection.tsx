@@ -44,12 +44,12 @@ export function ContactSection() {
   return (
     <>
       <div className="grid-6 mb-12">
-        <h2 className="col-6 md:col-1 md:col-start-2 text-[20pt] sm:text-[30pt] font-bold">
+        <h2 className="col-span-6 md:col-span-1 md:col-start-2 text-[20pt] sm:text-[30pt] font-bold">
           CONTACT
         </h2>
       </div>
       <div className="grid-6">
-        <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
+        <div className="col-span-6 md:col-span-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
           <p className="hidden md:block">
             お名前
           </p>
@@ -63,7 +63,7 @@ export function ContactSection() {
             内容
           </p>
         </div>
-        <div className="col-6 md:col-start-3 md:col-span-3">
+        <div className="col-span-6 md:col-start-3 md:col-span-3">
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           <div>
             <label className="block md:hidden text-[12pt] font-medium mb-1">お名前</label>

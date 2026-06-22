@@ -20,7 +20,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
       <section className="py-8 md:py-24 px-5 md:px-[45px]">
         <div className="grid-6">
           {/* Left Column - Title & Date */}
-          <div className="col-6 md:col-span-3">
+          <div className="col-span-6 md:col-span-3">
             <p className="text-[12pt] font-bold">{work.client}</p>
             <h1 className="text-[20pt] md:text-[30pt] font-bold leading-snug mb-2 md:mb-4">
               {work.title}
@@ -29,7 +29,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
           </div>
 
           {/* Right Column - Description & Details */}
-          <div className="col-6 md:col-span-3">
+          <div className="col-span-6 md:col-span-3">
             <div className="text-[10pt] md:text-[12pt] leading-[1.33] md:leading-[1.7] whitespace-pre-line">
               {work.description}
             </div>
@@ -96,7 +96,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
         <section className="py-4 md:py-8 px-5 md:px-[45px]">
           <div className="grid-6">
             {work.videoUrls.map((videoUrl, index) => (
-              <div key={index} className="col-6 aspect-video relative bg-gray-900 mb-4 md:mb-8 last:mb-0">
+              <div key={index} className="col-span-6 aspect-video relative bg-gray-900 mb-4 md:mb-8 last:mb-0">
                 <YouTubeEmbed url={videoUrl} />
               </div>
             ))}
@@ -121,7 +121,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
       {work.credits && (
         <section className="py-8 md:py-16 px-5 md:px-[45px]">
           <div className="grid-6">
-            <div className="col-6 md:col-start-4 md:col-span-3">
+            <div className="col-span-6 md:col-start-4 md:col-span-3">
               <Hr />
               <p className="text-xs md:text-sm font-medium mt-8 mb-1">Credit:</p>
               <div className="text-[10pt] md:text-[12pt] whitespace-pre-line">

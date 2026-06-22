@@ -77,7 +77,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
         <div className="">
           {/* Filter Selector */}
           <div className="grid-6 mb-6 md:mb-8">
-            <div className="col-6 md:col-start-6 md:col-1 flex justify-end">
+            <div className="col-span-6 md:col-start-6 md:col-span-1 flex justify-end">
               <div className="relative">
                 <select
                   value={filterTag}
@@ -106,30 +106,30 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
           ) : (
             <div className="grid-6 justify-end">
               {/* モバイル用 (md未満): 1カード表示 */}
-              <div className="col-6 md:hidden">
+              <div className="col-span-6 md:hidden">
                 <div className="grid-6">
                   {filteredWorks.map((work, index) => [
 
                     // 画像
-                    <div key={`image-${work.id}`} className="col-6">
+                    <div key={`image-${work.id}`} className="col-span-6">
                       <WorkListCard
                         {...work}
                         imageOnly
                       />
                     </div>,
                     // 中間ボーダー
-                    <div key={`border-middle-${work.id}`} className="col-6 my-8">
+                    <div key={`border-middle-${work.id}`} className="col-span-6 my-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
                     // テキスト
-                    <div key={`text-${work.id}`} className={`col-6 ${index === filteredWorks.length - 1 ? '' : ''}`}>
+                    <div key={`text-${work.id}`} className={`col-span-6 ${index === filteredWorks.length - 1 ? '' : ''}`}>
                       <WorkListCard
                         {...work}
                         textOnly
                       />
                     </div>,
                     // 上部ボーダー
-                    <div key={`border-top-${work.id}`} className="col-6 mt-12 mb-8">
+                    <div key={`border-top-${work.id}`} className="col-span-6 mt-12 mb-8">
                       <div className="w-full h-px bg-black" />
                     </div>,
 
@@ -138,7 +138,7 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
               </div>
 
               {/* デスクトップ用 (md以上): 2カード表示 */}
-              <div className="col-6 hidden md:block mb-[200px]">
+              <div className="col-span-6 hidden md:block mb-[200px]">
                 <div className="grid-6">
                   {Array.from({ length: Math.ceil(filteredWorks.length / 2) }, (_, groupIndex) => {
                     const startIndex = groupIndex * 2;
@@ -146,12 +146,12 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
 
                     return [
                       // 上部ボーダー
-                      <div key={`border-top-${groupIndex}`} className="h-2.5 col-6">
+                      <div key={`border-top-${groupIndex}`} className="h-2.5 col-span-6">
                         <Line />
                       </div>,
                       // 画像2つ
                       ...groupWorks.map((work) => (
-                        <div key={`image-${work.id}`} className="col-3 py-9 px-10">
+                        <div key={`image-${work.id}`} className="col-span-3 py-9 px-10">
                           <WorkListCard
                             {...work}
                             imageOnly
@@ -159,12 +159,12 @@ export function WorksClient({ initialWorks }: WorksClientProps) {
                         </div>
                       )),
                       // 中間ボーダー
-                      <div key={`border-middle-${groupIndex}`} className="h-2.5 col-6">
+                      <div key={`border-middle-${groupIndex}`} className="h-2.5 col-span-6">
                         <Line />
                       </div>,
                       // テキスト2つ
                       ...groupWorks.map((work) => (
-                        <div key={`text-${work.id}`} className={`col-3 pt-9 pb-16 px-10 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
+                        <div key={`text-${work.id}`} className={`col-span-3 pt-9 pb-16 px-10 ${groupIndex === Math.ceil(filteredWorks.length / 2) - 1 ? 'mb-[80px]' : ''}`}>
                           <WorkListCard
                             {...work}
                             textOnly
