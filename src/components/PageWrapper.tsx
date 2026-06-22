@@ -118,7 +118,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
           pointer-events-none で透明な領域へのクリックを背後（NEWS の URL リンク等）に透過させ、
           実際の操作要素（SOUND / メニューボタン）だけ pointer-events-auto で復活させる。 */}
       <header
-        className={`fixed top-0 left-0 z-50 pt-[45px] px-[20px] md:px-[45px] transition-[width] duration-500 ease-out pointer-events-none ${
+        className={`fixed top-0 left-0 z-50 pt-[45px] px-5 md:pr-[45px] transition-[width] duration-500 ease-out pointer-events-none ${
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >
