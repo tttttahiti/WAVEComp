@@ -374,6 +374,12 @@ main {
   animation: intro-fade-up 1350ms ease-out both;
 }
 
+/* SOUND ボタンの初回リビール: NEWS と同様に位置は変えず短くフェードインのみ。
+   ディレイは PageWrapper 側の inline animationDelay で付与する（backwards で待機中は透明）。 */
+.sound-intro {
+  animation: news-fade-in 100ms ease-out backwards;
+}
+
 @layer utilities {
   /* Grid column spans - fixed width, content can overflow */
   .col-1 {

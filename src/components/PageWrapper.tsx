@@ -43,7 +43,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       triggered = true;
       window.clearTimeout(fallback);
       setSoundReveal("animating");
-      // hero-intro(1350ms) + ディレイ(1125ms) の完了後に通常制御へ
+      // ディレイ(1125ms) + sound-intro(100ms) の完了後に通常制御へ（余裕をみて 3150ms）
       settleTimer = window.setTimeout(() => setSoundReveal("done"), 3150);
     };
 
@@ -140,7 +140,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
               soundReveal === "hidden"
                 ? "opacity-0 pointer-events-none"
                 : soundReveal === "animating"
-                  ? "hero-intro"
+                  ? "sound-intro"
                   : isSoundHidden
                     ? "opacity-0 pointer-events-none"
                     : "opacity-100"
