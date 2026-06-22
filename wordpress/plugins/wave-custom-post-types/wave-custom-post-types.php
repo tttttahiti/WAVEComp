@@ -605,11 +605,15 @@ class WAVE_Custom_Post_Types {
         <input type="text" id="<?php echo esc_attr($field_id); ?>" value="<?php echo esc_attr($url); ?>" readonly
             style="width:100%;box-sizing:border-box;font-size:11px;margin-bottom:6px;" onclick="this.select();" />
         <button type="button" class="button button-small" onclick="
+            var b=this;
             var f=document.getElementById('<?php echo esc_js($field_id); ?>');
-            f.select();
-            navigator.clipboard.writeText(f.value).then(function(){
-                var b=event.target; var t=b.textContent; b.textContent='コピーしました'; setTimeout(function(){b.textContent=t;},1500);
-            });
+            f.focus(); f.select(); f.setSelectionRange(0, 99999);
+            var done=function(){ var t=b.textContent; b.textContent='コピーしました'; setTimeout(function(){b.textContent=t;},1500); };
+            var ok=false;
+            try { ok=document.execCommand('copy'); } catch(e) {}
+            if (ok) { done(); }
+            else if (navigator.clipboard) { navigator.clipboard.writeText(f.value).then(done); }
+            else { alert('コピーできませんでした。URLを手動で選択してコピーしてください。'); }
         ">URLをコピー</button>
         <p style="color:#999;font-size:11px;margin-bottom:0;">
             ※ 新規作成時は一度「下書き保存」してから発行されたURLをご利用ください。
