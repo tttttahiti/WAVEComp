@@ -14,7 +14,7 @@ export function BorderLine({ className = "" }: BorderLineProps) {
       preserveAspectRatio="none"
       viewBox="0 0 9260 95"
       aria-hidden
-      className={`block w-full h-[10px] ${className}`}
+      className={`block w-full h-2.5 ${className}`}
     >
       <g transform="matrix(1,0,0,1,-370.13019,-10026.232552)">
         <g transform="matrix(8.333333,0,0,8.333333,0,0)">

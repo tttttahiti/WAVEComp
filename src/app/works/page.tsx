@@ -1,6 +1,12 @@
 import { Suspense } from "react";
 import { WorksClient, type Work } from "./WorksClient";
 import { getWorks, transformWork } from "@/lib/wordpress";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "Works",
+  path: "/works",
+});
 
 export default async function WorksPage() {
   let works: Work[] = [];

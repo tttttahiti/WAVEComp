@@ -80,6 +80,7 @@ export default async function HomePage() {
           displayOrder: transformed.displayOrder ?? 99,
           featuredOrder: transformed.featuredOrder ?? 99,
           date: transformed.releaseDate,
+          listenUrl: transformed.listenUrl
         };
       });
 

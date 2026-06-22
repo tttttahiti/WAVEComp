@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-[#E5E5E5] py-[45px] px-[20px] md:px-[45px] h-[322px]">
+    <footer className="bg-[#E5E5E5] py-[45px] px-5 md:px-[45px] h-[322px]">
       <div className="">
         <div className="grid-6 text-[12pt] leading-[1.7]">
           {/* Logo */}
@@ -20,7 +20,7 @@ export function Footer() {
           </div>
 
           {/* Navigation - hidden on mobile */}
-          <div className="hidden md:block col-1">
+          <div className="hidden md:block col-span-1">
             <Link href="/about" className="block text-black font-en font-bold hover:text-[#c2de6d] transition-colors">
               ABOUT
             </Link>
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
 
           {/* Social Links - hidden on mobile */}
-          <div className="hidden md:block col-1">
+          <div className="hidden md:block col-span-1">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -75,7 +75,7 @@ export function Footer() {
           </div>
 
           {/* Contact - hidden on mobile */}
-          <div className="hidden md:block col-1">
+          <div className="hidden md:block col-span-1">
             <p className="text-black font-en font-bold">CONTACT:</p>
             <a
               href="mailto:info@wa-ve.jp"
@@ -86,7 +86,7 @@ export function Footer() {
           </div>
 
           {/* Grid Blank - hidden on mobile */}
-          <div className="hidden md:block col-1"></div>
+          <div className="hidden md:block col-span-1"></div>
 
           {/* Copyright */}
           <div className="col-span-2 md:col-span-1 col-start-5 md:col-start-auto flex flex-col items-end md:items-start">

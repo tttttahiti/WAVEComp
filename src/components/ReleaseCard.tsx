@@ -18,6 +18,7 @@ interface ReleaseCardProps {
 }
 
 export function ReleaseCard({
+  slug,
   coverImage,
   title,
   year,
@@ -29,7 +30,7 @@ export function ReleaseCard({
   tags = [],
 }: ReleaseCardProps) {
   return (
-    <article className="grid-6 pb-[150px]">
+    <article className="grid-6 pb-[150px]" id={slug}>
       {/* モバイル: カバー画像を先に表示 */}
       <div className="col-span-6 md:col-span-1 h-[91px] mb-[41px]">
         <h3 className="text-[30pt] font-bold mb-3 md:mb-4 whitespace-nowrap">
@@ -48,9 +49,18 @@ export function ReleaseCard({
           className="object-cover"
           sizes="100vw"
         />
+        {listenUrl && (
+          <Link
+            href={listenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={`${title} を聴く`}
+          />
+        )}
       </div>
 
-      <div className="col-6 md:col-span-2 md:pt-[66px]">
+      <div className="col-span-6 md:col-span-2 md:pt-[66px]">
         {description ? (
           <div
             className="text-[12pt] leading-relaxed mb-4 md:mb-6 [&>p]:mb-4 [&>p:last-child]:mb-0"
@@ -83,7 +93,7 @@ export function ReleaseCard({
         <div>
           <Link
             href={listenUrl || ""}
-            className="btn-primary flex items-center justify-center md:inline-block md:w-1/2 text-center font-bold text-[12pt] h-12 md:h-auto"
+            className="bg-[#536cdb] text-white px-8 py-2 text-sm font-bold transition-all duration-200 hover:bg-[#c2de6d] hover:text-black flex items-center justify-center md:inline-block md:w-1/2 text-center h-12 md:h-auto"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -101,6 +111,15 @@ export function ReleaseCard({
           className="object-cover"
           sizes="50vw"
         />
+        {listenUrl && (
+          <Link
+            href={listenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={`${title} を聴く`}
+          />
+        )}
       </div>
     </article>
   );

@@ -4,6 +4,12 @@ import { MemberCard } from "@/components/MemberCard";
 import { InfoSection } from "@/components/InfoSection";
 import { HeroSection } from "@/components/HeroSection";
 import { getMembers, transformMember } from "@/lib/wordpress";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "About",
+  path: "/about",
+});
 
 // メンバーデータの型
 interface MemberData {
@@ -87,14 +93,14 @@ export default async function AboutPage() {
       <Concept titleColStart={2} className="py-[120px] md:py-[184px]" />
 
       {/* Our Service Section */}
-      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-5 md:px-[45px]">
         <div className="grid-6 items-start">
-          <h2 className="text-[30pt] font-bold col-6 md:col-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-6 md:col-span-2 md:col-start-2 whitespace-nowrap mb-12 md:mb-0">
             OUR SERVICE
           </h2>
 
           <ul
-            className="text-[12pt] md:text-[18pt] leading-[1.75] font-bold md:pt-0 md:pb-0 col-span-6 md:col-start-4 md:col-3 service-list"
+            className="text-[12pt] md:text-[18pt] leading-[1.75] font-bold md:pt-0 md:pb-0 col-span-6 md:col-start-4 md:col-span-3 service-list"
           >
             <li className="whitespace-nowrap">
               HAL ca アーティストマネージメント
@@ -109,9 +115,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Member Section */}
-      <section className="px-[20px] md:px-[45px]">
+      <section className="px-5 md:px-[45px]">
         <div className="grid-6 h-auto md:h-[50px] mb-12 md:mb-[40px]">
-          <h2 className="text-[30pt] font-bold col-6 md:col-4 md:col-start-2 whitespace-nowrap">
+          <h2 className="text-[20pt] sm:text-[30pt] font-bold col-span-6 md:col-span-4 md:col-start-2 whitespace-nowrap">
             MEMBER
           </h2>
         </div>
@@ -131,12 +137,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Info Section */}
-      <section className="pt-0 pb-16 md:pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-16 md:pb-24 px-5 md:px-[45px]">
         <InfoSection />
       </section>
 
       {/* Contact Section */}
-      <section className="pt-0 pb-24 px-[20px] md:px-[45px]">
+      <section className="pt-0 pb-24 px-5 md:px-[45px]">
         <ContactSection />
       </section>
     </>

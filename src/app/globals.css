@@ -67,81 +67,16 @@ p {
   font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
 }
 
-/* Monospace text (for code, technical content) */
+/* Monospace text (for code, technical content)。
+   .font-mono ユーティリティは Tailwind theme.fontFamily.mono が生成する。 */
 code,
-pre,
-.font-mono {
+pre {
   font-family: var(--font-dm-mono), var(--font-noto-sans-jp), monospace;
 }
 
-/* Hashtag style - DM Sans Mono */
-.hashtag {
-  font-family: var(--font-dm-mono), monospace;
-}
-
-/* Utility classes for explicit font control */
-.font-en {
-  font-family: var(--font-dm-sans), sans-serif;
-}
-
-.font-jp {
-  font-family: var(--font-noto-sans-jp), sans-serif;
-}
-
-/* Section heading style - DM Sans Bold, 30pt */
-.heading-section {
-  font-family: var(--font-dm-sans), sans-serif;
-  font-weight: 700;
-  font-size: 30pt;
-}
-
-/* Gradient Background - matching PDF design */
-.gradient-bg {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(83, 108, 219, 0.9) 0%,
-      rgba(139, 123, 232, 0.7) 30%,
-      rgba(184, 196, 255, 0.8) 50%,
-      rgba(200, 255, 0, 0.6) 70%,
-      rgba(200, 255, 0, 0.8) 100%
-    ),
-    linear-gradient(
-      90deg,
-      #536cdb 0%,
-      #8b7be8 25%,
-      #b8c4ff 50%,
-      #c8ff00 75%,
-      #536cdb 100%
-    );
-  background-size:
-    100% 100%,
-    200% 100%;
-}
-
-/* Vertical Japanese Text */
-.vertical-text {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-/* Button Styles */
-.btn-primary {
-  @apply bg-[#536cdb] text-white px-8 py-2 text-sm font-bold transition-all duration-200;
-}
-
-.btn-primary:hover {
-  @apply bg-[#c2de6d] text-black;
-}
-
-/* Card Hover Effect */
-.card-hover {
-  @apply transition-opacity duration-300 ease-out;
-}
-
-.card-hover:hover {
-  @apply opacity-70;
-}
+/* .font-en / .font-jp / .font-hashtag は Tailwind theme.fontFamily が生成する。
+   ボタン(旧 .btn-primary)・カードホバー(旧 .card-hover)は各コンポーネントに
+   Tailwind ユーティリティで直書きする方針に変更。 */
 
 /* Squish background images when menu is open */
 @media (min-width: 800px) {
@@ -149,56 +84,17 @@ pre,
     transform: scaleX(calc((100vw - 233px) / 100vw));
     transform-origin: left;
   }
-
-  /* hal-ca hero image - maintain aspect ratio, scale up to fill width */
-  body.menu-open .hal-ca-hero-image {
-    width: calc(100vw - 233px);
-  }
-
-  .hal-ca-hero-image {
-    width: 100%;
-  }
-}
-
-/* Hero Video Container - 幅変更方式（scaleXではなく） */
-.hero-video-container {
-  width: 100vw;
-  height: 100vh;
-  transition: width 0.5s ease-out;
 }
 
 .hero-video-iframe {
-  transform: translate(-50%, -50%);
   width: max(100vw, 177.78vh);
   height: max(100vh, 56.25vw);
 }
 
 @media (min-width: 800px) {
-  body.menu-open .hero-video-container {
-    width: calc(100vw - 233px);
-  }
-
   body.menu-open .hero-video-iframe {
     width: max(calc(100vw - 233px), 177.78vh);
     height: max(100vh, calc((100vw - 233px) * 0.5625));
-  }
-}
-
-/* Line separator */
-.line-separator {
-  @apply border-t border-black/10;
-}
-
-/* Menu overlay positioning - align with page content */
-.menu-overlay {
-  right: 0;
-  left: auto;
-}
-
-@media (min-width: 800px) {
-  .menu-overlay {
-    left: calc(100vw - 233px);
-    right: auto;
   }
 }
 
@@ -268,29 +164,6 @@ textarea:-webkit-autofill:focus {
     font-size: 15px;
   }
 }
-
-@media (max-width: 400px) {
-  h1,
-  h2,
-  .text-\[30pt\] {
-    font-size: 20pt !important;
-  }
-  .w-\[140px\].h-auto {
-    width: 90px !important;
-  }
-  .service-list {
-    font-size: 12pt !important;
-  }
-  .featured-heading {
-    font-size: 16pt !important;
-  }
-}
-
-/* Page transitions */
-main {
-  min-height: 100vh;
-}
-
 /* 6-column grid system */
 .grid-6 {
   display: grid;
@@ -347,22 +220,6 @@ main {
   opacity: 0.5;
 }
 
-/* --- デザイナー確認待ち: フリッカー版（2回素早くピッピ）。採用時は上の :hover を
-   削除して下の2ブロックのコメントを外す ---
-@keyframes news-flicker {
-  0% { opacity: 1; }
-  15% { opacity: 0.5; }
-  30% { opacity: 1; }
-  45% { opacity: 0.5; }
-  60% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-.news-url-flicker:hover {
-  animation: news-flicker 400ms steps(1, end) 1;
-}
---- */
-
 /* TOP 初回ロードのリビール（背景動画 → ロゴ → ニュース → サウンド）用フェードアップ */
 @keyframes intro-fade-up {
   from {
@@ -379,54 +236,11 @@ main {
   animation: intro-fade-up 1350ms ease-out both;
 }
 
-@layer utilities {
-  /* Grid column spans - fixed width, content can overflow */
-  .col-1 {
-    grid-column: span 1;
-  }
-
-  .col-2 {
-    grid-column: span 2;
-  }
-
-  .col-3 {
-    grid-column: span 3;
-  }
-
-  .col-4 {
-    grid-column: span 4;
-  }
-
-  .col-5 {
-    grid-column: span 5;
-  }
-
-  .col-6 {
-    grid-column: span 6;
-  }
-
-  /* Grid column start positions */
-  .col-start-1 {
-    grid-column-start: 1;
-  }
-
-  .col-start-2 {
-    grid-column-start: 2;
-  }
-
-  .col-start-3 {
-    grid-column-start: 3;
-  }
-
-  .col-start-4 {
-    grid-column-start: 4;
-  }
-
-  .col-start-5 {
-    grid-column-start: 5;
-  }
-
-  .col-start-6 {
-    grid-column-start: 6;
-  }
+/* SOUND ボタンの初回リビール: NEWS と同様に位置は変えず短くフェードインのみ。
+   ディレイは PageWrapper 側の inline animationDelay で付与する（backwards で待機中は透明）。 */
+.sound-intro {
+  animation: news-fade-in 100ms ease-out backwards;
 }
+
+/* グリッドのカラム span / start は Tailwind 標準の col-span-N / col-start-N を使用。
+   6カラムのテンプレート定義（.grid-6）のみ独自に持つ。 */

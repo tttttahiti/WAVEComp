@@ -180,7 +180,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         <div
           ref={progressRef}
           onClick={handleProgressClick}
-          className="flex-1 h-[10px] relative cursor-pointer"
+          className="flex-1 h-2.5 relative cursor-pointer"
         >
           {/* Background outline - sequence_outline style */}
           <svg
@@ -249,7 +249,7 @@ export function AudioPlayer({ src, title }: AudioPlayerProps) {
         </div>
 
         {/* Time Display */}
-        <span className="text-[10pt] text-wave-blue hashtag shrink-0 min-w-[80px] text-right">
+        <span className="text-[10pt] text-wave-blue font-hashtag shrink-0 min-w-[80px] text-right">
           {formatTime(currentTime)}/{formatTime(duration)}
         </span>
       </div>

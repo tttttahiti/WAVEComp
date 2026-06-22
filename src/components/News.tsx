@@ -11,7 +11,8 @@ const EXIT_DURATION_MS = 100;
 // 再生開始の合図（startReveal）を受けてから、ロゴの後ろにずらして入場させるディレイ。
 const INTRO_DELAY_MS = 675;
 // ニュース2行目（URL）を1行目の後ろにずらすオフセット。
-const URL_INTRO_OFFSET_MS = 495;
+// "ピピッ"と出す方針で、従来の半分(495→248)に短縮。
+const URL_INTRO_OFFSET_MS = 248;
 
 interface NewsProps {
   newsList: WPNews[];
@@ -36,8 +37,8 @@ function NewsBars({
     <>
       {/* 色は固定: 上段（本文）= 緑、下段（URL）= 青 */}
       <div
-        className={`bg-news-green text-white text-[12pt] md:text-[14pt] leading-[1.5] font-jp px-[20px] md:px-[30px] py-[10px] md:py-[12px] ${animateEntry ? "news-bar-anim" : ""}`}
-        style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs}ms` } : undefined}
+        className={`bg-news-green text-white text-[10pt] md:text-[11pt] leading-[1.5] font-jp px-5 py-1.5 md:py-2 ${animateEntry ? "news-bar-anim" : ""}`}
+        style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs}ms`, wordBreak: 'auto-phrase' } : { wordBreak: 'auto-phrase' }}
       >
         {body}
       </div>
@@ -46,7 +47,7 @@ function NewsBars({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`bg-news-blue text-white text-[11pt] md:text-[12pt] leading-[1.4] font-mono px-[20px] md:px-[30px] py-[8px] md:py-[10px] ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
+          className={`bg-news-blue text-white text-[10pt] md:text-[11pt] leading-[1.4] font-mono px-5 py-1.5 md:py-2 break-all ${animateEntry ? "news-bar-anim-delayed" : ""} pointer-events-auto news-url-flicker`}
           style={animateEntry && introDelayMs ? { animationDelay: `${introDelayMs + URL_INTRO_OFFSET_MS}ms` } : undefined}
         >
           {url}
@@ -133,7 +134,7 @@ export function News({ newsList, startReveal = true }: NewsProps) {
           <NewsBars item={exitingNews} animateEntry={false} />
         </div>
       ) : (
-        // 通常フェーズ：現在のニュース。100ms フェードイン（2行目は 495ms 遅れ）。
+        // 通常フェーズ：現在のニュース。100ms フェードイン（2行目は 248ms 遅れ）。
         <div key={current.id} className="flex flex-col items-start">
           <NewsBars
             item={current}

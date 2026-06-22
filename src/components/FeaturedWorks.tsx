@@ -18,15 +18,18 @@ export interface FeaturedItem {
   displayOrder: number;
   featuredOrder: number;
   date: string;
+  listenUrl?: string;
 }
 
 interface FeaturedWorksProps {
   featuredItems: FeaturedItem[];
+  // MORE WORKS のリンク先（既定は /works）。hal-ca では #HAL ca で絞り込んだ works へ。
+  moreWorksHref?: string;
 }
 
 // TOP（HomeClient）と hal-ca（HalCaClient）で共通の「FEATURED WORKS」ブロック。
 // 見出し + モバイル1カラム / デスクトップ3カラムのグリッド + MORE WORKS / MORE RELEASE。
-export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
+export function FeaturedWorks({ featuredItems, moreWorksHref = "/works" }: FeaturedWorksProps) {
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
 
   const handleImageLoad = useCallback((id: string, height: number) => {
@@ -45,26 +48,26 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
   }, [imageHeights, featuredItems.length]);
 
   const linkHref = (item: FeaturedItem) =>
-    item.type === "release" ? `/releases#${item.slug}` : `/works/${item.slug}`;
+    item.type === "release" ? item.listenUrl || `/releases#${item.slug}` : `/works/${item.slug}`;
 
   return (
-    <section className="py-12 md:py-[92px] px-[20px] md:px-[45px] bg-white">
+    <section className="py-12 md:py-[92px] px-5 md:px-[45px] bg-white">
       <div className="">
         <div className="grid-6 md:mb-12">
-          <h2 className="text-[30pt] font-bold col-3 featured-heading">FEATURED</h2>
-          <h2 className="text-[30pt] font-bold col-3 text-right featured-heading">WORKS</h2>
+          <h2 className="text-[16pt] xs:text-[20pt] sm:text-[30pt] font-bold col-span-3 featured-heading">FEATURED</h2>
+          <h2 className="text-[16pt] xs:text-[20pt] sm:text-[30pt] font-bold col-span-3 text-right featured-heading">WORKS</h2>
         </div>
 
         <div className="grid-6 justify-end">
           {/* モバイル用 (md未満): 1カード表示 */}
-          <div className="col-6 md:hidden">
+          <div className="col-span-6 md:hidden">
             <div className="grid-6">
-              <div className="col-6 my-8">
+              <div className="col-span-6 my-8">
                 <div className="w-full h-px bg-black" />
               </div>
               {featuredItems.map((item) => [
                 // 画像
-                <div key={`image-${item.type}-${item.id}`} className="col-6">
+                <div key={`image-${item.type}-${item.id}`} className="col-span-6">
                   <WorkCard
                     id={item.id}
                     slug={item.slug}
@@ -78,11 +81,11 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
                   />
                 </div>,
                 // 中間ボーダー
-                <div key={`border-middle-${item.type}-${item.id}`} className="col-6 my-8">
+                <div key={`border-middle-${item.type}-${item.id}`} className="col-span-6 my-8">
                   <div className="w-full h-px bg-black" />
                 </div>,
                 // テキスト
-                <div key={`text-${item.type}-${item.id}`} className="col-6">
+                <div key={`text-${item.type}-${item.id}`} className="col-span-6">
                   <WorkCard
                     id={item.id}
                     slug={item.slug}
@@ -96,7 +99,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
                   />
                 </div>,
                 // 下部ボーダー
-                <div key={`border-bottom-${item.type}-${item.id}`} className="col-6 my-8">
+                <div key={`border-bottom-${item.type}-${item.id}`} className="col-span-6 my-8">
                   <div className="w-full h-px bg-black" />
                 </div>,
               ]).flat()}
@@ -104,7 +107,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
           </div>
 
           {/* デスクトップ用 (md以上): 3カード表示 */}
-          <div className="col-6 hidden md:block">
+          <div className="col-span-6 hidden md:block">
             <div className="grid-6">
               {Array.from(
                 { length: Math.ceil(featuredItems.length / 3) },
@@ -114,12 +117,12 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
 
                   return [
                     // 上部ボーダー
-                    <div key={`border-top-${groupIndex}`} className="col-6">
+                    <div key={`border-top-${groupIndex}`} className="col-span-6">
                       <BorderLine />
                     </div>,
                     // 画像3つ
                     ...groupItems.map((item) => (
-                      <div key={`image-${item.type}-${item.id}`} className="col-2 pt-5 pb-8">
+                      <div key={`image-${item.type}-${item.id}`} className="col-span-2 pt-5 pb-8">
                         <WorkCard
                           id={item.id}
                           slug={item.slug}
@@ -135,12 +138,12 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
                       </div>
                     )),
                     // 中間ボーダー
-                    <div key={`border-middle-${groupIndex}`} className="col-6">
+                    <div key={`border-middle-${groupIndex}`} className="col-span-6">
                       <BorderLine />
                     </div>,
                     // テキスト3つ
                     ...groupItems.map((item) => (
-                      <div key={`text-${item.type}-${item.id}`} className="col-2 mt-3 mb-12">
+                      <div key={`text-${item.type}-${item.id}`} className="col-span-2 mt-3 mb-12">
                         <WorkCard
                           id={item.id}
                           slug={item.slug}
@@ -168,8 +171,8 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
         <div className="h-[143px] mt-[52px] mb-[52px]">
           <div className="grid-6">
             <Link
-              href="/works"
-              className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+              href={moreWorksHref}
+              className="inline-block text-[30pt] md:text-[30pt] col-span-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
             >
               MORE WORKS
             </Link>
@@ -177,7 +180,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
           <div className="mt-2 grid-6">
             <Link
               href="/releases"
-              className="inline-block text-[30pt] md:text-[30pt] col-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
+              className="inline-block text-[30pt] md:text-[30pt] col-span-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
             >
               MORE RELEASE
             </Link>

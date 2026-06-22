@@ -6,6 +6,7 @@ import { SoundProvider } from "@/components/SoundContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PageWrapper } from "@/components/PageWrapper";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, DEFAULT_OG_IMAGE } from "@/lib/metadata";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -29,13 +30,32 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "WA/VE",
-  description: "音のある時間を豊かに、緻密に、そして大胆に。心に響く音や体験をつくりだします。",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
   icons: {
     icon: [
       { url: "/icon_light.png", media: "(prefers-color-scheme: light)" },
       { url: "/icon_dark.png", media: "(prefers-color-scheme: dark)" },
     ],
+  },
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -54,7 +74,7 @@ export default function RootLayout({
 
             {/* Main Content - Shrinks when menu opens */}
             <PageWrapper>
-              <main>{children}</main>
+              <main className="min-h-screen">{children}</main>
               <Footer />
             </PageWrapper>
           </SoundProvider>

@@ -44,12 +44,12 @@ export function ContactSection() {
   return (
     <>
       <div className="grid-6 mb-12">
-        <h2 className="col-6 md:col-1 md:col-start-2 text-[30pt] font-bold">
+        <h2 className="col-span-6 md:col-span-1 md:col-start-2 text-[20pt] sm:text-[30pt] font-bold">
           CONTACT
         </h2>
       </div>
       <div className="grid-6">
-        <div className="col-6 md:col-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
+        <div className="col-span-6 md:col-span-1 md:col-start-2 space-y-3 md:space-y-[18px] text-[10pt] md:text-[12pt] font-medium leading-[1.8] md:leading-[2]">
           <p className="hidden md:block">
             お名前
           </p>
@@ -63,7 +63,7 @@ export function ContactSection() {
             内容
           </p>
         </div>
-        <div className="col-6 md:col-start-3 md:col-span-3">
+        <div className="col-span-6 md:col-start-3 md:col-span-3">
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           <div>
             <label className="block md:hidden text-[12pt] font-medium mb-1">お名前</label>
@@ -74,7 +74,7 @@ export function ContactSection() {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 
@@ -86,7 +86,7 @@ export function ContactSection() {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 
@@ -99,7 +99,7 @@ export function ContactSection() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full h-[20px] bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
+              className="w-full h-5 bg-white text-black border border-black/20 px-3 md:px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-wave-blue transition-colors"
             />
           </div>
 
@@ -119,7 +119,7 @@ export function ContactSection() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#536cdb] text-white px-8 py-2 text-sm font-bold transition-all duration-200 hover:bg-[#c2de6d] hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "SENDING..." : "SEND"}
           </button>

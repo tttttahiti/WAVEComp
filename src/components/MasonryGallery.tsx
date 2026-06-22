@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import Masonry from "masonry-layout";
-import imagesLoaded from "imagesloaded";
+// masonry-layout / imagesloaded は window を参照するブラウザ専用ライブラリ。
+// SSR 時のモジュール評価で "window is not defined" となるため、型のみ static import し、
+// 実体は effect 内で動的 import する（マークアップ自体は SSR される）。
+import type Masonry from "masonry-layout";
 
 interface MasonryGalleryProps {
   images: string[];
@@ -39,10 +41,16 @@ export function MasonryGallery({
 
   const columns = isMobile ? columnsMobile : columnsDesktop;
 
-  const initMasonry = useCallback(() => {
+  const initMasonry = useCallback(async () => {
     if (!gridRef.current || images.length === 0) return;
 
     const grid = gridRef.current;
+
+    // ブラウザ専用ライブラリをクライアントでのみ読み込む
+    const [{ default: MasonryLib }, { default: imagesLoaded }] = await Promise.all([
+      import("masonry-layout"),
+      import("imagesloaded"),
+    ]);
 
     // Destroy existing instance
     if (masonryRef.current) {
@@ -54,7 +62,7 @@ export function MasonryGallery({
 
     imgLoad.on("always", () => {
       if (grid) {
-        masonryRef.current = new Masonry(grid, {
+        masonryRef.current = new MasonryLib(grid, {
           itemSelector: ".gallery-item",
           columnWidth: ".gallery-sizer",
           percentPosition: true,

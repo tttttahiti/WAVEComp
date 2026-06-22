@@ -35,7 +35,7 @@ export function WorkListCard({
 
   if (imageOnly) {
     return (
-      <Link href={href} className="block card-hover">
+      <Link href={href} className="block transition-opacity duration-300 ease-out hover:opacity-70">
         {/* サムネール: 16:9 フレームに画像を contain（#12） */}
         <div className="relative bg-white overflow-hidden aspect-video">
           <Image
@@ -63,7 +63,7 @@ export function WorkListCard({
               <Link
                 key={index}
                 href={`/works?tag=${encodeURIComponent(tag)}`}
-                className="hashtag hover:text-[#c2de6d] transition-colors"
+                className="font-hashtag hover:text-[#c2de6d] transition-colors"
               >
                 {tag}
               </Link>

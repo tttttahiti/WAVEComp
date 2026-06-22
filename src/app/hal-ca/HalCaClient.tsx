@@ -12,7 +12,7 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
     <>
       {/* Hero Section */}
       <section data-hero className="relative aspect-video md:aspect-auto md:h-[40vh] md:max-h-[512px] bg-gray-100 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out hal-ca-hero-image">
+        <div className="absolute inset-y-0 left-0 w-full transition-[width] duration-500 ease-out">
           {/* 背景: 横方向の余白を埋める blur レイヤー（コンテナ全体を cover） */}
           <Image
             src="/images/hal-ca-hero2.jpg"
@@ -39,10 +39,10 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
       </section>
 
       {/* Artist Info Section */}
-      <section className="py-[94px] md:py-32 px-[20px] md:px-[45px]">
+      <section className="py-[94px] md:py-32 px-5 md:px-[45px]">
         <div className="grid-6">
-          <div className="col-6 md:col-3">
-            <h2 className="text-[30pt] md:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
+          <div className="col-span-6 md:col-span-3">
+            <h2 className="text-[20pt] sm:text-[30pt] font-bold mb-[59px]">HAL ca</h2>
 
             <p className="text-[12pt] font-medium leading-[1.33] md:leading-[1.75] space-y-4 md:space-y-6">
               HAL caは、アンビエント・実験音楽を軸とするコンポーザー /
@@ -89,8 +89,8 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
               THE SEVEN ART MUSEUM and Expo 2025 Osaka, Kansai.
             </p>
           </div>
-          <div className="hidden md:block md:col-1"></div>
-          <div className="col-6 md:col-2 mt-[30px] md:mt-[107px]">
+          <div className="hidden md:block md:col-span-1"></div>
+          <div className="col-span-6 md:col-span-2 mt-[30px] md:mt-[107px]">
             {/* External Links */}
             <div className="flex flex-col">
               <a
@@ -122,8 +122,12 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
         </div>
       </section>
 
-      {/* Selected Works Section（TOP / hal-ca 共通） */}
-      <FeaturedWorks featuredItems={featuredItems} />
+      {/* Selected Works Section（TOP / hal-ca 共通）。
+          hal-ca では MORE WORKS を #HAL ca で絞り込んだ works へ。 */}
+      <FeaturedWorks
+        featuredItems={featuredItems}
+        moreWorksHref={`/works?tag=${encodeURIComponent("#HAL ca")}`}
+      />
     </>
   );
 }

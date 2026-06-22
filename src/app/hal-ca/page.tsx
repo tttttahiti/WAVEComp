@@ -1,6 +1,12 @@
 import { HalCaClient } from "./HalCaClient";
 import { getWorks, getReleases, transformWork, transformRelease } from "@/lib/wordpress";
 import { type FeaturedItem } from "@/app/HomeClient";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({
+  title: "HAL ca",
+  path: "/hal-ca",
+});
 
 /**
  * 日付文字列をDateオブジェクトに変換
@@ -69,6 +75,7 @@ export default async function HalCaPage() {
           displayOrder: transformed.displayOrder ?? 99,
           featuredOrder: transformed.featuredHalcaOrder ?? 99,
           date: transformed.releaseDate,
+          listenUrl: transformed.listenUrl
         };
       });
 

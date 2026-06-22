@@ -43,7 +43,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       triggered = true;
       window.clearTimeout(fallback);
       setSoundReveal("animating");
-      // hero-intro(1350ms) + ディレイ(1575ms) の完了後に通常制御へ
+      // ディレイ(1125ms) + sound-intro(100ms) の完了後に通常制御へ（余裕をみて 3150ms）
       settleTimer = window.setTimeout(() => setSoundReveal("done"), 3150);
     };
 
@@ -118,7 +118,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
           pointer-events-none で透明な領域へのクリックを背後（NEWS の URL リンク等）に透過させ、
           実際の操作要素（SOUND / メニューボタン）だけ pointer-events-auto で復活させる。 */}
       <header
-        className={`fixed top-0 left-0 z-50 pt-[45px] px-[20px] md:px-[45px] transition-[width] duration-500 ease-out pointer-events-none ${
+        className={`fixed top-0 left-0 z-50 pt-[45px] px-5 md:pr-[45px] transition-[width] duration-500 ease-out pointer-events-none ${
           isMenuOpen ? "md:w-[calc(100vw-233px)]" : "w-full"
         }`}
       >
@@ -128,14 +128,19 @@ export function PageWrapper({ children }: PageWrapperProps) {
             style={{
               // ヒーロー＋ニュースが見えている間はニュース直下に追従（--news-bar-height）、
               // エリアを通り過ぎたら固定オフセット(0)で通常位置へ。
-              marginTop: inHeroZone ? "var(--news-bar-height, 0px)" : "0px",
-              ...(soundReveal === "animating" ? { animationDelay: "1575ms" } : {}),
+              // header の pt-[45px] が NEWS 下端のさらに下に乗って空きすぎるため、
+              // その 45px を相殺し、NEWS 本文の行間ぶんだけ空けて行リズムに合わせる。
+              // 18px ≒ 14pt×leading-1.5 の行間の約2倍。詰め/緩めは末尾の +18px を増減して調整可能。
+              marginTop: inHeroZone ? "calc(var(--news-bar-height, 0px) - 45px + 12px)" : "0px",
+              // NEWS2段目(=923ms: URLオフセット半減後)→SOUND の間隔を約半分(約200ms)に
+              // 詰めて "ピピッ"とデジタル的に出す（旧: 1575ms / 間隔405ms）。
+              ...(soundReveal === "animating" ? { animationDelay: "1125ms" } : {}),
             }}
             className={`pointer-events-auto font-en font-bold transition-[color,opacity,margin-top] duration-300 text-left text-[10pt] ${isScrolled ? "text-black" : "text-white"} ${
               soundReveal === "hidden"
                 ? "opacity-0 pointer-events-none"
                 : soundReveal === "animating"
-                  ? "hero-intro"
+                  ? "sound-intro"
                   : isSoundHidden
                     ? "opacity-0 pointer-events-none"
                     : "opacity-100"

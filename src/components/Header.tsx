@@ -28,7 +28,7 @@ export function Header() {
     <>
       {/* Menu Overlay - Full screen on mobile, fixed width on desktop */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-full md:w-[233px] z-40 transition-transform duration-500 ease-out menu-overlay bg-white ${
+        className={`fixed top-0 right-0 bottom-0 left-auto w-full md:w-[233px] z-40 transition-transform duration-500 ease-out bg-white ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
