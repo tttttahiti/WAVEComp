@@ -45,7 +45,7 @@ export function WorkDetail({ work }: { work: WorkDetailData }) {
                 <Link
                   key={index}
                   href={`/works?tag=${encodeURIComponent(tag)}`}
-                  className="text-[6pt] md:text-[7pt] font-medium hashtag hover:text-[#c2de6d] transition-colors"
+                  className="text-[6pt] md:text-[7pt] font-medium font-hashtag hover:text-[#c2de6d] transition-colors"
                 >
                   {tag}
                 </Link>

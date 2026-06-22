@@ -63,7 +63,7 @@ export function WorkListCard({
               <Link
                 key={index}
                 href={`/works?tag=${encodeURIComponent(tag)}`}
-                className="hashtag hover:text-[#c2de6d] transition-colors"
+                className="font-hashtag hover:text-[#c2de6d] transition-colors"
               >
                 {tag}
               </Link>

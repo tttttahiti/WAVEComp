@@ -51,6 +51,10 @@ const config: Config = {
           "var(--font-dm-sans)",
           "sans-serif",
         ],
+        hashtag: [
+          "var(--font-dm-mono)",
+          "monospace",
+        ],
       },
     },
   },

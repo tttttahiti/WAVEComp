@@ -67,26 +67,14 @@ p {
   font-family: var(--font-dm-sans), var(--font-noto-sans-jp), sans-serif;
 }
 
-/* Monospace text (for code, technical content) */
+/* Monospace text (for code, technical content)。
+   .font-mono ユーティリティは Tailwind theme.fontFamily.mono が生成する。 */
 code,
-pre,
-.font-mono {
+pre {
   font-family: var(--font-dm-mono), var(--font-noto-sans-jp), monospace;
 }
 
-/* Hashtag style - DM Sans Mono */
-.hashtag {
-  font-family: var(--font-dm-mono), monospace;
-}
-
-/* Utility classes for explicit font control */
-.font-en {
-  font-family: var(--font-dm-sans), sans-serif;
-}
-
-.font-jp {
-  font-family: var(--font-noto-sans-jp), sans-serif;
-}
+/* .font-en / .font-jp / .font-hashtag は Tailwind theme.fontFamily が生成する */
 
 /* Button Styles */
 .btn-primary {

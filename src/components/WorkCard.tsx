@@ -99,7 +99,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
               <Link
                 key={index}
                 href={`/works?tag=${encodeURIComponent(tag)}`}
-                className="hashtag hover:text-[#c2de6d] transition-colors"
+                className="font-hashtag hover:text-[#c2de6d] transition-colors"
               >
                 {tag}
               </Link>
@@ -143,7 +143,7 @@ export function WorkCard({ slug, thumbnail, client, title, tags, role, onImageLo
             <Link
               key={index}
               href={`/works?tag=${encodeURIComponent(tag)}`}
-              className="hashtag hover:text-[#c2de6d] transition-colors"
+              className="font-hashtag hover:text-[#c2de6d] transition-colors"
             >
               {tag}
             </Link>
