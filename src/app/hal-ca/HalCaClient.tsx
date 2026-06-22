@@ -122,8 +122,12 @@ export function HalCaClient({ featuredItems }: HalCaClientProps) {
         </div>
       </section>
 
-      {/* Selected Works Section（TOP / hal-ca 共通） */}
-      <FeaturedWorks featuredItems={featuredItems} />
+      {/* Selected Works Section（TOP / hal-ca 共通）。
+          hal-ca では MORE WORKS を #HAL ca で絞り込んだ works へ。 */}
+      <FeaturedWorks
+        featuredItems={featuredItems}
+        moreWorksHref={`/works?tag=${encodeURIComponent("#HAL ca")}`}
+      />
     </>
   );
 }

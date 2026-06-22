@@ -23,11 +23,13 @@ export interface FeaturedItem {
 
 interface FeaturedWorksProps {
   featuredItems: FeaturedItem[];
+  // MORE WORKS のリンク先（既定は /works）。hal-ca では #HAL ca で絞り込んだ works へ。
+  moreWorksHref?: string;
 }
 
 // TOP（HomeClient）と hal-ca（HalCaClient）で共通の「FEATURED WORKS」ブロック。
 // 見出し + モバイル1カラム / デスクトップ3カラムのグリッド + MORE WORKS / MORE RELEASE。
-export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
+export function FeaturedWorks({ featuredItems, moreWorksHref = "/works" }: FeaturedWorksProps) {
   const [imageHeights, setImageHeights] = useState<Record<string, number>>({});
 
   const handleImageLoad = useCallback((id: string, height: number) => {
@@ -169,7 +171,7 @@ export function FeaturedWorks({ featuredItems }: FeaturedWorksProps) {
         <div className="h-[143px] mt-[52px] mb-[52px]">
           <div className="grid-6">
             <Link
-              href="/works"
+              href={moreWorksHref}
               className="inline-block text-[30pt] md:text-[30pt] col-span-6 text-en font-bold text-wave-blue hover:text-[#c2de6d]"
             >
               MORE WORKS
