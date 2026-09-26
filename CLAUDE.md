@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-WA/VE Website - A creative studio/artist collective website built as a static Next.js site. Currently uses hardcoded data; WordPress headless CMS integration is planned but not yet implemented.
+WA/VE Website - A creative studio/artist collective website built with Next.js. Content (works, releases, members, news) comes from a headless WordPress via its REST API; see `src/lib/wordpress.ts`.
 
 ## Commands
 
@@ -22,7 +22,8 @@ No test framework is configured.
 - **Framework:** Next.js 15 (App Router) + TypeScript + React 19
 - **Styling:** Tailwind CSS 3 with custom utilities in `globals.css`
 - **Layout:** Masonry gallery via `masonry-layout` + `imagesloaded` packages
-- **CMS:** WordPress headless (planned, not yet implemented)
+- **CMS:** Headless WordPress — `wp/v2` custom post types plus a custom `wave/v1` namespace, base URL from `WORDPRESS_API_URL` (`src/lib/wordpress.ts`)
+- **Contact form:** `src/app/api/contact/route.ts`, sends mail via Resend (`RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`)
 
 ## Architecture
 
@@ -82,7 +83,7 @@ Note: CSS custom properties in `globals.css` use slightly different values for `
 - `DESIGN.md` — Project specifications (Japanese)
 - `SVG_REQUIREMENTS.md` — Required SVG/image assets
 - `WAVE_WEBSITE_10.pdf` — Desktop design reference
-- `WAVE_WEBSITE_10_MOBILE.pdf` — Mobile design reference
+- `WAVE_WEBSITE_11_MOBILE.pdf` — Mobile design reference
 
 ## Content Schema
 
@@ -94,6 +95,4 @@ HAL ca artist releases with: release date, track list, streaming links, images, 
 
 ## Remaining Tasks
 
-1. WordPress headless CMS setup and REST API integration
-2. Image and SVG asset placement (see `SVG_REQUIREMENTS.md`)
-3. Contact form submission backend
+1. Image and SVG asset placement (see `SVG_REQUIREMENTS.md`)
