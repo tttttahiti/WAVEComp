@@ -103,11 +103,18 @@ export function News({ newsList, startReveal = true }: NewsProps) {
         "--news-bar-height",
         `${Math.ceil(h)}px`,
       );
+      // NEWS の有無フラグ（1/0）。SOUND ボタンが desktop の左余白を
+      // NEWS テキストの左端（px-5 = 20px）に合わせるために参照する。
+      document.documentElement.style.setProperty(
+        "--news-present",
+        h > 0 ? "1" : "0",
+      );
     });
     ro.observe(el);
     return () => {
       ro.disconnect();
       document.documentElement.style.setProperty("--news-bar-height", "0px");
+      document.documentElement.style.setProperty("--news-present", "0");
     };
   }, []);
 
